@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+  		<property value="oracle.jdbc.driver.OracleDriver" name="driverClassName" />
+  		<!-- 오라클 주소 -->
+  		<property value="jdbc:oracle:thin:@localhost:1521:orcl" name="url" />
+  		<!-- 오라클 사용자 이름 -->
+  		<property value="pjac" name="username" />
+	  	<!-- 오라클 사용자 비밀번호 -->
+	  <property value="pjac" name="password" />
+	</bean>
+		
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean"> 
+  		<property name="dataSource" ref="dataSource" />
+  		<property value="classpath:/mybatis-config.xml" name="configLocation" /> 
+  		<property value="classpath*:*/*Mapper.xml" name="mapperLocations" />
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+      		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+
+		
+</beans>
