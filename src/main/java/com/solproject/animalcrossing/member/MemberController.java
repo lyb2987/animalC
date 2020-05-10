@@ -26,14 +26,18 @@ public class MemberController {
 		MemberVo vo2 = memberService.login(vo);
 		
 		ModelAndView mav = new ModelAndView();
-		System.out.println("sddbbdfb");
+		
 		if(vo2 != null) {
 			session.setAttribute("user", vo2);
-			mav.setViewName("home");
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing");
+			mav.addObject("msg", vo.getId() +"님 환영합니다.");
 		}
 		else {
-
 			mav.setViewName("home");
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing");
+			mav.addObject("msg", "로그인 실패! 다시 시도해 주세요!");
 		}
 		return mav;
 	}
@@ -103,11 +107,9 @@ public class MemberController {
 		if((vo2.getId().equals(vo.getId())) && (vo2.getPw().equals(vo.getPw())))
 		{
 			result = memberService.deleteMember(vo);
-			System.out.println("둘이 일치함");
 		}
 		
 		if(result) {
-			System.out.println("삭제 성공");
 			session.invalidate();
 			mav.setViewName("common/msg");
 			mav.addObject("path", "/animalcrossing");
@@ -186,7 +188,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("common/msg");
 		mav.addObject("path", "/animalcrossing");
-		mav.addObject("msg", "logout Success");
+		mav.addObject("msg", "로그아웃 되셨습니다.");
 		
 		return mav;
 	}

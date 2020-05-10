@@ -14,7 +14,7 @@
 			PW : <input type="text" name="pw">
 			<input type="submit" value="로그인">
 		</form>
-		<a href="./joinPage.do">회원가입</a>
+		<a href="${pageContext.request.contextPath}/member/joinPage.do">회원가입</a>
 	</c:when>
 	<c:otherwise>
 		${user.nickname} 님
