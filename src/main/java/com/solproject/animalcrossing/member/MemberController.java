@@ -26,7 +26,7 @@ public class MemberController {
 		MemberVo vo2 = memberService.login(vo);
 		
 		ModelAndView mav = new ModelAndView();
-		System.out.println("sddbbb");
+		System.out.println("sddbbdfb");
 		if(vo2 != null) {
 			session.setAttribute("user", vo2);
 			mav.setViewName("home");
