@@ -18,6 +18,15 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	// 로그인 페이지 이동 "완성"
+	@RequestMapping("loginPage.do")
+	public ModelAndView moveLoginPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/login");
+		return mav;
+	}
+	
 
 	// 로그인 "완성" postMapping 사용으로 간편하게 메소드 명시없이 사용이 가능
 	@PostMapping("loginRequest1.do")
