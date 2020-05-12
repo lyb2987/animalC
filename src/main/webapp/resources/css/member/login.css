@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.aforget{
+	color: black;
+}
+
+.logindiv{
+	
+}
+
+.idtext{
+	
+}
+
+.idinput{
+	
+}
+
+.pwtext{
+	
+}
+
+.pwinput{
+	
+}
+
+.loginbtnd{
+	
+}
+
+.loginbtn{
+	font-size: 20px;
+	border-radius: 8px;
+	background: green;
+	color: white;
+}
+
+.joinbtnd{
+	
+}
+
+.joinbtn{
+	font-size: 20px;
+	border-radius: 8px;
+	background: skyblue;
+	color: white;
+}

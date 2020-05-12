@@ -5,11 +5,28 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css">
 	<title>Home</title>
 	<%@ include file="tamplate/header.jsp"%>
+	
 </head>
 <body>
-<!--  <c:import url="tamplate/header.jsp"></c:import> -->
 
+<div class="wrapper">
+	<div class="main-wrap">
+		<div class="main-col-wrap">
+			test
+		</div>
+		<div class="sub-col-wrap">
+			test
+		</div>
+	</div>
+	<div class="sub-wrap">
+		test
+	</div>
+</div>
+
+
+	<%@ include file="tamplate/footer.jsp"%>
 </body>
 </html>

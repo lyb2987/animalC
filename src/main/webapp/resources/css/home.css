@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+div {
+    display: block;
+}
+
+.wrapper{
+	width: 980px;
+    margin: 0 auto;
+ 	margin-top: 10px;   
+}
+
+.main-wrap{
+	width: 680px;
+    float: left;
+}
+
+.main-col-wrap {
+    width: 460px;
+    position: relative;
+    float: right;
+}
+
+.sub-col-wrap {
+    width: 220px;
+    float: left;
+}
+
+.sub-wrap{
+	width: 300px;
+    float: left;
+}
