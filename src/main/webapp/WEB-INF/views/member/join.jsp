@@ -62,31 +62,32 @@
 						<a style="color: red;">*</a>이메일
 					</div>
 					<div class="emailinput">
-					 	<input type="text" name="pw">
+					 	<input type="text" name="email">
 					</div>
-					<div class="mailcheck" style="margin-top: 5px;">
-						<input class="mailcheckbtn" type="submit" value="메일전송">
-					</div>
+					
 					
 					
 					<div class="phonetext" style="margin-top: 10px;">
 						핸드폰번호
 					</div>
 					<div class="phoneinput">
-					 	<input type="text" name="pw">
+					 	<input type="text" name="phone">
 					</div>
 					
 					<div class="addrtext" style="margin-top: 10px;">
 						주소
 					</div>
 					<div class="addrinput">
-					 	<input type="text" name="pw">
+					 	<input type="text" name="addr">
 					</div>
 					
 					<div class="loginbtnd" style="margin-top: 10px;">
 						<input class="loginbtn" type="submit" value="회원가입">
 					</div>
 				</form>
+				<a style="color: black;">email test</a>
+				
+
 			</div>
 			<img alt="jessica" style="margin-left: 270px; margin-top: -750px;" src="${pageContext.request.contextPath}/resources/images/member/jessica.png" width="150px" height="200px">
 			<div class="aforget" style="margin-top: 15px; margin-left: 10px; float: right;">
@@ -100,6 +101,5 @@
 	</div>
 </div>
 
-	
 </body>
 </html>

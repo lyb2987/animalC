@@ -28,5 +28,6 @@
 
 
 	<%@ include file="tamplate/footer.jsp"%>
+	
 </body>
 </html>
