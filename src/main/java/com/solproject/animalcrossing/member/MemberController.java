@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.solproject.animalcrossing.memberInter.MemberService;
@@ -58,6 +59,45 @@ public class MemberController {
 		mav.setViewName("member/join");
 		return mav;
 	}
+	
+	
+	//id 유효성 및 중복 검사.
+	@ResponseBody
+	@PostMapping("checkId")
+	public int checkId(String id) {
+		int checkcnt = 0;
+		int dupleId = 0;
+		
+		// id의 길이 규칙 검사 위배되면 0반환
+		if(id.length()<5 || id.length()>15)
+			return checkcnt;
+		else {
+			// id의 길이만큼 돌며 숫자나 알파벳이 맞는지 확인 위배되면 0, 위배되지 않으면 1
+			for(int i=0; i<=id.length()-1; i++) {
+				if(Character.isAlphabetic(id.charAt(i)) || Character.isDigit(id.charAt(i)))
+					checkcnt = 1;
+				else {
+					checkcnt = 0;
+					break;
+				}
+			}
+		}
+		// id 규칙 검사 위배시 0반환, 알맞은 규칙을 가졌을 경우 중복검사 실시
+		if(checkcnt == 0) 
+			return checkcnt;
+		else {
+			dupleId = memberService.checkId(id);
+			// 아이디 중복여부를 count로 검사하였으니 1이랑 같거나 크면 중복, 0이면 사용가능
+			if(dupleId >= 1) {
+				checkcnt = 0;
+			}
+			else if(dupleId == 0) {
+				checkcnt = 1;
+			}
+		}
+		return checkcnt;
+	}
+	
 	
 	// 회원가입 "현재로서는 완성"
 	@PostMapping("joinMember.do")
@@ -157,37 +197,6 @@ public class MemberController {
 	
 	}
 	
-	// ID 규칙 위배 또는 중복 체크 -> 페이지 리다이렉트방법 몰라서 잠깐 스톱
-	@RequestMapping("checkId.do")
-	public ModelAndView checkId(Model model, MemberVo vo, HttpSession session) {
-		
-		ModelAndView mav = new ModelAndView();
-		int count=0;
-		
-		for(int i=0; i<vo.getId().length(); i++) {
-			if(Character.isAlphabetic(vo.getId().charAt(i)) || Character.isDigit(vo.getId().charAt(i)))
-				count += 1;
-			else {
-				count = -1;
-			}
-		}
-		if(vo.getId() == null || count==-1) {
-			mav.addObject("msg", "아이디 형식이 올바르지 않습니다!");
-		}
-		
-		boolean result = memberService.checkId(vo);
-
-		
-		if(result == true) {
-			mav.addObject("msg", "중복된 아이디가 있습니다.");
-			session.setAttribute("joinpossible", "no");
-		}
-		else {
-			mav.addObject("msg", "사용 가능한 아이디 입니다.");
-			session.setAttribute("joinpossible", "ok");
-		}
-		return mav;
-	}
 	
 	
 	@RequestMapping("logoutRequest.do")

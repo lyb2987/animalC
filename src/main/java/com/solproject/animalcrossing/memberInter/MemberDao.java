@@ -14,7 +14,7 @@ public interface MemberDao {
 	
 	public boolean joinMember(MemberVo vo);
 	
-	public boolean checkId(MemberVo vo);
+	public int checkId(String id);
 	
 	public boolean modifyMember(MemberVo vo);
 	

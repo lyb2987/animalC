@@ -37,8 +37,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public boolean checkId(MemberVo vo) {
-			boolean result = memberDao.checkId(vo);
+	public int checkId(String id) {
+			int result = memberDao.checkId(id);
 		return result;
 	}
 

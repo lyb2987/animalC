@@ -35,6 +35,12 @@
 			ADDR
 		FROM MEMBER WHERE ID = #{id} AND PW = #{pw}
 	</select>
+	
+	<!-- String 값 하나 같이 단일 값을 파라미터로 사용할 경우 value 사용 -->
+	<select id="checkId" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM MEMBER WHERE ID = #{value}
+	</select>
+	
 	<!-- 
 	
 	<select id="viewMember">

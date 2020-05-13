@@ -50,9 +50,9 @@ public class MemberDaoImpl implements MemberDao{
 	
 	// 중복확인을 위한 멤버 조회
 	@Override
-	public boolean checkId(MemberVo vo) {
-			MemberVo vo2 = sqlSession.selectOne(namespace + ".checkId", vo);
-		return (vo2.getId() == null) ? true : false;
+	public int checkId(String id) {
+		int result = sqlSession.selectOne(namespace + ".checkId", id);
+		return result;
 	}
 
 
