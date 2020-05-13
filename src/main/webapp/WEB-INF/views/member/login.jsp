@@ -21,7 +21,7 @@
 			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">
 				<img alt="aclogo" style="margin-left: 50px; margin-top: 100px;" src="${pageContext.request.contextPath}/resources/images/tamplate/aclogo.png" width="310px" height="70px">
 				
-				<form action="./member/loginRequest1.do" method=post id="loginForm">
+				<form action="./loginRequest1.do" method=post id="loginForm">
 					<div class="idtext" style="margin-top: 110px;">
 						ID
 					</div>
@@ -45,7 +45,7 @@
 				<a href="./member/forgetPage.do" style="color:blue;">아이디와 비밀번호가 기억나지 않아요!</a>
 			</div>
 			<div class="joinbtnd" style="margin-top: 50px; margin-left: 386px;" >
-				<a href="./member/forgetPage.do" style="color:blue;">회원가입</a>
+				<a href="./member/loginPage.do" style="color:blue;">회원가입</a>
 			</div>
 		</div>
 		<div class="sub-col-wrap">

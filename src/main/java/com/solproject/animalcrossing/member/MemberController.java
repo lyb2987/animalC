@@ -60,6 +60,21 @@ public class MemberController {
 		return mav;
 	}
 	
+	// 아이디, 비밀번호 찾기 페이지
+	@RequestMapping("forgetPage.do")
+	public ModelAndView moveForgetPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/forget");
+		return mav;
+	}
+	
+	// 아이디 비번찾기 기능 추가후 jsp에서 ajax형식으로 변환
+	@ResponseBody
+	@PostMapping("forgetidpw")
+	public String forgetIdPw(String email) {
+		System.out.println(email);
+		return "test";
+	}
 	
 	//id 유효성 및 중복 검사.
 	@ResponseBody
