@@ -19,17 +19,17 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">
-				<img alt="aclogo" style="margin-left: 50px; margin-top: 100px;" src="${pageContext.request.contextPath}/resources/images/tamplate/aclogo.png" width="310px" height="70px">
+				<img alt="aclogo" style="margin-left: 50px; margin-top: 80px;" src="${pageContext.request.contextPath}/resources/images/tamplate/aclogo.png" width="310px" height="65px">
 				
 				<form action="./loginRequest1.do" method=post id="loginForm">
-					<div class="idtext" style="margin-top: 110px;">
-						ID
+					<div class="idtext" style="margin-top: 80px;">
+						아이디
 					</div>
 					<div class="idinput">
 						<input type="text" name="id" id="id">
 					</div>
 					<div class="pwtext" style="margin-top: 10px;">
-						PW
+						비밀번호
 					</div>
 					<div class="pwtext">
 					 	<input type="password" name="pw" id="pw">

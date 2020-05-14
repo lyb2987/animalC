@@ -55,4 +55,16 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public String forgetId(String email) {
+		String id = memberDao.forgetId(email);
+		return id;
+	}
+
+	@Override
+	public String forgetPw(String email) {
+			String pw = memberDao.forgetPw(email);
+		return pw;
+	}
+
 }

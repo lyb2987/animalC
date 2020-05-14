@@ -16,9 +16,10 @@
 <div class="wrapper">
 	<div class="main-wrap">
 		<div class="main-col-wrap">
-			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">
+			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">	
+				<h2 style="margin-left: 175px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">회원가입</h2>
 				<form action="./joinMember.do" method=post id="joinForm">
-					<div class="idtext" style="margin-top: 50px;">
+					<div class="idtext" style="margin-top: 30px;">
 						<a style="color: red;">*</a>아이디
 					</div>
 					<div class="idinput">

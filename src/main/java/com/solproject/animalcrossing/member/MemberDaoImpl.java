@@ -83,4 +83,18 @@ public class MemberDaoImpl implements MemberDao{
 		return result;
 	}
 
+
+	@Override
+	public String forgetId(String email) {
+		String id = sqlSession.selectOne(namespace + ".forgetId", email);
+		return id;
+	}
+
+
+	@Override
+	public String forgetPw(String email) {
+		String pw = sqlSession.selectOne(namespace + ".forgetPw", email);
+		return pw;
+	}
+
 }

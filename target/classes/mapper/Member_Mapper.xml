@@ -41,6 +41,14 @@
 		SELECT COUNT(*) FROM MEMBER WHERE ID = #{value}
 	</select>
 	
+	<select id="forgetId" resultType="String" parameterType="String">
+		SELECT ID FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
+		<select id="forgetPw" resultType="String" parameterType="String">
+		SELECT PW FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
 	<!-- 
 	
 	<select id="viewMember">

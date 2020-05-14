@@ -19,4 +19,8 @@ public interface MemberService {
 	public boolean modifyMember(MemberVo vo);
 	
 	public boolean deleteMember(MemberVo vo);
+	
+	public String forgetId(String email);
+
+	public String forgetPw(String email);
 }
