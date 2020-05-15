@@ -6,5 +6,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.solproject.animalcrossing.member.MemberVo" alias="memberVo" />
+		<typeAlias type="com.solproject.animalcrossing.board.BoardVo" alias="boardVo" />
 	</typeAliases>
 </configuration>

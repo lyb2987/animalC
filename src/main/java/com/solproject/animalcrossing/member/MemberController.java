@@ -23,6 +23,13 @@ public class MemberController {
 	@Autowired
 	private MailService mailService;
 	
+	@RequestMapping("tespage.do")
+	public ModelAndView moveTestPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/test");
+		return mav;
+	}
+	
 	// 로그인 페이지 이동 "완성"
 	@RequestMapping("loginPage.do")
 	public ModelAndView moveLoginPage() {

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.inputc{
+	width: 200px;
+	border: 2px solid #aaa;
+	border-radius:4px;
+	outline: none;
+	padding: 8px;
+	box-sizing: border-box;
+	transition:.3s;
+}
+
+button{
+	background-color: white;
+ 	color: black;
+	padding: 8px;
+	border-radius:4px;
+  	border: 2px solid gray; 
+}
+
+.submitbtn{
+	background-color: white;
+ 	color: black;
+	padding: 8px;
+	border-radius:4px;
+  	border: 2px solid #4CAF50; 
+}

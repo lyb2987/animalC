@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/join.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/member/test.css">
 	<title>회원가입</title>
 	<%@ include file="../tamplate/header.jsp"%>
 </head>
@@ -25,7 +25,7 @@
 						<a style="color: red;">*</a>아이디
 					</div>
 					<div class="idinput">
-						<input type="text" class="id" name="id" id="id">
+						<input type="text" class="inputc" name="id" id="id">
 						<button class="checkIdbtn" type="button" id="checkIdbtn" 
 							onclick="checkId();" value="N" style="margin-left: 3px">중복확인</button>
 					</div>
@@ -37,7 +37,7 @@
 						<a style="color: red;">*</a>비밀번호
 					</div>
 					<div class="pwinput">
-					 	<input type="password" name="pw" id="pw">
+					 	<input type="password" class="inputc" name="pw" id="pw">
 					 	<a style="color: black;" id="pwrule"> 8글자 이상, 영문과 숫자 조합 </a>
 					</div>
 					
@@ -45,21 +45,21 @@
 						<a style="color: red;">*</a>이름
 					</div>
 					<div class="nameinput">
-					 	<input type="text" name="name" id="name">
+					 	<input type="text" class="inputc" name="name" id="name">
 					</div>
 					
 					<div class="nicknametext" style="margin-top: 10px;">
 						<a style="color: red;">*</a>닉네임
 					</div>
 					<div class="nicknameinput">
-					 	<input type="text" name="nickname" id="nickname">
+					 	<input type="text" class="inputc" name="nickname" id="nickname">
 					</div>
 					
 					<div class="birthtext" style="margin-top: 10px;">
 						<a style="color: red;">*</a>생년월일
 					</div>
 					<div class="birthinput">
-					 	<input type="text" name="birth" id="birth" placeholder="ex) 19950101">
+					 	<input type="text" class="inputc" name="birth" id="birth" placeholder="ex) 19950101">
 					</div>
 					
 					<div class="sextext" style="margin-top: 10px;">
@@ -74,7 +74,7 @@
 						<a style="color: red;">*</a>이메일
 					</div>
 					<div class="emailinput">
-					 	<input type="text" name="email" id="email">
+					 	<input type="text" class="inputc" name="email" id="email">
 					 	<button class="sendEmailbtn" type="button" id="sendEmailbtn" 
 							onclick="sendEmail();" value="N" style="margin-left: 3px">메일전송</button>
 					</div>
@@ -83,7 +83,7 @@
 						<a style="color: red;">*</a>인증번호
 					</div>
 					<div class="emailinput">
-					 	<input type="text" name="anum" id="anum">
+					 	<input type="text" class="inputc" name="anum" id="anum">
 					 	<button class="checkNumbtn" type="button" id="checkNumbtn" 
 							onclick="checkNum();" value="N" style="margin-left: 3px">확인</button>
 					</div>
@@ -93,18 +93,18 @@
 						핸드폰번호
 					</div>
 					<div class="phoneinput">
-					 	<input type="text" name="phone" id="phone" value="입력안함">
+					 	<input type="text" class="inputc" name="phone" id="phone" value="입력안함">
 					</div>
 					
 					<div class="addrtext" style="margin-top: 10px;">
 						주소
 					</div>
 					<div class="addrinput">
-					 	<input type="text" name="addr" id="addr" value="입력안함">
+					 	<input type="text" class="inputc" name="addr" id="addr" value="입력안함">
 					</div>
 					
 					<div class="joinbtnd" style="margin-top: 10px;">
-						<input class="joinbtn" id="joinbtn" type="submit" value="회원가입">
+						<input class="joinbtn" class="submitbtn" id="joinbtn" type="submit" value="회원가입">
 					</div>
 				</form>
 			</div>
