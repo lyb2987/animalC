@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.solproject.animalcrossing.mapper.Board_Mapper">
+
+	<!-- 게시글 작성 -->
+	<insert id="writeBoard" parameterType="boardVo">
+		INSERT INTO 
+		BOARD(BNO, BTITLE, BKIND, BCONTENT, BWRITER, REGDATE) 
+		VALUES(BOARD_SEQ.NEXTVAL, #{btitle}, #{bkind}, #{bcontent}, #{bwriter}, SYSDATE)
+	</insert>
+		
+</mapper>

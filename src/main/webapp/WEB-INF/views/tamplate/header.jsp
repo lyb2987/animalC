@@ -30,6 +30,9 @@
 						<li class="_item"> 
 							<a href="${pageContext.request.contextPath}/member/joinPage.do"> 회원가입 </a>
 						</li>
+						<li class="_item"> 
+							<a href="${pageContext.request.contextPath}/member/tespage.do"> 테스트페이지 </a> 
+						</li>
 					</ul>
 				</c:when>
 				<c:otherwise>
@@ -40,6 +43,9 @@
 						</li>
 						<li class="_item"> 
 							<a href="${pageContext.request.contextPath}/member/myPage.do"> 마이페이지 </a> 
+						</li>
+						<li class="_item"> 
+							<a href="${pageContext.request.contextPath}/member/tespage.do"> 테스트페이지 </a> 
 						</li>
 					</ul>
 				</c:otherwise>
@@ -63,7 +69,7 @@
 				<a class="menu-a" href="${pageContext.request.contextPath}/"> 질문 </a>
 			</li>
 			<li class="menu-item"> 
-				<a class="menu-a" href="${pageContext.request.contextPath}/"> 자유게시판 </a>
+				<a class="menu-a" href="${pageContext.request.contextPath}/board/moveBoardMain"> 자유게시판 </a>
 			</li>
 			<li class="menu-item">
 				<a class="menu-a" href="${pageContext.request.contextPath}/"> 검색 </a>

@@ -4,12 +4,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.solproject.animalcrossing.mail.MailVo;
+import com.solproject.animalcrossing.mailInter.MailService;
 import com.solproject.animalcrossing.memberInter.MemberService;
 
 @Controller
@@ -19,6 +20,15 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private MailService mailService;
+	
+	@RequestMapping("tespage.do")
+	public ModelAndView moveTestPage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("member/test");
+		return mav;
+	}
 	
 	// 로그인 페이지 이동 "완성"
 	@RequestMapping("loginPage.do")
@@ -68,12 +78,58 @@ public class MemberController {
 		return mav;
 	}
 	
-	// 아이디 비번찾기 기능 추가후 jsp에서 ajax형식으로 변환
+	// 아이디 비번찾기 
 	@ResponseBody
 	@PostMapping("forgetidpw")
-	public String forgetIdPw(String email) {
-		System.out.println(email);
-		return "test";
+	public int forgetIdPw(String email) {
+
+		System.out.println(email + "전달 확인");
+		int result = 0;
+		String message="";
+		MailVo mail = new MailVo();
+		
+		String idpw = email.split(" ")[0];
+		email = email.split(" ")[1];
+		
+		// 아이디를 찾는지 비밀번호를 찾는지 검사
+		if(idpw.equals("id")) {
+			System.out.println(email + " --> 잘 분리되어 들어가는 지 확인");
+			String id = memberService.forgetId(email);
+			// 찾는 아이디가 존재하지 않으면 2를 반환하여 존재하지 않는 계정임을 알림
+			if(id=="") {
+				result = 2;
+				return result;
+			}
+			else {
+				message = id;
+				mail.setMessage("찾으시는 아이디는 " + message + "입니다.");
+				result=1;
+			}
+		}
+		else if(idpw.equals("pw")) {
+			String pw = memberService.forgetPw(email);
+			message = pw;
+			mail.setMessage("찾으시는 비밀번호는 " + message + "입니다.");;
+			result=1;
+		}
+		else {
+			result=0;
+			return result;
+		}
+
+		mail.setSubject("AnimalC 아이디/비밀번호 찾기 메일입니다!");
+		mail.setSenderMail("lyb2619@gmail.com");
+		mail.setSenderName("AnimalC");
+		mail.setReceiveMail(email);
+		
+		try {
+			mailService.sendMail(mail);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	//id 유효성 및 중복 검사.
