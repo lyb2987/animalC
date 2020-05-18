@@ -17,6 +17,8 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div id="topMenu" style="margin-top: 0px;">
+				
+			
 				<a href="./writeBoardPage" style="color: black;"> 게시글 작성</a>
 			</div>
 		</div>

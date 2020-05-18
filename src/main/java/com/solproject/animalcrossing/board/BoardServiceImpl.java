@@ -16,5 +16,7 @@ public class BoardServiceImpl implements BoardService{
 			int result = boardDao.writeBoard(vo);
 		return result;
 	}
+
+
 	
 }

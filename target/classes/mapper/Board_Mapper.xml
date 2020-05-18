@@ -10,5 +10,5 @@
 		BOARD(BNO, BTITLE, BKIND, BCONTENT, BWRITER, REGDATE) 
 		VALUES(BOARD_SEQ.NEXTVAL, #{btitle}, #{bkind}, #{bcontent}, #{bwriter}, SYSDATE)
 	</insert>
-		
+	
 </mapper>
