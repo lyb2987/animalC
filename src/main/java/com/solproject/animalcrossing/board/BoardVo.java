@@ -1,14 +1,12 @@
 package com.solproject.animalcrossing.board;
 
-import java.util.Date;
-
 public class BoardVo {
 	private int bno;
 	private String btitle;
 	private String bkind;
 	private String bcontent;
 	private String bwriter;
-	private Date regdate;
+	private String regdate;
 	private int viewCnt;
 	
 	public int getBno() {
@@ -35,10 +33,10 @@ public class BoardVo {
 	public void setBcontent(String bcontent) {
 		this.bcontent = bcontent;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	public int getViewCnt() {

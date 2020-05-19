@@ -1,5 +1,7 @@
 package com.solproject.animalcrossing.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,26 @@ public class BoardServiceImpl implements BoardService{
 	public int writeboard(BoardVo vo) {
 			int result = boardDao.writeBoard(vo);
 		return result;
+	}
+
+	@Override
+	public List<BoardVo> getBoardList() {
+		return boardDao.getBoardList();
+	}
+
+	@Override
+	public List<String> getBoardDateList() {
+		return boardDao.getBoardDateList();
+	}
+
+	@Override
+	public List<BoardVo> getBoardFirstList() {
+		return boardDao.getBoardFirstList();
+	}
+
+	@Override
+	public int getBoardCount() {
+		return boardDao.getBoardCount();
 	}
 
 

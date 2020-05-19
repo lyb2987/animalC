@@ -11,4 +11,42 @@
 		VALUES(BOARD_SEQ.NEXTVAL, #{btitle}, #{bkind}, #{bcontent}, #{bwriter}, SYSDATE)
 	</insert>
 	
+	<select id="getBoardList" resultType="boardVo">
+		SELECT BNO, BTITLE, BKIND, BCONTENT, BWRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD HH:MI:SS') AS REGDATE, VIEWCNT 
+		FROM BOARD ORDER BY REGDATE DESC
+	</select>
+	
+	<select id="getBoardDateList" resultType="String">
+		SELECT TO_CHAR(REGDATE, 'YYYY-MM-DD HH:MI:SS') 
+		FROM BOARD ORDER BY REGDATE DESC
+	</select>
+	
+	<!-- 게시판 메인접속 시 표시될 게시글 데이터 가져오기 -->
+	<select id="getBoardFistList" resultType="boardVo">
+		SELECT B.BNO, B.BTITLE, B.BKIND, B.BCONTENT, B.BWRITER, B.REGDATE, B.VIEWCNT
+		FROM(
+		    SELECT ROWNUM AS RNUM, A.BNO, A.BTITLE, A.BKIND, A.BCONTENT, A.BWRITER, A.REGDATE, A.VIEWCNT 
+		    FROM(
+		            SELECT BNO, BTITLE, BKIND, BCONTENT, BWRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD HH:MI:SS') AS REGDATE, VIEWCNT 
+		            FROM BOARD ORDER BY REGDATE DESC
+		    ) A <![CDATA[WHERE ROWNUM <=10]]>
+		)B <![CDATA[WHERE B.RNUM >= 1]]>
+	</select>
+	
+	<!-- 게시판에서 버튼 선택시 표시될 게시글 데이터 가져오기 -->
+	<select id="getBoardPageList" resultType="boardVo" parameterType="paging">
+		SELECT B.BNO, B.BTITLE, B.BKIND, B.BCONTENT, B.BWRITER, B.REGDATE, B.VIEWCNT
+		FROM(
+		    SELECT ROWNUM AS RNUM, A.BNO, A.BTITLE, A.BKIND, A.BCONTENT, A.BWRITER, A.REGDATE, A.VIEWCNT 
+		    FROM(
+		            SELECT BNO, BTITLE, BKIND, BCONTENT, BWRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD HH:MI:SS') AS REGDATE, VIEWCNT 
+		            FROM BOARD ORDER BY REGDATE DESC
+		    ) A <![CDATA[WHERE ROWNUM ${startRnum}]]>
+		)B <![CDATA[WHERE B.RNUM ${endRnum}]]>
+	</select>
+	
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+	
 </mapper>
