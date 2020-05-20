@@ -3,6 +3,7 @@ package com.solproject.animalcrossing.boardInter;
 import java.util.List;
 
 import com.solproject.animalcrossing.board.BoardVo;
+import com.solproject.animalcrossing.board.Paging;
 
 public interface BoardDao {
 	public int writeBoard(BoardVo vo);
@@ -12,6 +13,8 @@ public interface BoardDao {
 	public List<String> getBoardDateList();
 
 	public List<BoardVo> getBoardFirstList();
+	
+	public List<BoardVo> getBoardPageList(Paging paging);
 	
 	public int getBoardCount();
 }

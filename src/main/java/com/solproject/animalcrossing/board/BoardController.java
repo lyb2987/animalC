@@ -57,30 +57,58 @@ public class BoardController {
 		
 	}
 	
+	@ResponseBody
+	@PostMapping("getPageBtn")
+	public Paging getPageBtn(int currentP) {
+		
+		Paging p = new Paging(currentP);
+		
+		return p;
+	}
+	
+	@ResponseBody
+	@PostMapping("getBoardPageList")
+	public List<BoardVo> getBoardPageList(int currenP){
+		
+		
+		int boardCtn = boardService.getBoardCount();
+		Paging p = new Paging(boardCtn);
+		
+		p.movePage(currenP);
+		
+		
+		List<BoardVo> list = boardService.getBoardPageList(p);
+		
+		return list;
+	}
+	
 	//페이징 테스트중2 다음버튼 클릭시 다음 페이지 보여주기
 	@ResponseBody
 	@PostMapping("moveNextPage")
-	public String moveNextPage(String currentP, String startP, String endP){
+	public Paging moveNextPage(int currentP, int startP, int endP){
 		
-		System.out.println("들어옴");
-		System.out.println("현재 페이지  : "+ currentP);
+		
+		System.out.println("현재 페이지 : " + currentP);
+		System.out.println("시작 페이지 : " + startP);
+		System.out.println("끝 페이지 : " + endP);
 		
 
-		System.out.println(currentP);
-		System.out.println(startP);
-		System.out.println(endP);
+		int boardCtn = boardService.getBoardCount();
+		Paging p = new Paging(boardCtn);
+		p.setCurrentPage(currentP);
+		p.setStartPage(startP);
+		p.setEndPage(endP);
+		
+		p.nextPage();
 		/*
-		int cp = Integer.parseInt(currentP);
-		int sp = Integer.parseInt(startP);
-		int ep = Integer.parseInt(endP);
-		
-		System.out.println("이동 후 페이지  : "+ (cp+10));
-		System.out.println("이동 후 시작 페이지  : "+ (sp+10));
-		System.out.println("이동 후 끝 페이지  : "+ (ep+10));
+		List<BoardVo> list = boardService.getBoardPageList(p);
 		*/
+		System.out.println("현재 페이지 : " + p.getCurrentPage());
+		System.out.println("시작 페이지 : " + p.getStartPage());
+		System.out.println("끝 페이지 : " + p.getEndPage());
 		
 		
-		return "";
+		return p;
 	}
 	
 	

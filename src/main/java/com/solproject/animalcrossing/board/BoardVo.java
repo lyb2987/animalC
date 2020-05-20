@@ -9,6 +9,10 @@ public class BoardVo {
 	private String regdate;
 	private int viewCnt;
 	
+	BoardVo(){
+		
+	}
+	
 	public int getBno() {
 		return bno;
 	}

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
+import com.solproject.animalcrossing.board.Paging;
 
 @Repository
 public class BoardDaoImpl implements BoardDao{
@@ -40,6 +41,11 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public int getBoardCount() {
 		return sqlSession.selectOne(namespace+ ".getBoardCount");
+	}
+
+	@Override
+	public List<BoardVo> getBoardPageList(Paging paging) {
+		return sqlSession.selectList(namespace + ".getBoardFistList", paging);
 	}
 
 	

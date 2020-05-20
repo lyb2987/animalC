@@ -19,7 +19,7 @@
 		<div class="main-col-wrap">
 			<div class="board" style="width:100%;">
 				<table style="width:100%; text-align: center; border-bottom: 1px solid #aaa;">
-					<tr style="border-bottom: 1px solid #aaa;">
+					<tr id="boardhead" style="border-bottom: 1px solid #aaa;">
 						<td>글 번호</td>
 						<td>글 종류</td>
 						<td>제목</td>
@@ -27,65 +27,26 @@
 						<td>작성일</td>
 						<td>조회수</td>
 					</tr>
-					<c:forEach var="row" items="${list}">
-						<tr style="border-bottom: 1px solid #aaa;">
-							<td>${row.bno}</td>
-							<td>${row.bkind}</td>
-							<td><a href="./viewBoard" style="color: black;">${row.btitle}</a></td>
-							<td>${row.bwriter}</td>
-							<td>${row.regdate}</td>
-							<td>${row.viewCnt}</td>
-						</tr>
-					</c:forEach>
+
 				</table>
 			</div>
 		
-			<div class="pagingAndWrite">
-				<ul class="pageUl">
-					<li>
-						<button onclick="goFront();" value="">맨 앞</button>
-					</li>
-					<li>
-						<button onclick="goPrevious();" value="">이전</button>
-					</li>
-					
-					<c:choose>
-						<c:when test="${paging.currentPage <= 10}">
-							<c:set var="startPageNum" value="1"/>
-							<c:set var="endPageNum" value="10"/>
-						</c:when>	
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${(paging.currentPage%10)==0}">
-									<c:set var="startPageNum" value="${paging.currentPage-9}"/>
-									<c:set var="endPageNum" value="${paging.currentPage}"/>
-								</c:when>
-								<c:otherwise>
-									<c:set var="startPageNum" value="${(paging.currentPage/10)*10+1}"/>
-									<c:set var="endPageNum" value="${paging.currentPage+9}"/>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					
-					<c:if test="${endPageNum > paging.endPage}">
-						<c:set var="endPageNum" value="${paging.endPage}"/>
-					</c:if>
-					
-					<c:forEach var="pageNum" begin="${startPageNum}" end="${endPageNum}" step="1">
-						<li class="pageList">
-							<a href="" style="color: black;">${pageNum}</a>
-						</li>
-					</c:forEach>
-					
-					
-					<li>
-						<button onclick="goNext();" value="">다음</button>
-					</li>
-					<li>
-						<button onclick="goEnd();" value="">맨 끝</button>
-					</li>
+			<div>
+				<div id="beforePageBtn">
+					<button onclick="goFront();" value="">맨 앞</button>
+					<button onclick="goPrevious();" value="">이전</button>
+				</div>
+						
+				<ul id="pageUl" class="pageUl">
 				</ul>
+	
+				<div id="afterPageBtn">
+					<button onclick="goNext();" value="">다음</button>
+					<button onclick="goEnd();" value="">맨 끝</button>
+				</div>
+			</div>
+		
+			<div class="Write">
 				<a href="./writeBoardPage" style="color: black;"> 게시글 작성</a>
 			</div>
 		</div>
@@ -99,35 +60,121 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		console.log("ready");
+		var pageNum = 1;
+		$.getList(pageNum);
+		$.getPageButton(pageNum);
 	});
 
+	// 게시글 뿌려주는 ajax
+	$.getList = function(pageNum){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getBoardPageList",
+			type : "post",
+			dataType : "json",
+			data : {"currenP" : pageNum},
+			success : function(data){
+
+				var pageHTML2 ="";
+				$("#boardTable").empty();
+				console.log(data.length);
+				
+				for(var i=0; i<=data.length; i++){
+					// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
+					if(data[i]){
+						pageHTML2 += "<tr id=\"boardTable\" style=\"border-bottom: 1px solid #aaa;\">\n"
+						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
+						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
+						pageHTML2 += "<td> <a href=\"./viewBoard\" style=\"color : black;\">" + data[i].btitle + "</a> </td>\n";
+						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
+						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
+						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
+						pageHTML2 += "</tr>"
+					}
+				}
+				//console.log(pageHTML2);
+				$("#boardhead").after(pageHTML2);
+			}
+		})
+	}
+
+	// 버튼 뿌려주는 ajax
+	$.getPageButton = function(pageNum){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getPageBtn",
+			type : "post",
+			dataType : "json",
+			data : {"currentP" : ${paging.currentPage}},
+			success : function(data){
+				var currentP = data.currentPage;
+				var pageHTML ="";
+				$("#pageUl").empty();
+				for(var i=data.startPage; i<=data.endPage; i++){
+					console.log(i);
+					pageHTML += "<li id=\"pageList\" class=\"pageList\">\n";
+					pageHTML += "\t<a href=\"\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
+					pageHTML += "</li>\n"
+				}
+				console.log(pageHTML);
+				$("#pageUl").append(pageHTML);
+			}
+		})
+	}
+	
 	function goPrevious(){
 	}
 	function goFront(){
 	}
 	function goEnd(){
 	}
+	
 	function goNext(){
+		console.log(${paging.currentPage});
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/moveNextPage",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : "${paging.currentPage}", "startP" : "${startPageNum}", "endP" : "${endPageNum}"},
+			data : {"currentP" : ${paging.currentPage}, "startP" : ${paging.startPage}, "endP" : ${paging.endPage}},
 			success : function(data){
-				
+				var currentP = data.currentPage;
+				var pageHTML ="";
+				$("#pageUl").empty();
+				for(var i=data.startPage; i<=data.endPage; i++){
+					console.log(i);
+					pageHTML += "<li id=\"pageList\" class=\"pageList\">\n";
+					pageHTML += "\t<a href=\"\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
+					pageHTML += "</li>"
+					console.log(pageHTML);
+					//$("#pageUl").html(data.currentPage);
+					$.ajax({
+						url : "${pageContext.request.contextPath}/board/getBoardPageList",
+						type : "post",
+						dataType : "json",
+						data : {"currenP" : currentP},
+						success : function(data){
+							var pageHTML2 ="";
+							$("#boardTable").empty();
+							console.log(data.length);
+							for(var i=0; i<=data.length; i++){
+								pageHTML2 ="";
+								pageHTML2 += "<td>" + ${data[i].bno} + "</td>\n";
+								pageHTML2 += "<td>" + ${data[i].bkind} + "</td>\n";
+								pageHTML2 += "<td> <a href=\"./viewBoard\" style=\"color : black;\">" + ${data[i].btitle} + "</a> </td>\n";
+								pageHTML2 += "<td>" + ${data[i].bwriter} + "</td>\n";
+								pageHTML2 += "<td>" + ${data[i].regdate} + "</td>\n";
+								pageHTML2 += "<td>" + ${data[i].viewCtn} + "</td>\n";
+							}
+							console.log(pageHTML2);
+						}
+					})
+				}
 			}
 		})
-		
-		/*var currentPage = "${paging.currentPage}";
-		${startPageNum} = ${startPageNum} + 10;
-		${endPageNum} = ${endPageNum} + 10;
-		
-		if("${endPageNum}" > "${paging.endPage}")
-			"${endPageNum}" = "${paging.endPage}";
-		alert("${startPageNum}" "${endPageNum}" );
-		*/
 	}
+	
+	
+
+	
 </script>
 
 </body>

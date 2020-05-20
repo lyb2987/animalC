@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
 import com.solproject.animalcrossing.boardInter.BoardService;
+import com.solproject.animalcrossing.board.Paging;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -37,6 +38,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int getBoardCount() {
 		return boardDao.getBoardCount();
+	}
+
+	@Override
+	public List<BoardVo> getBoardPageList(Paging paging) {
+		return boardDao.getBoardPageList(paging);
 	}
 
 
