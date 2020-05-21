@@ -45,7 +45,12 @@ public class BoardDaoImpl implements BoardDao{
 
 	@Override
 	public List<BoardVo> getBoardPageList(Paging paging) {
-		return sqlSession.selectList(namespace + ".getBoardFistList", paging);
+		return sqlSession.selectList(namespace + ".getBoardPageList", paging);
+	}
+
+	@Override
+	public BoardVo getBoard(int bno) {
+		return sqlSession.selectOne(namespace + ".getBoard", bno);
 	}
 
 	

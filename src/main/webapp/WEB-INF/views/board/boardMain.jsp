@@ -59,11 +59,13 @@
 </div>
 
 <script type="text/javascript">
+	var currentP = ${paging.currentPage};
+	var pageSize = ${paging.pageCnt};
+	
 	$(document).ready(function(){
 		console.log("ready");
-		var pageNum = 1;
-		$.getList(pageNum);
-		$.getPageButton(pageNum);
+		$.getList(1);
+		$.getPageButton(1);
 	});
 
 	// 게시글 뿌려주는 ajax
@@ -72,20 +74,17 @@
 			url : "${pageContext.request.contextPath}/board/getBoardPageList",
 			type : "post",
 			dataType : "json",
-			data : {"currenP" : pageNum},
+			data : {"currentP" : pageNum},
 			success : function(data){
-
 				var pageHTML2 ="";
-				$("#boardTable").empty();
-				console.log(data.length);
-				
+				$("tr").remove(".boardList");
 				for(var i=0; i<=data.length; i++){
 					// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
 					if(data[i]){
-						pageHTML2 += "<tr id=\"boardTable\" style=\"border-bottom: 1px solid #aaa;\">\n"
+						pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
 						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
 						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
-						pageHTML2 += "<td> <a href=\"./viewBoard\" style=\"color : black;\">" + data[i].btitle + "</a> </td>\n";
+						pageHTML2 += "<td> <a href=\"#none\" onclick=\"viewBoard(" + data[i].bno + ")\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";
 						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
 						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
 						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
@@ -94,85 +93,139 @@
 				}
 				//console.log(pageHTML2);
 				$("#boardhead").after(pageHTML2);
+				console.log("현재 페이지 : " + currentP);	
 			}
 		})
 	}
 
+	
 	// 버튼 뿌려주는 ajax
-	$.getPageButton = function(pageNum){
+	$.getPageButton = function(currentP){
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/getPageBtn",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : ${paging.currentPage}},
+			data : {"currentP" : currentP},
 			success : function(data){
 				var currentP = data.currentPage;
 				var pageHTML ="";
 				$("#pageUl").empty();
 				for(var i=data.startPage; i<=data.endPage; i++){
-					console.log(i);
 					pageHTML += "<li id=\"pageList\" class=\"pageList\">\n";
-					pageHTML += "\t<a href=\"\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
+					pageHTML += "\t<a href=\"#none\" onclick=\"goPageBtn(" + i + ")\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
 					pageHTML += "</li>\n"
 				}
-				console.log(pageHTML);
 				$("#pageUl").append(pageHTML);
+				$("#pagebtn"+currentP).css("font-weight", "bold");
 			}
 		})
 	}
 	
-	function goPrevious(){
-	}
 	function goFront(){
-	}
-	function goEnd(){
+		currentP=1;
+		$.getList(1);
+		$.getPageButton(1);
 	}
 	
+	function goEnd(){
+		currentP=pageSize;
+		$.getList(currentP);
+		$.getPageButton(currentP);
+	}
+
+	function goPageBtn(i){
+		$("#pagebtn"+currentP).css("font-weight", "normal");
+		currentP = i;
+		$("#pagebtn"+currentP).css("font-weight", "bold");
+		console.log("현재 페이지 : " + currentP);
+		$.getList(i);
+	}
+
+	// 이전버튼 기능
+	function goPrevious(){
+		if(currentP <= 10){
+			alert("이미 첫 페이지 입니다.");
+			return ;
+		}
+
+		console.log("다음 버튼 시작 전 현재 페이지 : " + currentP);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/movePreviousPage",
+			type : "post",
+			dataType : "json",
+			data : {"currentP" : currentP},
+			success : function(data){
+				var pageHTML ="";
+				$("#pageUl").empty();
+				for(var i=data.startPage; i<=data.endPage; i++){
+					pageHTML += "<li id=\"pageList\" class=\"pageList\">\n";
+					pageHTML += "\t<a  href=\"#none\" onclick=\"goPageBtn("+i+")\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
+					pageHTML += "</li>\n"
+				}
+				$("#pageUl").append(pageHTML);
+				currentP = data.currentPage;
+				$("#pagebtn"+currentP).css("font-weight", "bold");
+				console.log("다음 클릭 후 현재 페이지 : " + currentP);
+				$.getList(data.currentPage);
+			}
+		})
+	}
+		
+	// 다음버튼 기능
 	function goNext(){
-		console.log(${paging.currentPage});
+		//페이지 사이즈가 10보다 작거나 같으면 리턴
+		if(pageSize <= 10){
+			alert("이미 마지막 페이지 입니다.");
+			return ;
+		}
+		else{
+			if(currentP%10==0){
+				if((currentP/10)*10+1 > pageSize){
+					alert("이미 마지막 페이지 입니다.");
+					return ;
+				}
+			}
+			else{
+				if((currentP/10)*10+11 > pageSize){
+					alert("이미 마지막 페이지 입니다.");
+					return ;
+				}
+			}
+		}
+	
+		console.log("다음 버튼 시작 전 현재 페이지 : " + currentP);
+		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/moveNextPage",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : ${paging.currentPage}, "startP" : ${paging.startPage}, "endP" : ${paging.endPage}},
+			data : {"currentP" : currentP},
 			success : function(data){
-				var currentP = data.currentPage;
 				var pageHTML ="";
 				$("#pageUl").empty();
 				for(var i=data.startPage; i<=data.endPage; i++){
-					console.log(i);
 					pageHTML += "<li id=\"pageList\" class=\"pageList\">\n";
-					pageHTML += "\t<a href=\"\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
-					pageHTML += "</li>"
-					console.log(pageHTML);
-					//$("#pageUl").html(data.currentPage);
-					$.ajax({
-						url : "${pageContext.request.contextPath}/board/getBoardPageList",
-						type : "post",
-						dataType : "json",
-						data : {"currenP" : currentP},
-						success : function(data){
-							var pageHTML2 ="";
-							$("#boardTable").empty();
-							console.log(data.length);
-							for(var i=0; i<=data.length; i++){
-								pageHTML2 ="";
-								pageHTML2 += "<td>" + ${data[i].bno} + "</td>\n";
-								pageHTML2 += "<td>" + ${data[i].bkind} + "</td>\n";
-								pageHTML2 += "<td> <a href=\"./viewBoard\" style=\"color : black;\">" + ${data[i].btitle} + "</a> </td>\n";
-								pageHTML2 += "<td>" + ${data[i].bwriter} + "</td>\n";
-								pageHTML2 += "<td>" + ${data[i].regdate} + "</td>\n";
-								pageHTML2 += "<td>" + ${data[i].viewCtn} + "</td>\n";
-							}
-							console.log(pageHTML2);
-						}
-					})
+					pageHTML += "\t<a  href=\"#none\" onclick=\"goPageBtn("+i+")\" id=\"pagebtn" + i + "\" style=\"color : black;\">" + i + "</a>\n" 
+					pageHTML += "</li>\n"
 				}
+				$("#pageUl").append(pageHTML);
+				currentP = data.currentPage;
+				$("#pagebtn"+currentP).css("font-weight", "bold");
+				console.log("다음 클릭 후 현재 페이지 : " + currentP);
+				$.getList(data.currentPage);
 			}
 		})
 	}
 	
-	
+
+	function viewBoard(i){
+		var bnof = "<form name=\"bnoform\"> <input name=\"bno\" value=\"" + i + "\"/> </form>";
+		console.log(bnof);
+		f.action = "./viewBoard";
+		f.method = "post";
+		f.submit();
+	}
 
 	
 </script>

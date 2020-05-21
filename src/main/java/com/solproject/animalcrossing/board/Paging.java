@@ -7,14 +7,13 @@ public class Paging {
 	private int startPage;		// 맨 앞 페이지
 	private int endPage;		// 맨 뒤 페이지
 	private int currentPage;	// 현재 페이지
-	private int nextPage;		// 다음페이지
-	private int previousPage;	// 이전페이지
 	private int startRnum;		// rnum(데이터베이스 페이징 번호) 시작값 
 	private int endRnum;		// rnum 끝값
 	
-	/*
-	 *  
-	 * */
+	/* 
+	   
+	   
+	 */
 	// 기본 생성자가 없으면 ajax로 데이터를 넘겨줄때 에러가남 생성해주면 잘 됨
 	Paging(){
 		
@@ -26,16 +25,11 @@ public class Paging {
 		if(boardCnt % perPageBoardCnt == 0)
 			this.pageCnt = boardCnt / perPageBoardCnt;
 		else
-			this.pageCnt = (boardCnt / perPageBoardCnt) + 1;
+			this.pageCnt = (boardCnt / perPageBoardCnt);
+		
 		this.currentPage = 1;
-		this.previousPage = 0;
-		this.nextPage = 2;
-		this.startRnum = 1;
-		this.endRnum = 10;
-		this.startPage = 1;
-		this.endPage = 10;
-		
-		
+		this.setSrnumErnum();
+		this.setSpageEpage();
 	}
 	
 	Paging(int boardCnt, int currentPage){
@@ -44,70 +38,107 @@ public class Paging {
 		if(boardCnt % perPageBoardCnt == 0)
 			this.pageCnt = boardCnt / perPageBoardCnt;
 		else
-			this.pageCnt = (boardCnt / perPageBoardCnt) + 1;
+			this.pageCnt = (boardCnt / perPageBoardCnt);
+		
 		this.currentPage = currentPage;
-		this.previousPage = this.currentPage-1;
-		this.nextPage = this.currentPage+1;
-		this.startRnum = this.currentPage*10+1;
-		this.endRnum = this.startRnum+9;
-		this.startPage = 1;
-		this.endPage = 10;
+		this.setSrnumErnum();
+		this.setSpageEpage();
+		
 	}
 	
 	public void movePage(int currentPage){
-		//  
-		// 페이지 이동 시 전페이지와 다음페이지, 가지고 올 데이터 범위 세팅
-		if(currentPage == 1) {
-			this.currentPage = currentPage;
-			this.previousPage = 0;
-			this.startRnum = 1;
-			this.endRnum = this.perPageBoardCnt;
-		}
-		// db에서 마지막 페이지 데이터 가져오는 sql 만들어보고 생각해야될듯
-		else if(currentPage == endPage){
-			this.currentPage = currentPage;
-			this.nextPage= 0;			
-			this.startRnum = currentPage*10+1;
-			this.endRnum = (currentPage+1)*10;
-		}
-		else {
-			this.currentPage = currentPage;
-			this.startRnum = currentPage*10+1;
-			this.endRnum = (currentPage+1)*10;
-		}
+		this.currentPage = currentPage;
+		this.setSrnumErnum();
 	}
 	
 	// 다음버튼 클릭 시 실행될 메소드
 	public void nextPage() {
-		int current = this.currentPage;
-		if(current <= 10) {
-			this.currentPage= 11;
-			this.setSrnumErnum();
-			this.startPage = 11;
-			this.endPage = 20;
-			if(this.endPage>this.pageCnt) 
-				this.endPage = this.pageCnt;
+		if(this.currentPage <= 10) {
+			if(this.pageCnt <= 10) {
+				
+			}
+			else {
+				this.currentPage=11;
+			}
 		}
-		else if(current > 10) {
-			this.currentPage = (current/10)*10+1;
-			this.setSrnumErnum();
-			this.startPage = (current/10)*10+1;
-			this.endPage = this.startPage+9;
-			if(this.endPage>this.pageCnt) 
-				this.endPage = this.pageCnt;
+		else {
+			if(this.currentPage % 10 == 0) {
+				if(this.pageCnt < (this.currentPage/10) * 10 + 1) {
+					
+				}
+				else {
+					this.currentPage= (this.currentPage/10) * 10 + 1;
+				}
+			}
+			else {
+				if(this.pageCnt < (this.currentPage/10) * 10 + 1 + 10) {
+				}
+				else {
+					this.currentPage= (this.currentPage/10) * 10 + 1 + 10;
+				}
+			}
 		}
+		this.setSpageEpage();
+		this.setSrnumErnum();
 	}
 	
-	// 페이지 이동에 따라 StartRnum과 EndRnum을 세팅
+	public void previousPage() {
+		if(this.currentPage <=10) {
+		}
+		else {
+			if(this.currentPage%10==0) {
+				this.currentPage = this.currentPage-10;
+			}
+			else {
+				this.currentPage = (this.currentPage/10)*10;
+			}
+		}
+		this.setSpageEpage();
+		this.setSrnumErnum();
+	}
+	
+	
+	// StartRnum과 EndRnum을 세팅
 	public void setSrnumErnum() {
 		if(this.currentPage == 1) {
-			this.startRnum = this.currentPage;
-			this.endPage = this.currentPage + 9;
+			this.startRnum = 1;
+			this.endRnum = 10;
 		}
 		else {
 			this.startRnum = this.currentPage * 10 + 1;
-			this.endPage = this.startRnum + 9;
+			this.endRnum = this.startRnum + 9;
 		}
+	}
+	
+	
+	// 시작페이지와 끝페이지 세팅
+	public void setSpageEpage() {
+		if(this.pageCnt <= 10) {
+			this.startPage = 1;
+			this.endPage = this.pageCnt;
+		}
+		else {
+			if(this.currentPage % 10 == 0) {
+				if(this.currentPage == 10) {
+					this.startPage = 1;
+					this.endPage = 10;
+				}
+				else {
+					this.startPage = this.currentPage - 9;
+					this.endPage = this.currentPage;
+				}
+			}
+			else {
+				this.startPage = (this.currentPage / 10) * 10 + 1;
+				if(this.startPage+9 > this.pageCnt) {
+					this.endPage = this.pageCnt;
+				}
+				else {
+					this.endPage = this.startPage + 9;
+				}
+			}
+		}
+
 	}
 	
 	
@@ -128,18 +159,6 @@ public class Paging {
 	}
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
-	}
-	public int getNextPage() {
-		return nextPage;
-	}
-	public void setNextPage(int nextPage) {
-		this.nextPage = nextPage;
-	}
-	public int getPreviousPage() {
-		return previousPage;
-	}
-	public void setPreviousPage(int previousPage) {
-		this.previousPage = previousPage;
 	}
 	public int getStartPage() {
 		return startPage;
@@ -165,14 +184,11 @@ public class Paging {
 	public void setEndRnum(int endRnum) {
 		this.endRnum = endRnum;
 	}
-
 	public int getBoardCnt() {
 		return boardCnt;
 	}
-
 	public void setBoardCnt(int boardCnt) {
 		this.boardCnt = boardCnt;
 	}
-	
 	
 }

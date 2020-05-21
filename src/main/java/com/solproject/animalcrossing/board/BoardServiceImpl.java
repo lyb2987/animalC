@@ -45,6 +45,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.getBoardPageList(paging);
 	}
 
+	@Override
+	public BoardVo getBoard(int bno) {
+		return boardDao.getBoard(bno);
+	}
+
 
 	
 }

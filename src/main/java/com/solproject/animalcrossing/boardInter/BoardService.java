@@ -18,4 +18,6 @@ public interface BoardService {
 	public List<BoardVo> getBoardPageList(Paging paging);
 	
 	public int getBoardCount();
+
+	public BoardVo getBoard(int bno);
 }

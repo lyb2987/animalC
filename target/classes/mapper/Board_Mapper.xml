@@ -41,12 +41,16 @@
 		    FROM(
 		            SELECT BNO, BTITLE, BKIND, BCONTENT, BWRITER, TO_CHAR(REGDATE, 'YYYY-MM-DD HH:MI:SS') AS REGDATE, VIEWCNT 
 		            FROM BOARD ORDER BY REGDATE DESC
-		    ) A <![CDATA[WHERE ROWNUM <= ${endRnum}]]>
-		)B <![CDATA[WHERE B.RNUM >= ${startRnum}]]>
+		    ) A <![CDATA[WHERE ROWNUM <= #{endRnum}]]>
+		)B <![CDATA[WHERE B.RNUM >= #{startRnum}]]>
 	</select>
 	
 	<select id="getBoardCount" resultType="int">
 		SELECT COUNT(*) FROM BOARD
+	</select>
+	
+	<select id="getBoard" resultType="boardVo" parameterType="int">
+		SELECT * FROM BOARD WHERE BNO = #{bno};
 	</select>
 	
 </mapper>

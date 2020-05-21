@@ -22,6 +22,7 @@ public class BoardPageDataTest {
 	
 	@Test
 	public void test() throws Exception{
+		/*
 		BoardVo vo2 = new BoardVo();
 		int result = 0;
 
@@ -45,6 +46,7 @@ public class BoardPageDataTest {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		*/
 		
 	}
 	
