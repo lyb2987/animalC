@@ -19,4 +19,10 @@ public interface BoardDao {
 	public int getBoardCount();
 	
 	public BoardVo getBoard(int bno);
+	
+	public int increaseViewCnt(int bno);
+	
+	public int modifyBoard(BoardVo vo);
+	
+	public int deleteBoard(int bno);
 }

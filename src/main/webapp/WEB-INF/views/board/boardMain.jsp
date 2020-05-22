@@ -84,7 +84,7 @@
 						pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
 						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
 						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
-						pageHTML2 += "<td> <a href=\"#none\" onclick=\"viewBoard(" + data[i].bno + ")\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";
+						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
 						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
 						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
 						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
@@ -219,13 +219,7 @@
 	}
 	
 
-	function viewBoard(i){
-		var bnof = "<form name=\"bnoform\"> <input name=\"bno\" value=\"" + i + "\"/> </form>";
-		console.log(bnof);
-		f.action = "./viewBoard";
-		f.method = "post";
-		f.submit();
-	}
+
 
 	
 </script>

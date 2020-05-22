@@ -53,6 +53,26 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectOne(namespace + ".getBoard", bno);
 	}
 
+	@Override
+	public int increaseViewCnt(int bno) {
+		return sqlSession.update(namespace + ".increaseViewCnt", bno);
+	}
+
+	@Override
+	public int modifyBoard(BoardVo vo) {
+		
+		System.out.println(vo.getBtitle());
+		System.out.println(vo.getBkind());
+		System.out.println(vo.getBcontent());
+		System.out.println(vo.getBno());
+		return sqlSession.update(namespace + ".modifyBoard", vo);
+	}
+
+	@Override
+	public int deleteBoard(int bno) {
+		return sqlSession.delete(namespace + ".deleteBoard", bno);
+	}
+
 	
 
 }

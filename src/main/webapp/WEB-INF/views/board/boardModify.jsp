@@ -17,9 +17,10 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div id="writediv" style="margin-top: 0px;">
-				<form action="./writeboard" method=post id="writeForm">
+				<form action="./modifyBoard" method=post id="writeForm">
 					<div class="titleandbkinddiv" style="margin-top: 10px;">
-					 	<input type="text" name="btitle" id="btitle" placeholder="제목을 입력해주세요.">
+						글 번호 : <input  type="text" style="width: 40px;" name="bno" id="bno" value="${board.bno}" readonly="readonly">
+					 	<input type="text" name="btitle" id="btitle" value="${board.btitle}">
 					 	<select id="bkind" name="bkind">
 						 	<option id="etc">기타</option>
 						 	<option id="Humor">유머</option>
@@ -29,7 +30,7 @@
 					 	</select>
 					</div>
 					<div class="contentdiv" style="margin-top: 10px;">
-						<textarea style="width: 500px; height: 300px;" name="bcontent" id="bcontent" placeholder="내용을 입력해주세요."></textarea>
+						<textarea style="width: 500px; height: 300px;" name="bcontent" id="bcontent">${board.bcontent}</textarea>
 					</div>
 					<div class="writebtndiv">
 							<input class="writebtn" id="writebtn" type="submit" value="확인">
@@ -46,33 +47,6 @@
 </div>
 <script type="text/javascript">
 
-
-/*		작성 기능 ajax로 하려다 화면이 넘어가야되서 수정하는 중
-	function write(){
-		if($("#title").val()==""){
-			alert("제목을 입력해주세요.");
-			$("#title").focus();
-			return false;
-		}
-		if($("#content").val()==""){
-			alert("내용을 입력해주세요.");
-			$("#content").focus();
-			return false;
-		}
-		$.ajax({
-			url : "${pageContext.request.contextPath}/board/writeboard",
-			type : "post",
-			dataType : "json",
-			data : {"title" : $("#title").val(), "bkind" : $("#bkind").val(), "content" : $("#content").val()},
-			success : function(data){
-				if(data==1){
-				}
-				else{
-				}
-			}
-		})
-	}
-*/
 </script>
 </body>
 </html>

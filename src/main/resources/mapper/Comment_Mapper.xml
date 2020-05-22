@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solproject.animalcrossing.mapper.Comment_Mapper">
+
+	<insert id="commentWrite" parameterType="commentVo">
+		INSERT INTO 
+		CCOMMENT(CNO, CWRITER, CCONTENT, CREGDATE) 
+		VALUES(#{cno}, #{cwriter}, #{ccontent}, SYSDATE)
+	</insert>
+
+	<select id="getCommentList" resultType="commentVo">
+		SELECT CNO, CWRITER, CCONTENT, TO_CHAR(CREGDATE, 'YYYY-MM-DD HH:MI:SS') AS CREGDATE
+		FROM CCOMMENT
+		WHERE CNO = #{cno}
+		ORDER BY CREGDATE DESC
+	</select>
+
+</mapper>

@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias type="com.solproject.animalcrossing.member.MemberVo" alias="memberVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.BoardVo" alias="boardVo" />
+		<typeAlias type="com.solproject.animalcrossing.board.CommentVo" alias="commentVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.Paging" alias="paging" />
 	</typeAliases>
 </configuration>

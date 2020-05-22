@@ -50,7 +50,26 @@
 	</select>
 	
 	<select id="getBoard" resultType="boardVo" parameterType="int">
-		SELECT * FROM BOARD WHERE BNO = #{bno};
+		SELECT * FROM BOARD WHERE BNO = #{bno}
 	</select>
+	
+	<update id="increaseViewCnt" parameterType="int">
+		UPDATE BOARD SET
+			VIEWCNT = VIEWCNT+1
+		WHERE BNO = #{bno}
+	</update>
+	
+	
+	<update id="modifyBoard" parameterType="boardVo">
+		UPDATE BOARD SET
+			BTITLE = #{btitle},
+			BKIND = #{bkind},
+			BCONTENT = #{bcontent}
+		WHERE BNO = #{bno}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM BOARD WHERE BNO = #{bno} 
+	</delete>
 	
 </mapper>

@@ -50,6 +50,21 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.getBoard(bno);
 	}
 
+	@Override
+	public int increaseViewCnt(int bno) {
+		return boardDao.increaseViewCnt(bno);
+	}
+
+	@Override
+	public int modifyBoard(BoardVo vo) {
+		return boardDao.modifyBoard(vo);
+	}
+
+	@Override
+	public int deleteBoard(int bno) {
+		return boardDao.deleteBoard(bno);
+	}
+
 
 	
 }

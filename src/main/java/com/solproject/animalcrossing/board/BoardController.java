@@ -21,6 +21,9 @@ public class BoardController {
 	@Autowired
 	private BoardServiceImpl boardService;
 	
+	@Autowired
+	private CommentServiceImpl commentService;
+	
 	// 게시판 메인
 	@RequestMapping("moveBoardMain")
 	public ModelAndView moveBoardMainPage() {
@@ -101,12 +104,16 @@ public class BoardController {
 	}
 	
 	// 게시글 페이지로 이동
-	@PostMapping("viewBoard")
-	public ModelAndView viewBoard(int bno){
+	@RequestMapping("viewBoard")
+	public ModelAndView viewBoard(String bno){
 		ModelAndView mav = new ModelAndView();
-	
-		BoardVo vo = boardService.getBoard(bno);
+		
 
+		int incCnt = boardService.increaseViewCnt(Integer.parseInt(bno));
+		if(incCnt==1) {
+			System.out.println("증가 완료");
+		}
+		BoardVo vo = boardService.getBoard(Integer.parseInt(bno));
 
 		mav.addObject("board", vo);
 		mav.setViewName("board/boardView");
@@ -142,6 +149,108 @@ public class BoardController {
 		}
 		return mav;
 	}
+	
+	// 수정페이지로 이동
+	@RequestMapping("moveModifyBoard")
+	public  ModelAndView moveModifyBoard(String bno){
+		ModelAndView mav = new ModelAndView();
+		
+		
+		BoardVo vo = boardService.getBoard(Integer.parseInt(bno));
+
+		mav.addObject("board", vo);
+		mav.setViewName("board/boardModify");
+		
+		return mav;
+	}
+	
+	// 글 삭제 deleteBoard
+	@RequestMapping("deleteBoard")
+	public  ModelAndView deleteBoard(String bno) {
+		ModelAndView mav = new ModelAndView();
+		
+		int result = boardService.deleteBoard(Integer.parseInt(bno));
+		
+		if(result==1) {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/board/moveBoardMain");
+			mav.addObject("msg", "게시글이 삭제되었습니다.");
+			
+		}
+		else {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/board/viewBoard?bno=" + bno);
+			mav.addObject("msg", "게시글 삭제 실패!");
+		}
+		return mav;
+	}
+	
+	// 글 수정 modifyBoard
+	@PostMapping("modifyBoard")
+	public ModelAndView modifyBoard(BoardVo vo, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println(vo.getBno());
+		
+		BoardVo vo2 = new BoardVo();
+		MemberVo member = (MemberVo)session.getAttribute("user");
+		
+		vo2.setBno(vo.getBno());
+		vo2.setBtitle(vo.getBtitle());
+		vo2.setBcontent(vo.getBcontent());
+		vo2.setBkind(vo.getBkind());
+		vo2.setBwriter(member.getId());
+	
+		int result = boardService.modifyBoard(vo2);
+
+		//http://localhost:8080/animalcrossing/board/viewBoard?bno=402
+		if(result==1) {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/board/viewBoard?bno="+Integer.toString(vo.getBno()));
+			mav.addObject("msg", "게시글이 수정되었습니다.");
+			
+		}
+		else {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/board/moveBoardMain");
+			mav.addObject("msg", "게시글 수정 실패!");
+		}
+		return mav;
+	}
+	
+	// 댓글작성 commentWrite
+	@ResponseBody
+	@PostMapping("commentWrite")
+	public int commentWrite(String cno, String ccontent, HttpSession session){
+		
+		CommentVo commentVo = new CommentVo();
+		MemberVo memberVo = (MemberVo)session.getAttribute("user");
+		
+		if(cno==null) {
+			commentVo.setCwriter(memberVo.getId());
+		}else {
+			commentVo.setCwriter("비회원");
+		}
+		
+		commentVo.setCno(Integer.parseInt(cno));
+		commentVo.setCcontent(ccontent);
+		
+		
+		int result = commentService.commentWrite(commentVo); 
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("getCommentList")
+	public List<CommentVo> getCommentList(String cno){
+		
+		List<CommentVo> clist = commentService.getCommentList(Integer.parseInt(cno));
+		
+		
+		return clist;
+	}
+	
 	
 	
 	// db 인서트 필요할때 말고는 헤더에 봉인해둠 + 로그인하고 사용할 것
