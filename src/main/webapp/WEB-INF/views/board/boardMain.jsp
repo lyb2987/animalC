@@ -84,6 +84,7 @@
 						pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
 						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
 						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
+						// 테스트를 위해 viewBoard -> viewBoardTest로 변경
 						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
 						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
 						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";

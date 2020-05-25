@@ -1,11 +1,18 @@
 package com.solproject.animalcrossing.board;
 
 public class CommentVo {
-	private int cno;
+	private int bno;
 	private String cwriter;
 	private String ccontent;
 	private String cregdate;
+	private int cno;
 	
+	public int getBno() {
+		return bno;
+	}
+	public void setBno(int bno) {
+		this.bno = bno;
+	}
 	public int getCno() {
 		return cno;
 	}

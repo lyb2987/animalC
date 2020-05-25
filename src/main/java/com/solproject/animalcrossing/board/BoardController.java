@@ -62,12 +62,13 @@ public class BoardController {
 		int boardCtn = boardService.getBoardCount();
 		Paging p = new Paging(boardCtn, currentP);
 		
-		
+		/*
 		System.out.println("현재 페이지 : " +p.getCurrentPage());
 		System.out.println("시작 페이지 : " +p.getStartPage());
 		System.out.println("끝 페이지 : " +p.getEndPage());
 		System.out.println("db 데이터 시작값 : " + p.getStartRnum());
 		System.out.println("db 데이터 끝값 : " + p.getEndRnum());
+		*/
 		
 		List<BoardVo> list = boardService.getBoardPageList(p);
 		
@@ -96,9 +97,18 @@ public class BoardController {
 	
 	// 글작성 페이지로 이동
 	@RequestMapping("writeBoardPage")
-	public ModelAndView boardWritePage() {
+	public ModelAndView boardWritePage(HttpSession session) {
+		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("board/boardWrite");
+		
+		if(session.getAttribute("user") == null) {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/board/moveBoardMain");
+			mav.addObject("msg", "게시글 작성을 위해 로그인 해주세요!");
+		}
+		else {
+			mav.setViewName("board/boardWrite");	
+		}
 		
 		return mav;
 	}
@@ -111,7 +121,6 @@ public class BoardController {
 
 		int incCnt = boardService.increaseViewCnt(Integer.parseInt(bno));
 		if(incCnt==1) {
-			System.out.println("증가 완료");
 		}
 		BoardVo vo = boardService.getBoard(Integer.parseInt(bno));
 
@@ -120,6 +129,7 @@ public class BoardController {
 		
 		return mav;
 	}
+	
 	
 	// 글 작성
 	@PostMapping("writeboard")
@@ -221,18 +231,18 @@ public class BoardController {
 	// 댓글작성 commentWrite
 	@ResponseBody
 	@PostMapping("commentWrite")
-	public int commentWrite(String cno, String ccontent, HttpSession session){
+	public int commentWrite(String bno, String ccontent, HttpSession session){
 		
 		CommentVo commentVo = new CommentVo();
 		MemberVo memberVo = (MemberVo)session.getAttribute("user");
 		
-		if(cno==null) {
+		if(bno==null) {
 			commentVo.setCwriter(memberVo.getId());
 		}else {
 			commentVo.setCwriter("비회원");
 		}
 		
-		commentVo.setCno(Integer.parseInt(cno));
+		commentVo.setBno(Integer.parseInt(bno));
 		commentVo.setCcontent(ccontent);
 		
 		
@@ -243,15 +253,36 @@ public class BoardController {
 	
 	@ResponseBody
 	@PostMapping("getCommentList")
-	public List<CommentVo> getCommentList(String cno){
+	public List<CommentVo> getCommentList(String bno){
 		
-		List<CommentVo> clist = commentService.getCommentList(Integer.parseInt(cno));
-		
+		List<CommentVo> clist = commentService.getCommentList(Integer.parseInt(bno));
 		
 		return clist;
 	}
 	
+	@ResponseBody
+	@PostMapping("deleteComment")
+	public int deleteComment(String cno) {
+		
+		int result = commentService.deleteComment(Integer.parseInt(cno));
+		
+		return result;
+	}
 	
+	// 댓글수정
+	@ResponseBody
+	@PostMapping("modifyComment")
+	public int modifyComment(String cno, String mcomment){
+		
+		CommentVo vo = new CommentVo();
+		
+		vo.setCno(Integer.parseInt(cno));
+		vo.setCcontent(mcomment);
+		
+		int result = commentService.modifyComment(vo);
+		
+		return result;
+	}
 	
 	// db 인서트 필요할때 말고는 헤더에 봉인해둠 + 로그인하고 사용할 것
 	@RequestMapping("writeboardloop")

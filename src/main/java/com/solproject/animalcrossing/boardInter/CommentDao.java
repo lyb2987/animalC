@@ -8,6 +8,10 @@ public interface CommentDao {
 	
 	public int commentWrite(CommentVo vo);
 	
-	public List<CommentVo> getCommentList(int cno);
+	public List<CommentVo> getCommentList(int bno);
+	
+	public int modifyComment(CommentVo vo);
+	
+	public int deleteComment(int cno);
 	
 }
