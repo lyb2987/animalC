@@ -1,15 +1,25 @@
 package com.solproject.animalcrossing.board;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.solproject.animalcrossing.member.MemberVo;
@@ -112,6 +122,43 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	
+	// 섬머노트 테스트 페이지 moveSummerNoteWrite
+	@RequestMapping("moveSummerNoteWrite")
+	public ModelAndView moveSummerNoteWrite() {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("board/boardWriteSummerNote");
+		
+		return mav;
+	}
+	
+	
+	// 이미지 업로드 fileInsert
+	@ResponseBody
+	@PostMapping("fileInsert")
+	public String fileInsert(MultipartFile files, HttpServletRequest request) throws Exception{
+		// C:\Users\soldesk\Desktop\filelocation
+		
+		String applicationPath = request.getServletPath();
+		
+		System.out.println(applicationPath);
+		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation";		// 파일 경로
+		
+		String originalFileName = files.getOriginalFilename();	// 오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
+		
+		String saveFileName = UUID.randomUUID() + extension;
+		
+		File targetFile = new File(fileRoot + saveFileName);
+		
+		files.transferTo(targetFile);
+		
+		return "";
+	}
+	
 	
 	// 게시글 페이지로 이동
 	@RequestMapping("viewBoard")

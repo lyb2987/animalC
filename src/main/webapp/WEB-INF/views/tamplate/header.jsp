@@ -30,6 +30,9 @@
 						<li class="_item"> 
 							<a href="${pageContext.request.contextPath}/member/joinPage.do"> 회원가입 </a>
 						</li>
+						<li class="_item"> 
+							<a href="${pageContext.request.contextPath}/board/moveSummerNoteWrite"> 테스트페이지 </a> 
+						</li>
 					</ul>
 				</c:when>
 				<c:otherwise>
