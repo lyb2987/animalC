@@ -2,24 +2,18 @@ package com.solproject.animalcrossing.board;
 
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.solproject.animalcrossing.member.MemberVo;
@@ -142,21 +136,32 @@ public class BoardController {
 	public String fileInsert(MultipartFile files, HttpServletRequest request) throws Exception{
 		// C:\Users\soldesk\Desktop\filelocation
 		
-		String applicationPath = request.getServletPath();
 		
-		System.out.println(applicationPath);
-		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation";		// 파일 경로
+		//String applicationPath = request.getServletPath(); -> /board/fileInsert
+		//C:\Users\soldesk\Desktop\filelocation
+		//String fileRoot = "C:\\Users\\soldesk\\Desktop\\SP\\animalC\\src\\main\\webapp\\resources\\images\\boardImage\\";		// 파일 경로
+		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation";
+
+		System.out.println(fileRoot);
+		
 		
 		String originalFileName = files.getOriginalFilename();	// 오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
 		
+		//저장될 파일이름 설정
 		String saveFileName = UUID.randomUUID() + extension;
 		
+		// 경로와 파일이름을 담은 파일 생성
 		File targetFile = new File(fileRoot + saveFileName);
+		
+		System.out.println(targetFile.toString());
 		
 		files.transferTo(targetFile);
 		
-		return "";
+		// 파일 저장
+		//OutputStream out = new FileOutputStream(targetFile);
+
+		return saveFileName;
 	}
 	
 	

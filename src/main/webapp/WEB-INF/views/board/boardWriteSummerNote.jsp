@@ -55,6 +55,11 @@ $(document).ready(function() {
 
 });
 
+function sleep(delay){
+	var start = new Date().getTime();
+	while(new Date().getTime() < start + delay);
+}
+
 $('#bcontent').summernote({
     placeholder: '내용을 입력해주세요.',
     height: 300,                 
@@ -76,14 +81,15 @@ $('#bcontent').summernote({
               contentType:false,
               processData:false,
               success:function(imageName){
+                 //${pageContext.request.contextPath}/resources/images/boardImage/
                  imageName = imageName.trim();
-                 console.log(imageName);
-                 $("#bcontent").summernote('editor.insertImage',imageName);
-                 
+                 var imagePath = "C:\Users\soldesk\Desktop\filelocation" + imageName;
+ 				
+                 console.log("<"+imageName+">");
+				 console.log("<"+imagePath+">");
+                 $("#bcontent").summernote('editor.insertImage',imagePath);
               }
-
            });
-
         },
         
         onMediaDelete:function(files){
