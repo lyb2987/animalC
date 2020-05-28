@@ -81,13 +81,14 @@ $('#bcontent').summernote({
               contentType:false,
               processData:false,
               success:function(imageName){
-                 //${pageContext.request.contextPath}/resources/images/boardImage/
+
                  imageName = imageName.trim();
-                 var imagePath = "C:\Users\soldesk\Desktop\filelocation" + imageName;
- 				
+
+				 // server.xml에 외부 리소스 폴더를 명시해 놨으므로 그부분을 붙여서 사용하면 잘 가져옴
+                 imageName = "/getImages/"+imageName;
                  console.log("<"+imageName+">");
-				 console.log("<"+imagePath+">");
-                 $("#bcontent").summernote('editor.insertImage',imagePath);
+				 
+                 $("#bcontent").summernote('editor.insertImage',imageName);
               }
            });
         },

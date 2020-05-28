@@ -134,16 +134,9 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("fileInsert")
 	public String fileInsert(MultipartFile files, HttpServletRequest request) throws Exception{
-		// C:\Users\soldesk\Desktop\filelocation
-		
-		
-		//String applicationPath = request.getServletPath(); -> /board/fileInsert
-		//C:\Users\soldesk\Desktop\filelocation
-		//String fileRoot = "C:\\Users\\soldesk\\Desktop\\SP\\animalC\\src\\main\\webapp\\resources\\images\\boardImage\\";		// 파일 경로
-		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation";
 
-		System.out.println(fileRoot);
-		
+		// 저장경로 명시
+		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation\\";
 		
 		String originalFileName = files.getOriginalFilename();	// 오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
@@ -153,14 +146,11 @@ public class BoardController {
 		
 		// 경로와 파일이름을 담은 파일 생성
 		File targetFile = new File(fileRoot + saveFileName);
-		
-		System.out.println(targetFile.toString());
-		
+
+		// 파일저장
 		files.transferTo(targetFile);
 		
-		// 파일 저장
-		//OutputStream out = new FileOutputStream(targetFile);
-
+		//return saveFileName;
 		return saveFileName;
 	}
 	

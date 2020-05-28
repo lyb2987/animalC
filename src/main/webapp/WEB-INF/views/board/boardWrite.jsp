@@ -6,8 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<title>게시글 쓰기</title>
 	<%@ include file="../tamplate/header.jsp"%>
 </head>
@@ -28,9 +32,8 @@
 						 	<option id="Game">게임</option>
 					 	</select>
 					</div>
-					<div class="contentdiv" style="margin-top: 10px;">
-						<textarea style="width: 500px; height: 300px;" name="bcontent" id="bcontent" placeholder="내용을 입력해주세요."></textarea>
-					</div>
+					<textarea name="bcontent" id="bcontent"></textarea>
+					
 					<div class="writebtndiv">
 							<input class="writebtn" id="writebtn" type="submit" value="확인">
 					</div>
@@ -46,33 +49,69 @@
 </div>
 <script type="text/javascript">
 
+$(document).ready(function() { 
+	$('#bcontent').summernote();
 
-/*		작성 기능 ajax로 하려다 화면이 넘어가야되서 수정하는 중
-	function write(){
-		if($("#title").val()==""){
-			alert("제목을 입력해주세요.");
-			$("#title").focus();
-			return false;
-		}
-		if($("#content").val()==""){
-			alert("내용을 입력해주세요.");
-			$("#content").focus();
-			return false;
-		}
-		$.ajax({
-			url : "${pageContext.request.contextPath}/board/writeboard",
-			type : "post",
-			dataType : "json",
-			data : {"title" : $("#title").val(), "bkind" : $("#bkind").val(), "content" : $("#content").val()},
-			success : function(data){
-				if(data==1){
-				}
-				else{
-				}
-			}
-		})
-	}
-*/
+});
+
+function sleep(delay){
+	var start = new Date().getTime();
+	while(new Date().getTime() < start + delay);
+}
+
+$('#bcontent').summernote({
+    placeholder: '내용을 입력해주세요.',
+    height: 300,                 
+    minHeight: null,             
+    maxHeight: null,           
+    focus: true,
+    callbacks : {
+        onImageUpload : function(files, editor) {
+
+           var formData = new FormData(); //html의 폼태그와 같은 역할
+           formData.append('files',files[0]); //<input type="file" name="">
+           
+           $.ajax({
+              type:"post",
+              url:"${pageContext.request.contextPath}/board/fileInsert",
+              data:formData,
+              enctype:"multipart/form-data",
+              cache:false,
+              contentType:false,
+              processData:false,
+              success:function(imageName){
+
+                 imageName = imageName.trim();
+
+				 // server.xml에 외부 리소스 폴더를 명시해 놨으므로 그부분을 붙여서 사용하면 잘 가져옴
+                 imageName = "/getImages/"+imageName;
+                 console.log("<"+imageName+">");
+				 
+                 $("#bcontent").summernote('editor.insertImage',imageName);
+              }
+           });
+        },
+        
+        onMediaDelete:function(files){
+           
+           var fileName = $(files[0]).attr("src");
+           fileName = fileName.substring(fileName.lastIndexOf("/"));
+           console.log(fileName);
+           
+           $.ajax({
+              type:"post",
+              url:"../boardFile/summerDelete",
+              data:{fileName:fileName},
+              success:function(data){
+                 data = data.trim();
+                 console.log(data);
+              }
+           })
+        }
+        
+     }
+ });
+
 </script>
 </body>
 </html>

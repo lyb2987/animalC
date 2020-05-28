@@ -5,18 +5,18 @@ div {
 }
 
 .wrapper{
-	width: 980px;
+	width: 1420px;
     margin: 0 auto;
  	margin-top: 10px;   
 }
 
 .main-wrap{
-	width: 680px;
+	width: 1120px;
     float: left;
 }
 
 .main-col-wrap {
-    width: 460px;
+    width: 900px;
     position: relative;
     float: right;
 }

@@ -18,6 +18,7 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div class="board" style="width:100%;">
+				<h2 style="margin-left: 400px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">자유게시판</h2>
 				<table style="width:100%; text-align: center; border-bottom: 1px solid #aaa;">
 					<tr id="boardhead" style="border-bottom: 1px solid #aaa;">
 						<td>글 번호</td>
@@ -30,25 +31,25 @@
 
 				</table>
 			</div>
+			<div class="Write" style="margin-top: 5px; float : right;" >
+				<a href="./writeBoardPage" style="color: black;"> 게시글 작성</a>
+			</div>
 		
-			<div>
-				<div id="beforePageBtn">
+			<div id="bottomDiv" style="margin-left : 175px; margin-top: 20px;">
+				<div id="buttonAndPaging" style="margin-top: 20px;">
 					<button onclick="goFront();" value="">맨 앞</button>
 					<button onclick="goPrevious();" value="">이전</button>
-				</div>
+
 						
-				<ul id="pageUl" class="pageUl">
+				<ul id="pageUl" class="pageUl" style="margin-left: 100px; margin-top: -25px;">
 				</ul>
 	
-				<div id="afterPageBtn">
-					<button onclick="goNext();" value="">다음</button>
+					<button onclick="goNext();" value="" style="margin-left : 8px;">다음</button>
 					<button onclick="goEnd();" value="">맨 끝</button>
 				</div>
 			</div>
 		
-			<div class="Write">
-				<a href="./writeBoardPage" style="color: black;"> 게시글 작성</a>
-			</div>
+			
 		</div>
 		<div class="sub-col-wrap" style="background: yellow">
 		</div>

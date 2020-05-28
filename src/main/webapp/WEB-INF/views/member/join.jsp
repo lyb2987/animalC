@@ -19,8 +19,8 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">	
-				<h2 style="margin-left: 175px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">회원가입</h2>
-				<form action="./joinMember.do" method=post id="joinForm">
+				<h2 style="margin-left: 400px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">회원가입</h2>
+				<form action="./joinMember.do" method=post id="joinForm" style="margin-left : 200px;">
 					<div class="idtext" style="margin-top: 30px;">
 						<a style="color: red;">*</a>아이디
 					</div>
@@ -108,8 +108,8 @@
 					</div>
 				</form>
 			</div>
-			<img alt="jessica" style="margin-left: 270px; margin-top: -750px;" src="${pageContext.request.contextPath}/resources/images/member/jessica.png" width="190px" height="210px">
-			<div class="guide" style="margin-top: 15px; margin-left: 10px; float: right;">
+			<img alt="jessica" style="margin-left: 520px; margin-top: -850px;" src="${pageContext.request.contextPath}/resources/images/member/jessica.png" width="190px" height="210px">
+			<div class="guide" style="margin-top: 15px; margin-left: 450px;">
 				<a style="color:red;">*가 표시된 항목은 필수 입력 항목입니다!</a>
 			</div>
 			

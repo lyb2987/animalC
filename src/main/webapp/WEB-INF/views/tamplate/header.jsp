@@ -15,10 +15,8 @@
 <div class="header" id="header">
 	<div class="header-inner">
 		<div class="brand" id="brand">
-			<a href="${pageContext.request.contextPath}/" class="logoimage"> 
-				<img alt=" AnimalC" src="${pageContext.request.contextPath}/resources/images/tamplate/icon.png" width="20px" height="20px"> 
-				AnimalC
-			</a>
+			<img alt="AnimalC" src="${pageContext.request.contextPath}/resources/images/tamplate/icon.png" style="margin-top: 3px;" width="20px" height="20px">
+			<a href="${pageContext.request.contextPath}/" class="logoimage" style="margin-top: 15px; margin-left: 3px;">AnimalC</a>
 		</div>
 		<div class="header-menu">	
 			<c:choose>
@@ -45,7 +43,7 @@
 							<a href="${pageContext.request.contextPath}/member/myPage.do"> 마이페이지 </a> 
 						</li>
 						<li class="_item"> 
-							<a href="${pageContext.request.contextPath}/member/tespage.do"> 테스트페이지 </a> 
+							<a href="${pageContext.request.contextPath}/board/moveSummerNoteWrite"> 테스트페이지 </a> 
 						</li>
 						<!--
 						<li class="_item"> 
