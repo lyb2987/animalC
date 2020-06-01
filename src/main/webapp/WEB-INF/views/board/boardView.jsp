@@ -37,6 +37,10 @@
 				<div class="baordInfo">
 					<p>${board.bwriter} ${board.regdate} ${board.viewCnt}</p>
 				</div>
+				
+				<div class="like">
+					<button class="likeBtn" type="button" id="likeBtn" onclick="blikeUp();">추천</button>
+				</div>
 			</div>
 			
 			<div class="commentAreaDiv" style="margin-top: 150px;">
@@ -64,6 +68,7 @@
 	
 	$(document).ready(function(){
 		$.getCList();
+		$.getBlike();
 	});
 	
 	function modifyBoard(){
@@ -104,6 +109,66 @@
 		
 	}
 
+	// 추천 불러오기
+	$.getBlike = function(){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getBlike",
+			type : "post",
+			dataType : "json",
+			data : {"bno" : bno},
+			success : function(data){
+				$("#likeBtn").text(data+" 추천");
+			}
+		})
+	}
+
+
+	// 추천 
+	function blikeUp(){
+		var userId = "${user.id}";
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/blikeUp",
+			type : "post",
+			dataType : "json",
+			data : {"bno" : bno, "userId" : userId},
+			success : function(data){
+				if(data==-1){
+					var conf = confirm("이미 추천하셨습니다. 추천을 취소하시겠습니까?");
+					if(conf == false)
+						return ;
+					$.blikeDown();
+				}
+				else{
+					alert("추천하였습니다.");
+					$.getBlike();
+				}
+			}
+		})
+	}
+
+	// 추천 취소
+	$.blikeDown = function(){
+		var userId = "${user.id}";
+		console.log("들어옴");
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/blikeDown",
+			type : "post",
+			dataType : "json",
+			data : {"bno" : bno, "userId" : userId},
+			success : function(data){
+				if(data==1){
+					alert("추천을 취소하였습니다.");
+				}
+				else{
+					alert("추천취소에 실패하였습니다.");
+				}
+				$.getBlike();
+			}
+		})
+	}
+	
+	
 	// 댓글 불러오기
 	$.getCList = function(){
 		// 쌍 따옴표로 묶어줘야 에러 안남

@@ -28,6 +28,9 @@ public class BoardController {
 	@Autowired
 	private CommentServiceImpl commentService;
 	
+	@Autowired
+	private BlikeServiceImpl blikeService;
+	
 	// 게시판 메인
 	@RequestMapping("moveBoardMain")
 	public ModelAndView moveBoardMainPage() {
@@ -154,6 +157,66 @@ public class BoardController {
 		return saveFileName;
 	}
 	
+	// 추천수 가져오기
+	@ResponseBody
+	@PostMapping("getBlike")
+	public int getBlike(String bno) {
+		int likeCnt = blikeService.getLike(Integer.parseInt(bno));
+		return likeCnt;
+	}
+	
+	@ResponseBody
+	@PostMapping("blikeUp")
+	public int blikeUp(String bno, String userId, HttpServletRequest request) {
+		BlikeVo vo = null;
+		int likeStatus = 0;
+		
+		// 로그인 여부 체크
+		if(userId.equals("")) {
+			userId = request.getRemoteAddr();
+			vo = new BlikeVo(Integer.parseInt(bno), userId);
+			System.out.println("비회원 id : " + userId);
+		}
+		else {
+			vo = new BlikeVo(Integer.parseInt(bno), userId);
+			System.out.println("회원 id :" + userId);
+		}
+		
+		// 중복여부 체크
+		int check = blikeService.checkAllike(userId);
+		if(check == 0) {
+			likeStatus = blikeService.likeUp(vo);
+		}
+		else {
+			likeStatus = -1;
+		}
+		
+		return likeStatus;
+	}
+	
+	// 추천 취소 blikeDown
+	@ResponseBody
+	@PostMapping("blikeDown")
+	public int blikeDown(String bno, String userId, HttpServletRequest request) {
+		BlikeVo vo = null;
+		int likeStatus = 0;
+		
+		// 로그인 여부 체크
+		if(userId.equals("")) {
+			userId = request.getRemoteAddr();
+			vo = new BlikeVo(Integer.parseInt(bno), userId);
+			System.out.println("비회원 id : " + userId);
+		}
+		else {
+			vo = new BlikeVo(Integer.parseInt(bno), userId);
+			System.out.println("회원 id :" + userId);
+		}
+		
+		// 추천 취소
+		likeStatus = blikeService.likeDown(vo);
+		
+		return likeStatus;
+	}
 	
 	// 게시글 페이지로 이동
 	@RequestMapping("viewBoard")

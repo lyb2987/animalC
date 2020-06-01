@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solproject.animalcrossing.mapper.Blike_Mapper">
+	<insert id="likeup" parameterType="blikeVo">
+		INSERT INTO 
+		BLIKE(BNO, BLIKER) 
+		VALUES(#{bno}, #{bliker})
+	</insert>
+	
+	<select id="getlike" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM BLIKE WHERE BNO = #{bno}
+	</select>
+	
+	<select id="checkAllike" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM BLIKE WHERE BLIKER = #{bliker}
+	</select>
+	
+	<delete id="likeDown" parameterType="blikeVo">
+		DELETE FROM BLIKE WHERE BNO = #{bno} AND BLIKER = #{bliker} 
+	</delete>
+	
+</mapper>
