@@ -14,4 +14,5 @@ public interface CommentDao {
 	
 	public int deleteComment(int cno);
 	
+	public int getCommentCnt(int bno);
 }

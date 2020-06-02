@@ -34,4 +34,9 @@ public class CommentDaoImpl implements CommentDao {
 	public int deleteComment(int cno) {
 		return sqlSession.delete(namespace + ".deleteComment", cno);
 	}
+
+	@Override
+	public int getCommentCnt(int bno) {
+		return sqlSession.selectOne(namespace + ".getCommentCnt", bno);
+	}
 }

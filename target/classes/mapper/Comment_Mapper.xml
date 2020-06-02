@@ -26,4 +26,8 @@
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM CCOMMENT WHERE CNO = #{cno} 
 	</delete>
+	
+	<select id="getCommentCnt" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM CCOMMENT WHERE BNO = #{bno}
+	</select>
 </mapper>

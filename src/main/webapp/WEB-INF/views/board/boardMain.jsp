@@ -27,6 +27,7 @@
 						<td>작성자</td>
 						<td>작성일</td>
 						<td>조회수</td>
+						<td>추천수</td>
 					</tr>
 
 				</table>
@@ -77,7 +78,8 @@
 			dataType : "json",
 			data : {"currentP" : pageNum},
 			success : function(data){
-				var pageHTML2 ="";
+				var pageHTML2 = "";
+				var bnoString = "";
 				$("tr").remove(".boardList");
 				for(var i=0; i<=data.length; i++){
 					// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
@@ -86,20 +88,44 @@
 						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
 						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
 						// 테스트를 위해 viewBoard -> viewBoardTest로 변경
-						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
+						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" id=\"btitle" + data[i].bno +"\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
 						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
 						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
 						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
+						pageHTML2 += "<td id=\"likeCnt" + data[i].bno + "\"> </td>\n"
 						pageHTML2 += "</tr>"
+						bnoString += data[i].bno + " ";
 					}
 				}
 				//console.log(pageHTML2);
 				$("#boardhead").after(pageHTML2);
+				$.getLikeAndCommentCnt(bnoString);
 				console.log("현재 페이지 : " + currentP);	
 			}
 		})
 	}
 
+
+	// 댓글수, 추천수 가져오는 ajax
+	$.getLikeAndCommentCnt = function(bnoString){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getLikeAndCommentCnt",
+			type : "post",
+			dataType : "json",
+			data : {"bnoString" : bnoString},
+			success : function(data){
+				var commentCHTML = "";
+				for(var i=0; i<=data.length; i++){
+					// 리스트로 되있을때 if문으로 검사한해주면 유효하지 않은 애들이라고 에러 나옴
+					if(data[i]){
+						$("#likeCnt" + data[i].bno).append(data[i].likeCnt);
+						commentCHTML = " [" + data[i].commentCnt + "]";
+						$("#btitle" + data[i].bno).append(commentCHTML);
+					}
+				}
+			}
+		})
+	}
 	
 	// 버튼 뿌려주는 ajax
 	$.getPageButton = function(currentP){

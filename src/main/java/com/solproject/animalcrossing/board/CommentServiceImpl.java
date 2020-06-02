@@ -33,6 +33,11 @@ public class CommentServiceImpl implements CommentService{
 	public int deleteComment(int cno) {
 		return commentDao.deleteComment(cno);
 	}
+
+	@Override
+	public int getCommentCnt(int bno) {
+		return commentDao.getCommentCnt(bno);
+	}
 	
 
 }

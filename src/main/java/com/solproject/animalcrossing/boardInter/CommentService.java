@@ -13,4 +13,6 @@ public interface CommentService {
 	public int modifyComment(CommentVo vo);
 
 	public int deleteComment(int cno);
+	
+	public int getCommentCnt(int bno);
 }

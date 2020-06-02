@@ -2,6 +2,7 @@ package com.solproject.animalcrossing.board;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,6 +79,40 @@ public class BoardController {
 		*/
 		
 		List<BoardVo> list = boardService.getBoardPageList(p);
+		
+		return list;
+	}
+	
+	// 게시글 목록 댓글, 추천수 가져오기 getLikeAndCommentCnt
+	@ResponseBody
+	@PostMapping("getLikeAndCommentCnt")
+	public List<BoardLAndCcnt> getLikeAndCommentCnt(String bnoString){
+
+		List<BoardLAndCcnt> list = new ArrayList<BoardLAndCcnt>();
+		
+		String likeCString = "";
+		String commentCString = "";
+		
+		String bnol[] =  null;
+		String likeCnt[] = null;
+		String commentCnt[] = null;
+		
+		bnol = bnoString.split(" ");
+		
+		for (int i = 0; i < bnol.length; i++) {
+			likeCString += Integer.toString(blikeService.getLike(Integer.parseInt(bnol[i]))) + " ";
+			commentCString += Integer.toString(commentService.getCommentCnt(Integer.parseInt(bnol[i])))+ " ";
+		}
+		
+		likeCnt = likeCString.split(" ");
+		commentCnt = commentCString.split(" ");
+		
+		for(int i = 0; i < bnol.length; i++) {
+			BoardLAndCcnt lacCnt = new BoardLAndCcnt(Integer.parseInt(bnol[i]), Integer.parseInt(likeCnt[i]), Integer.parseInt(commentCnt[i]));
+			list.add(lacCnt);
+			//System.out.println("bno : " + list.get(i).getBno() + " likeCnt : " + list.get(i).getLikeCnt() + " commentCnt : " + list.get(i).getCommentCnt());
+		}
+		
 		
 		return list;
 	}
@@ -336,15 +371,18 @@ public class BoardController {
 	// 댓글작성 commentWrite
 	@ResponseBody
 	@PostMapping("commentWrite")
-	public int commentWrite(String bno, String ccontent, HttpSession session){
+	public int commentWrite(String bno, String ccontent, HttpSession session, HttpServletRequest request){
 		
 		CommentVo commentVo = new CommentVo();
 		MemberVo memberVo = (MemberVo)session.getAttribute("user");
 		
+		// 왜 bno가 null인지 검사하는지 까먹음 살펴봐야됨ㅋㅋ
 		if(bno==null) {
 			commentVo.setCwriter(memberVo.getId());
 		}else {
-			commentVo.setCwriter("비회원");
+			String ipv4 =  request.getRemoteAddr();
+			commentVo.setCwriter("비회원 : " + ipv4);
+			//commentVo.setCwriter("비회원"); 댓글 테이블의 cwriter가 무결성 제약조건때문에 ip 사용 안되길래 제약조건 수정함
 		}
 		
 		commentVo.setBno(Integer.parseInt(bno));
