@@ -7,7 +7,7 @@ public interface BlikeDao {
 
 	public int getLike(int bno);
 	
-	public int checkAllike(String bliker);
+	public int checkAllike(BlikeVo vo);
 
 	public int likeDown(BlikeVo vo);
 }

@@ -38,8 +38,8 @@
 					<p>${board.bwriter} ${board.regdate} ${board.viewCnt}</p>
 				</div>
 				
-				<div class="like">
-					<button class="likeBtn" type="button" id="likeBtn" onclick="blikeUp();">추천</button>
+				<div class="blike">
+					<button class="blikeBtn" type="button" id="blikeBtn" onclick="blikeUp();">추천</button>
 				</div>
 			</div>
 			
@@ -65,6 +65,7 @@
 <script type="text/javascript">
 	var bno = ${board.bno};
 	var lastC = "";
+	var clikeString ="";
 	
 	$(document).ready(function(){
 		$.getCList();
@@ -117,7 +118,7 @@
 			dataType : "json",
 			data : {"bno" : bno},
 			success : function(data){
-				$("#likeBtn").text(data+" 추천");
+				$("#blikeBtn").text(data+" 추천");
 			}
 		})
 	}
@@ -182,10 +183,17 @@
 				var pageHTML = "";
 				for(var i=0; i<data.length; i++){
 					if(data[i]){
+						clikeString += data[i].cno + " ";
 						pageHTML += "<div class=\"commentDiv\">\n";
 							pageHTML += "<div class=\"chead\">\n";
 								pageHTML += "<p style=\"margin-top : 5px;\">" + data[i].cwriter + "     " + data[i].cregdate + "</p>\n";
 							pageHTML += "</div>\n";
+							pageHTML += "<div class=\"clike\">\n"
+								pageHTML += "<button class=\"clikeBtn\" type=\"button\" style=\"float : right; margin-top : -38px;\" id=\"clikeBtn" + data[i].cno + "\" onclick=\"clikeUp(" + data[i].cno + ");\">추천</button>"
+							pageHTML += "</div>\n"
+							//<div class="blike">
+								//<button class="blikeBtn" type="button" id="blikeBtn" onclick="blikeUp();">추천</button>
+							//</div>
 								//조건문으로 댓글 작성자 확인후 배치, 비교식때 equals 사용이 아니고 == 를 사용해야함 
 							pageHTML += "<div class=\"commentbody\" id=\"commentbody"+ data[i].cno +"\">\n";
 								if(userId == data[i].cwriter){
@@ -202,12 +210,32 @@
 						pageHTML += "<hr width=\"100%\" color=\"#aaa\" style=\"margin-top : 5px;\">\n"
 					}
 				}
-				console.log(pageHTML);
+				//console.log(pageHTML);
 				$("#commentsDiv").append(pageHTML);
+				$.getClikeCnt(clikeString);
 			}
 		})
 	}
 
+	// 댓글 추천 수 가져오기
+	$.getClikeCnt=function(clikeString){
+		console.log(clikeString);
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getClike",
+			type : "post",
+			dataType : "json",
+			data : {"clikeString" : clikeString},
+			success : function(data){
+				for(var i=0; i<data.length; i++){
+					if(data[i]){
+						//console.log(data[i].cno + "  :  "  + data[i].clikeCnt);
+						$("#clikeBtn"+ data[i].cno).text(data[i].clikeCnt+" 추천");
+					}
+				}
+			}
+		})
+	}
+	
 	// 댓글 수정 폼생성
 	function cModifytry(cno){
 		lastC = $("#cContent"+ cno).text();
@@ -291,6 +319,52 @@
 
 		$("#commentbody" + cno).append(pageHTML);
 		
+	}
+
+	// 댓글 추천 버튼 클릭
+	function clikeUp(cno){
+	var userId = "${user.id}";
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/clikeUp",
+			type : "post",
+			dataType : "json",
+			data : {"cno" : cno, "userId" : userId},
+			success : function(data){
+				if(data==-1){
+					var conf = confirm("이미 추천하셨습니다. 추천을 취소하시겠습니까?");
+					if(conf == false)
+						return ;
+					$.clikeDown(cno);
+				}
+				else{
+					alert("추천하였습니다.");
+					//console.log(clikeString);
+					$.getClikeCnt(clikeString);
+				}
+			}
+		})
+	}
+
+	// 댓글 추천 취소
+	$.clikeDown = function(cno){
+		var userId = "${user.id}";
+		console.log("들어옴");
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/clikeDown",
+			type : "post",
+			dataType : "json",
+			data : {"cno" : cno, "userId" : userId},
+			success : function(data){
+				if(data==1){
+					alert("추천을 취소하였습니다.");
+				}
+				else{
+					alert("추천취소에 실패하였습니다.");
+				}
+				$.getClikeCnt(clikeString);
+			}
+		})
 	}
 	
 </script>

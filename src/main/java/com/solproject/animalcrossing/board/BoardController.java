@@ -32,6 +32,9 @@ public class BoardController {
 	@Autowired
 	private BlikeServiceImpl blikeService;
 	
+	@Autowired
+	private ClikeServiceImpl clikeService;
+	
 	// 게시판 메인
 	@RequestMapping("moveBoardMain")
 	public ModelAndView moveBoardMainPage() {
@@ -192,14 +195,42 @@ public class BoardController {
 		return saveFileName;
 	}
 	
-	// 추천수 가져오기
+	// 게시글 추천수 가져오기
 	@ResponseBody
 	@PostMapping("getBlike")
 	public int getBlike(String bno) {
 		int likeCnt = blikeService.getLike(Integer.parseInt(bno));
+		System.out.println("추천 수 : " + likeCnt);
 		return likeCnt;
 	}
 	
+	// 댓글 추천수 가져오기 getClike
+	@ResponseBody
+	@PostMapping("getClike")
+	public List<CommentCnoALCnt> getClike(String clikeString) {
+		List<CommentCnoALCnt> list = new ArrayList<CommentCnoALCnt>();
+		
+		
+		int likeCnt=0;
+		if(clikeString.equals(""))
+			return list;
+		
+		String cnoli[] = clikeString.split(" ");
+		
+		
+		for (int i = 0; i < cnoli.length; i++) {
+			likeCnt = clikeService.getLike(Integer.parseInt(cnoli[i]));
+			// 여기서 객체 생성안해주고 밖에서 해둔거 가져다 쓰면 마지막 데이터로 중복 도배됨
+			CommentCnoALCnt vo = new CommentCnoALCnt(Integer.parseInt(cnoli[i]), likeCnt);
+			list.add(vo);
+		}
+		
+		
+		return list;
+	}
+	
+	
+	// 게시글 추천
 	@ResponseBody
 	@PostMapping("blikeUp")
 	public int blikeUp(String bno, String userId, HttpServletRequest request) {
@@ -218,7 +249,7 @@ public class BoardController {
 		}
 		
 		// 중복여부 체크
-		int check = blikeService.checkAllike(userId);
+		int check = blikeService.checkAllike(vo);
 		if(check == 0) {
 			likeStatus = blikeService.likeUp(vo);
 		}
@@ -252,6 +283,65 @@ public class BoardController {
 		
 		return likeStatus;
 	}
+	
+	
+	// 댓글 추천
+	@ResponseBody
+	@PostMapping("clikeUp")
+	public int clikeUp(String cno, String userId, HttpServletRequest request) {
+		ClikeVo vo = null;
+		int likeStatus = 0;
+		
+		//System.out.println("cno : " + cno);
+		
+		// 로그인 여부 체크
+		if(userId.equals("")) {
+			userId = request.getRemoteAddr();
+			vo = new ClikeVo(Integer.parseInt(cno), userId);
+			//System.out.println("비회원 id : " + userId);
+		}
+		else {
+			vo = new ClikeVo(Integer.parseInt(cno), userId);
+			//System.out.println("회원 id :" + userId);
+		}
+		
+		// 중복여부 체크
+		int check = clikeService.checkAllike(vo);
+		if(check == 0) {
+			likeStatus = clikeService.likeUp(vo);
+		}
+		else {
+			likeStatus = -1;
+		}
+		
+		return likeStatus;
+	}
+	
+	// 댓글 추천 취소
+	@ResponseBody
+	@PostMapping("clikeDown")
+	public int clikeDown(String cno, String userId, HttpServletRequest request) {
+		ClikeVo vo = null;
+		int likeStatus = 0;
+		
+		// 로그인 여부 체크
+		if(userId.equals("")) {
+			userId = request.getRemoteAddr();
+			vo = new ClikeVo(Integer.parseInt(cno), userId);
+			System.out.println("비회원 id : " + userId);
+		}
+		else {
+			vo = new ClikeVo(Integer.parseInt(cno), userId);
+			System.out.println("회원 id :" + userId);
+		}
+		
+		// 추천 취소
+		likeStatus = clikeService.likeDown(vo);
+		
+		return likeStatus;
+	} 
+	 
+	 
 	
 	// 게시글 페이지로 이동
 	@RequestMapping("viewBoard")

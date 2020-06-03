@@ -22,8 +22,8 @@ public class BlikeServiceImpl implements BlikeService{
 	}
 
 	@Override
-	public int checkAllike(String bliker) {
-		return blikeDao.checkAllike(bliker);
+	public int checkAllike(BlikeVo vo) {
+		return blikeDao.checkAllike(vo);
 	}
 
 	@Override

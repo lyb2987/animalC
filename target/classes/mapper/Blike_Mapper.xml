@@ -12,8 +12,8 @@
 		SELECT COUNT(*) FROM BLIKE WHERE BNO = #{bno}
 	</select>
 	
-	<select id="checkAllike" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM BLIKE WHERE BLIKER = #{bliker}
+	<select id="checkAllike" parameterType="blikeVo" resultType="int">
+		SELECT COUNT(*) FROM BLIKE WHERE BLIKER = #{bliker} AND BNO = ${bno}
 	</select>
 	
 	<delete id="likeDown" parameterType="blikeVo">
