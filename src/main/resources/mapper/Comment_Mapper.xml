@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solproject.animalcrossing.mapper.Comment_Mapper">
+
+	<insert id="commentWrite" parameterType="commentVo">
+		INSERT INTO 
+		CCOMMENT(BNO, CWRITER, CCONTENT, CREGDATE, CNO) 
+		VALUES(#{bno}, #{cwriter}, #{ccontent}, SYSDATE, CCOMMENT_SEQ.NEXTVAL)
+	</insert>
+
+	<select id="getCommentList" resultType="commentVo">
+		SELECT BNO, CWRITER, CCONTENT, TO_CHAR(CREGDATE, 'YYYY-MM-DD HH24:MI:SS') AS CREGDATE, CNO
+		FROM CCOMMENT
+		WHERE BNO = #{bno}
+		ORDER BY CREGDATE DESC
+	</select>
+
+	<update id="modifyComment" parameterType="commentVo">
+		UPDATE CCOMMENT SET
+			CCONTENT = #{ccontent}
+		WHERE CNO = #{cno}
+	</update>
+	
+		
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM CCOMMENT WHERE CNO = #{cno} 
+	</delete>
+	
+	<select id="getCommentCnt" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM CCOMMENT WHERE BNO = #{bno}
+	</select>
+</mapper>

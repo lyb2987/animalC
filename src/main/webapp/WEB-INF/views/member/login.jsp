@@ -18,7 +18,7 @@
 <div class="wrapper">
 	<div class="main-wrap">
 		<div class="main-col-wrap">
-			<div class="logindiv" style="margin-left: 10px; margin-right: 5px;">
+			<div class="logindiv" style="margin-left: 300px; margin-right: 5px;">
 				<img alt="aclogo" style="margin-left: 50px; margin-top: 80px;" src="${pageContext.request.contextPath}/resources/images/tamplate/aclogo.png" width="310px" height="65px">
 				
 				<form action="./loginRequest1.do" method=post id="loginForm">
@@ -41,10 +41,10 @@
 				<img alt="nergoori" style="margin-left: 270px; margin-top: -165px;" src="${pageContext.request.contextPath}/resources/images/member/nergoori.png" width="100px" height="200px">
 					
 			</div>
-			<div class="aforget" style="margin-top: 20px; margin-right: 10px; float: right;">
+			<div class="aforget" style="margin-top: 20px; margin-left: 400px; ">
 				<a href="./member/forgetPage.do" style="color:blue;">아이디와 비밀번호가 기억나지 않아요!</a>
 			</div>
-			<div class="joinbtnd" style="margin-top: 50px; margin-left: 386px;" >
+			<div class="joinbtnd" style="margin-top: 10px; margin-left: 613px;" >
 				<a href="./member/loginPage.do" style="color:blue;">회원가입</a>
 			</div>
 		</div>

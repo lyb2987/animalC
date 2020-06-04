@@ -32,6 +32,7 @@
 						 	<option id="Game">게임</option>
 					 	</select>
 					</div>
+					
 					<textarea name="bcontent" id="bcontent"></textarea>
 					
 					<div class="writebtndiv">
