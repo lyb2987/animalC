@@ -11,5 +11,6 @@
 		<typeAlias type="com.solproject.animalcrossing.board.BlikeVo" alias="blikeVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.ClikeVo" alias="clikeVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.Paging" alias="paging" />
+		<typeAlias type="com.solproject.animalcrossing.qboard.QBoardVo" alias="qboardVo" />
 	</typeAliases>
 </configuration>

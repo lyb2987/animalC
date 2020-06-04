@@ -29,7 +29,7 @@
 							<a href="${pageContext.request.contextPath}/member/joinPage.do"> 회원가입 </a>
 						</li>
 						<li class="_item"> 
-							<a href="${pageContext.request.contextPath}/board/moveSummerNoteWrite"> 테스트페이지 </a> 
+							<a href="${pageContext.request.contextPath}/qnaboard/moveQBWrite"> 테스트페이지 </a> 
 						</li>
 					</ul>
 				</c:when>
@@ -43,11 +43,11 @@
 							<a href="${pageContext.request.contextPath}/member/myPage.do"> 마이페이지 </a> 
 						</li>
 						<li class="_item"> 
-							<a href="${pageContext.request.contextPath}/board/moveSummerNoteWrite"> 테스트페이지 </a> 
+							<a href="${pageContext.request.contextPath}/qnaboard/moveQBWrite"> 테스트페이지 </a> 
 						</li>
 						<!--
 						<li class="_item"> 
-							<a href="${pageContext.request.contextPath}/board/writeboardloop"> 인서트 </a> 
+							<a href="${pageContext.request.contextPath}/qnaboard/writeboardloop"> 인서트 </a> 
 						</li>
 						-->
 					</ul>

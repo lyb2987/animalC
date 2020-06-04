@@ -177,7 +177,7 @@ public class BoardController {
 	public String fileInsert(MultipartFile files, HttpServletRequest request) throws Exception{
 
 		// 저장경로 명시
-		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation\\";
+		String fileRoot = "C:\\Users\\lyb85\\Desktop\\filelocation\\";
 		
 		String originalFileName = files.getOriginalFilename();	// 오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
