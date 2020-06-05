@@ -17,10 +17,10 @@
 <div class="wrapper">
 	<div class="main-wrap">
 		<div class="main-col-wrap">
-			<div class="board" style="width:100%;">
+			<div class="qboard" style="width:100%;">
 				<h2 style="margin-left: 400px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">질문게시판</h2>
 				<table style="width:100%; text-align: center; border-bottom: 1px solid #aaa;">
-					<tr id="boardhead" style="border-bottom: 1px solid #aaa;">
+					<tr id="qboardhead" style="border-bottom: 1px solid #aaa;">
 						<td>글 번호</td>
 						<td>제목</td>
 						<td>작성자</td>
@@ -74,7 +74,7 @@
 	// 게시글 뿌려주는 ajax
 	$.getList = function(pageNum){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/board/getBoardPageList",
+			url : "${pageContext.request.contextPath}/qnaboard/getQnABoardPageList",
 			type : "post",
 			dataType : "json",
 			data : {"currentP" : pageNum},
@@ -83,55 +83,33 @@
 				var bnoString = "";
 				$("tr").remove(".boardList");
 				for(var i=0; i<=data.length; i++){
-					// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
 					if(data[i]){
-						pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
-						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
-						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
-						// 테스트를 위해 viewBoard -> viewBoardTest로 변경
-						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" id=\"btitle" + data[i].bno +"\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
-						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
-						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
-						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
-						pageHTML2 += "<td id=\"likeCnt" + data[i].bno + "\"> </td>\n"
+						pageHTML2 += "<tr id=\"qboardTable\" class=\"qboardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
+						pageHTML2 += "<td>" + data[i].qbno + "</td>\n";
+						pageHTML2 += "<td> <a href=\"./viewBoard?qbno=" + data[i].qbno + "\" id=\"qbtitle" + data[i].qbno +"\" style=\"color : black; font-weight : bold;\">" + data[i].qbtitle + "</a> </td>\n";						
+						pageHTML2 += "<td>" + data[i].qbwriter + "</td>\n";
+						pageHTML2 += "<td>" + data[i].qregdate + "</td>\n";
+						pageHTML2 += "<td>" + data[i].acount + "</td>\n";
+						pageHTML2 += "<td>" + data[i].viewcnt + "</td>\n";
+						pageHTML2 += "<td id=\"likeCnt\">" + data[i].likecnt + "</td>\n"
+						if(data[i].adoption == "")
+							pageHTML2 += "<td> 채택 안 됨 </td>\n";
+						else
+							pageHTML2 += "<td> 채택 됨 </td>\n";
 						pageHTML2 += "</tr>"
-						bnoString += data[i].bno + " ";
 					}
 				}
-				//console.log(pageHTML2);
-				$("#boardhead").after(pageHTML2);
-				$.getLikeAndCommentCnt(bnoString);
+				console.log(pageHTML2);
+				$("#qboardhead").after(pageHTML2);
 				console.log("현재 페이지 : " + currentP);	
 			}
 		})
 	}
 
-
-	// 댓글수, 추천수 가져오는 ajax
-	$.getLikeAndCommentCnt = function(bnoString){
-		$.ajax({
-			url : "${pageContext.request.contextPath}/board/getLikeAndCommentCnt",
-			type : "post",
-			dataType : "json",
-			data : {"bnoString" : bnoString},
-			success : function(data){
-				var commentCHTML = "";
-				for(var i=0; i<=data.length; i++){
-					// 리스트로 되있을때 if문으로 검사한해주면 유효하지 않은 애들이라고 에러 나옴
-					if(data[i]){
-						$("#likeCnt" + data[i].bno).append(data[i].likeCnt);
-						commentCHTML = " [" + data[i].commentCnt + "]";
-						$("#btitle" + data[i].bno).append(commentCHTML);
-					}
-				}
-			}
-		})
-	}
-	
 	// 버튼 뿌려주는 ajax
 	$.getPageButton = function(currentP){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/board/getPageBtn",
+			url : "${pageContext.request.contextPath}/qnaboard/getPageBtn",
 			type : "post",
 			dataType : "json",
 			data : {"currentP" : currentP},

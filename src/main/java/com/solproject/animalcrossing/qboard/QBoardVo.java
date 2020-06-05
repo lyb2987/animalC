@@ -1,19 +1,15 @@
 package com.solproject.animalcrossing.qboard;
 
-import java.sql.Date;
-
-import com.solproject.animalcrossing.qlike.QlikeVo;
-
 public class QBoardVo {
 	private int qbno;
 	private String qbtitle;
 	private String qbcontent;
 	private String qbwriter;
-	private Date qregdate;
+	private String qregdate;
 	private int viewcnt;
 	private int acount;				// 답변 갯수
 	private int adoption;
-	private QlikeVo qlike;
+	private int likecnt;
 	
 	public int getQbno() {
 		return qbno;
@@ -39,10 +35,10 @@ public class QBoardVo {
 	public void setQbwriter(String qbwriter) {
 		this.qbwriter = qbwriter;
 	}
-	public Date getQregdate() {
+	public String getQregdate() {
 		return qregdate;
 	}
-	public void setQregdate(Date qregdate) {
+	public void setQregdate(String qregdate) {
 		this.qregdate = qregdate;
 	}
 	public int getViewcnt() {
@@ -62,6 +58,12 @@ public class QBoardVo {
 	}
 	public void setAdoption(int adoption) {
 		this.adoption = adoption;
+	}
+	public int getLikecnt() {
+		return likecnt;
+	}
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
 	}
 	
 	

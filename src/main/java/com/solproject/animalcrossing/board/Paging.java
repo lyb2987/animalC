@@ -15,11 +15,11 @@ public class Paging {
 	   
 	 */
 	// 기본 생성자가 없으면 ajax로 데이터를 넘겨줄때 에러가남 생성해주면 잘 됨
-	Paging(){
+	public Paging(){
 		
 	}
 	
-	Paging(int boardCnt){
+	public Paging(int boardCnt){
 		this.perPageBoardCnt = 10;
 		this.boardCnt = boardCnt;
 		if(boardCnt % perPageBoardCnt == 0)
@@ -32,7 +32,7 @@ public class Paging {
 		this.setSpageEpage();
 	}
 	
-	Paging(int boardCnt, int currentPage){
+	public Paging(int boardCnt, int currentPage){
 		this.perPageBoardCnt = 10;
 		this.boardCnt = boardCnt;
 		if(boardCnt % perPageBoardCnt == 0)

@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   
 <configuration>
+	<settings>           
+	     <setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
 	<typeAliases>
 		<typeAlias type="com.solproject.animalcrossing.member.MemberVo" alias="memberVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.BoardVo" alias="boardVo" />
@@ -12,5 +16,6 @@
 		<typeAlias type="com.solproject.animalcrossing.board.ClikeVo" alias="clikeVo" />
 		<typeAlias type="com.solproject.animalcrossing.board.Paging" alias="paging" />
 		<typeAlias type="com.solproject.animalcrossing.qboard.QBoardVo" alias="qboardVo" />
+		<typeAlias type="com.solproject.animalcrossing.qlike.QlikeVo" alias="qlikeVo" />
 	</typeAliases>
 </configuration>

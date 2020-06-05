@@ -90,6 +90,11 @@
 
 	// 댓글달기
 	function commentWrite(){
+		if($("#ccontent").val() == ""){
+			alert("댓글 내용을 입력해주세요!");
+			
+			return 0;
+		}
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/commentWrite",
 			type : "post",

@@ -42,7 +42,7 @@ public class BoardDaoImpl implements BoardDao{
 	public int getBoardCount() {
 		return sqlSession.selectOne(namespace+ ".getBoardCount");
 	}
-
+	
 	@Override
 	public List<BoardVo> getBoardPageList(Paging paging) {
 		return sqlSession.selectList(namespace + ".getBoardPageList", paging);

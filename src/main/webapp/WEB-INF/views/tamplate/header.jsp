@@ -69,7 +69,7 @@
 				<a class="menu-a" href="${pageContext.request.contextPath}/"> 도감 </a>
 			</li>
 			<li class="menu-item"> 
-				<a class="menu-a" href="${pageContext.request.contextPath}/"> 질문 </a>
+				<a class="menu-a" href="${pageContext.request.contextPath}/qnaboard/moveQNAMain"> 질문 </a>
 			</li>
 			<li class="menu-item"> 
 				<a class="menu-a" href="${pageContext.request.contextPath}/board/moveBoardMain"> 자유게시판 </a>
