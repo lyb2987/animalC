@@ -23,4 +23,26 @@
 		    ) A <![CDATA[WHERE ROWNUM <= #{endRnum}]]>
 		)B <![CDATA[WHERE B.RNUM >= #{startRnum}]]>
 	</select>
+	
+	<select id="getBoard" resultType="qboardVo" parameterType="int">
+		SELECT * FROM QBOARD WHERE QBNO = #{qbno}
+	</select>
+	
+	<update id="increaseViewCnt" parameterType="int">
+		UPDATE QBOARD SET
+			VIEWCNT = VIEWCNT+1
+		WHERE QBNO = #{qbno}
+	</update>
+	
+	<update id="likeUp" parameterType="int">
+		UPDATE QBOARD SET
+			LIKECNT = LIKECNT+1
+		WHERE QBNO = #{qbno}
+	</update>
+	
+	<update id="likeDown" parameterType="int">
+		UPDATE QBOARD SET
+			LIKECNT = LIKECNT-1
+		WHERE QBNO = #{qbno}
+	</update>
 </mapper>

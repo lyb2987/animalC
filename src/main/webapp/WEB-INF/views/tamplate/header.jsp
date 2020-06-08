@@ -43,7 +43,7 @@
 							<a href="${pageContext.request.contextPath}/member/myPage.do"> 마이페이지 </a> 
 						</li>
 						<li class="_item"> 
-							<a href="${pageContext.request.contextPath}/qnaboard/moveQBWrite"> 테스트페이지 </a> 
+							<a href="${pageContext.request.contextPath}/qnaboard/writeQboardloop"> 테스트페이지 </a> 
 						</li>
 						<!--
 						<li class="_item"> 

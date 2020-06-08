@@ -177,7 +177,8 @@ public class BoardController {
 	public String fileInsert(MultipartFile files, HttpServletRequest request) throws Exception{
 
 		// 저장경로 명시
-		String fileRoot = "C:\\Users\\lyb85\\Desktop\\filelocation\\";
+		//C:\Users\soldesk\Desktop\filelocation
+		String fileRoot = "C:\\Users\\soldesk\\Desktop\\filelocation\\";
 		
 		String originalFileName = files.getOriginalFilename();	// 오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자
@@ -190,6 +191,8 @@ public class BoardController {
 
 		// 파일저장
 		files.transferTo(targetFile);
+		
+		System.out.println("인서트 완료");
 		
 		//return saveFileName;
 		return saveFileName;
@@ -516,7 +519,7 @@ public class BoardController {
 		
 		return result;
 	}
-	
+	/*
 	// db 인서트 필요할때 말고는 헤더에 봉인해둠 + 로그인하고 사용할 것
 	@RequestMapping("writeboardloop")
 	public ModelAndView writeBoardloop(BoardVo vo, HttpSession session) {
@@ -559,5 +562,5 @@ public class BoardController {
 		}
 		return mav;
 	}
-	
+	*/
 }

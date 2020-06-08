@@ -29,6 +29,26 @@ public class QBoardServiceImpl implements QBoardService{
 	public List<QBoardVo> getQBoardPageList(Paging p) {
 		return qBoardDao.getQBoardPageList(p);
 	}
+
+	@Override
+	public int increaseViewCnt(int qbno) {
+		return qBoardDao.increaseViewCnt(qbno);
+	}
+
+	@Override
+	public QBoardVo getQBoard(int qbno) {
+		return qBoardDao.getBoard(qbno);
+	}
+
+	@Override
+	public int likeUp(int qbno) {
+		return qBoardDao.likeUp(qbno);
+	}
+
+	@Override
+	public int likeDown(int qbno) {
+		return qBoardDao.likeDown(qbno);
+	}
 	
 	
 }

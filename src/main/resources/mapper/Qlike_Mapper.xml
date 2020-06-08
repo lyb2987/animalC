@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.solproject.animalcrossing.mapper.QBoard_Mapper">
-
+<mapper namespace="com.solproject.animalcrossing.mapper.Qlike_Mapper">
+	
+	<select id="checkAllike" parameterType="qlikeVo" resultType="int">
+		SELECT COUNT(*) FROM QLIKE WHERE QBLIKER = #{qbliker} AND QBNO = #{qbno}
+	</select>
+	
+	<insert id="createLike" parameterType="qlikeVo">
+		INSERT INTO QLIKE(QBNO, QBLIKER)
+		VALUES(#{qbno}, #{qbliker})
+	</insert>
+	
+	<delete id="deleteLike" parameterType="qlikeVo">
+		DELETE FROM QLIKE WHERE QBNO = #{qbno} AND QBLIKER = #{qbliker}
+	</delete>
+	
 </mapper>

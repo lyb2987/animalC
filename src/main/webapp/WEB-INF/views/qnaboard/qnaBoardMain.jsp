@@ -81,12 +81,12 @@
 			success : function(data){
 				var pageHTML2 = "";
 				var bnoString = "";
-				$("tr").remove(".boardList");
+				$("tr").remove(".qboardList");
 				for(var i=0; i<=data.length; i++){
 					if(data[i]){
 						pageHTML2 += "<tr id=\"qboardTable\" class=\"qboardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
 						pageHTML2 += "<td>" + data[i].qbno + "</td>\n";
-						pageHTML2 += "<td> <a href=\"./viewBoard?qbno=" + data[i].qbno + "\" id=\"qbtitle" + data[i].qbno +"\" style=\"color : black; font-weight : bold;\">" + data[i].qbtitle + "</a> </td>\n";						
+						pageHTML2 += "<td> <a href=\"./viewQBoard?qbno=" + data[i].qbno + "\" id=\"qbtitle" + data[i].qbno +"\" style=\"color : black; font-weight : bold;\">" + data[i].qbtitle + "</a> </td>\n";						
 						pageHTML2 += "<td>" + data[i].qbwriter + "</td>\n";
 						pageHTML2 += "<td>" + data[i].qregdate + "</td>\n";
 						pageHTML2 += "<td>" + data[i].acount + "</td>\n";

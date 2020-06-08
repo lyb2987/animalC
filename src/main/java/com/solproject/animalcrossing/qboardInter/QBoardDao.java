@@ -11,4 +11,12 @@ public interface QBoardDao {
 	public int getQBoardCount();
 	
 	public List<QBoardVo> getQBoardPageList(Paging p);
+	
+	public int increaseViewCnt(int qbno);
+	
+	public QBoardVo getBoard(int qbno);
+	
+	public int likeUp(int qbno);
+	
+	public int likeDown(int qbno);
 }

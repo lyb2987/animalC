@@ -17,5 +17,6 @@
 		<typeAlias type="com.solproject.animalcrossing.board.Paging" alias="paging" />
 		<typeAlias type="com.solproject.animalcrossing.qboard.QBoardVo" alias="qboardVo" />
 		<typeAlias type="com.solproject.animalcrossing.qlike.QlikeVo" alias="qlikeVo" />
+		<typeAlias type="com.solproject.animalcrossing.answer.AnswerVo" alias="answerVo" />
 	</typeAliases>
 </configuration>

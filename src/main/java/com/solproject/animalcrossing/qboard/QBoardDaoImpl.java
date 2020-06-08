@@ -27,5 +27,21 @@ public class QBoardDaoImpl implements QBoardDao{
 	public List<QBoardVo> getQBoardPageList(Paging p) {
 		return sqlSession.selectList(namespace + ".getQBoardPageList", p);
 	}
+	@Override
+	public int increaseViewCnt(int qbno) {
+		return sqlSession.update(namespace + ".increaseViewCnt", qbno);
+	}
+	@Override
+	public QBoardVo getBoard(int qbno) {
+		return sqlSession.selectOne(namespace + ".getBoard", qbno);
+	}
+	@Override
+	public int likeUp(int qbno) {
+		return sqlSession.update(namespace + ".likeUp", qbno);
+	}
+	@Override
+	public int likeDown(int qbno) {
+		return sqlSession.update(namespace + ".likeDown", qbno);
+	}
 	
 }

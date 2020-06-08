@@ -11,5 +11,20 @@ public class QlikeServiceImpl implements QlikeService{
 
 	@Autowired
 	QlikeDao qlikeDao;
+
+	@Override
+	public int checkAllike(QlikeVo vo) {
+		return qlikeDao.checkAllike(vo);
+	}
+
+	@Override
+	public int createLike(QlikeVo vo) {
+		return qlikeDao.createLike(vo);
+	}
+
+	@Override
+	public int deleteLike(QlikeVo vo) {
+		return qlikeDao.deleteLike(vo);
+	}
 	
 }
