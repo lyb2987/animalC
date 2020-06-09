@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.solproject.animalcrossing.qboard.QBoardServiceImpl;
+import com.solproject.animalcrossing.util.LcLs;
 
 @Controller
 @RequestMapping("/qlike/**")
@@ -23,10 +24,9 @@ public class QlikeController {
 	// 질문 추천
 	@PostMapping("qblikeUp")
 	@ResponseBody
-	public int qlikeUp(String qbno, String userId, HttpServletRequest request) {
+	public LcLs qlikeUp(String qbno, String userId, HttpServletRequest request) {
 		QlikeVo vo = null;
-		int likeStatus = 0;
-		int createLike = 0;
+		LcLs cs = new LcLs(0, 0); 
 		
 		// 로그인 여부 체크
 		if(userId.equals("")) {
@@ -40,30 +40,29 @@ public class QlikeController {
 		System.out.println(vo.toString());
 		
 		// 중복여부 체크
-		int check = qlikeService.checkAllike(vo);
-		System.out.println("check : " + check);
-		if(check == 0) {
-			likeStatus = qBoardService.likeUp(Integer.parseInt(qbno));
+		cs.setLikeStatus(qlikeService.checkAllike(vo)); ;
+		
+		if(cs.getLikeStatus() == 0) {
+			cs.setLikeStatus(qBoardService.likeUp(Integer.parseInt(qbno)));
 		}
 		else {
-			check = -1;
-			return check;
+			cs.setLikeStatus(-1);
+			return cs;
 		}
 		
-		if(likeStatus == 1) {
-			createLike = qlikeService.createLike(vo);
-			System.out.println("createLike :" + createLike);
+		if(cs.getLikeStatus() == 1) {
+			cs.setLikeStatus(qlikeService.createLike(vo));
+			cs.setLikeCnt(qBoardService.getLikeCnt(Integer.parseInt(qbno)));
 		}
 		
-		return createLike;
+		return cs;
 	}
 	
-	@PostMapping("qlikeDown")
+	@PostMapping("qblikeDown")
 	@ResponseBody
-	public int qlikeDown(String qbno, String userId, HttpServletRequest request) {
+	public LcLs qlikeDown(String qbno, String userId, HttpServletRequest request) {
 		QlikeVo vo = null;
-		int likeStatus = 0;
-		int deleteLike = 0;
+		LcLs cs = new LcLs(0, 0);
 		
 		// 로그인 여부 체크
 		if(userId.equals("")) {
@@ -77,15 +76,15 @@ public class QlikeController {
 		}
 		
 		// 추천 취소
-		likeStatus = qBoardService.likeDown(Integer.parseInt(qbno));
-		if(likeStatus == 1) {
-			deleteLike = qlikeService.deleteLike(vo);
-			System.out.println("deleteLike :" + deleteLike);
+		cs.setLikeStatus(qBoardService.likeDown(Integer.parseInt(qbno))); 
+		if(cs.getLikeStatus() == 1) {
+			cs.setLikeStatus(qlikeService.deleteLike(vo));
+			cs.setLikeCnt(qBoardService.getLikeCnt(Integer.parseInt(qbno)));
 		}
 		else {
-			likeStatus = -1;
+			cs.setLikeStatus(-1);
 		}
-		return likeStatus;
+		return cs;
 		
 	}
 

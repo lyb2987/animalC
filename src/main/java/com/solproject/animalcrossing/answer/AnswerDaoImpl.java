@@ -1,5 +1,7 @@
 package com.solproject.animalcrossing.answer;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,5 +18,10 @@ public class AnswerDaoImpl implements AnswerDao{
 	@Override
 	public int writeAnswer(AnswerVo vo) {
 		return sqlSession.insert(namespace + ".writeAnswer", vo);
+	}
+
+	@Override
+	public List<AnswerVo> getAlist(int qbno) {
+		return sqlSession.selectList(namespace + ".getAlist", qbno);
 	}
 }

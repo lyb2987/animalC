@@ -45,4 +45,32 @@
 			LIKECNT = LIKECNT-1
 		WHERE QBNO = #{qbno}
 	</update>
+	
+	
+	<update id="decreaseAcnt" parameterType="int">
+		UPDATE QBOARD SET
+			ACOUNT = ACOUNT-1
+		WHERE QBNO = #{qbno}
+	</update>
+	
+	<update id="increaseAcnt" parameterType="int">
+		UPDATE QBOARD SET
+			ACOUNT = ACOUNT+1
+		WHERE QBNO = #{qbno}
+	</update>
+	
+	<select id="getLikeCnt" parameterType="int" resultType="int">
+		SELECT LIKECNT FROM QBOARD WHERE QBNO = #{qbno}
+	</select>
+	
+	<delete id="deleteQBoard" parameterType="int">
+		DELETE FROM QBOARD WHERE QBNO = #{qbno} 
+	</delete>
+	
+	<update id="modifyQBoard" parameterType="qboardVo">
+		UPDATE QBOARD SET
+			QBTITLE = #{qbtitle},
+			QBCONTENT = #{qbcontent}
+		WHERE QBNO = #{qbno}
+	</update>
 </mapper>

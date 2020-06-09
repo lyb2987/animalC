@@ -1,5 +1,9 @@
 package com.solproject.animalcrossing.qboard;
 
+import java.util.List;
+
+import com.solproject.animalcrossing.answer.AnswerVo;
+
 public class QBoardVo {
 	private int qbno;
 	private String qbtitle;
@@ -10,6 +14,17 @@ public class QBoardVo {
 	private int acount;				// 답변 갯수
 	private int adoption;
 	private int likecnt;
+	private List<AnswerVo> alist;
+	
+	QBoardVo(){
+		
+	}
+	
+	QBoardVo(int qbno, String qbtitle, String qbcontent){
+		this.qbno = qbno;
+		this.qbtitle = qbtitle;
+		this.qbcontent = qbcontent;
+	}
 	
 	public int getQbno() {
 		return qbno;
@@ -65,7 +80,11 @@ public class QBoardVo {
 	public void setLikecnt(int likecnt) {
 		this.likecnt = likecnt;
 	}
-	
-	
+	public List<AnswerVo> getAlist() {
+		return alist;
+	}
+	public void setAlist(List<AnswerVo> alist) {
+		this.alist = alist;
+	}
 	
 }

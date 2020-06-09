@@ -43,5 +43,25 @@ public class QBoardDaoImpl implements QBoardDao{
 	public int likeDown(int qbno) {
 		return sqlSession.update(namespace + ".likeDown", qbno);
 	}
+	@Override
+	public int getLikeCnt(int qbno) {
+		return sqlSession.selectOne(namespace + ".getLikeCnt", qbno);
+	}
+	@Override
+	public int deleteQBoard(int qbno) {
+		return sqlSession.delete(namespace + ".deleteQBoard", qbno);
+	}
+	@Override
+	public int modifyQBoard(QBoardVo vo) {
+		return sqlSession.update(namespace + ".modifyQBoard", vo);
+	}
+	@Override
+	public int increaseAcnt(int qbno) {
+		return sqlSession.update(namespace + ".increaseAcnt", qbno);
+	}
+	@Override
+	public int decreaseAcnt(int qbno) {
+		return sqlSession.update(namespace + ".decreaseAcnt", qbno);
+	}
 	
 }

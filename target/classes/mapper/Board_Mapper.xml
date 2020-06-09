@@ -72,4 +72,6 @@
 		DELETE FROM BOARD WHERE BNO = #{bno} 
 	</delete>
 	
+	
+	
 </mapper>

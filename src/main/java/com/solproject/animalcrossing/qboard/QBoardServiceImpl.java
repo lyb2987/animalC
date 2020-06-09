@@ -49,6 +49,31 @@ public class QBoardServiceImpl implements QBoardService{
 	public int likeDown(int qbno) {
 		return qBoardDao.likeDown(qbno);
 	}
+
+	@Override
+	public int getLikeCnt(int qbno) {
+		return qBoardDao.getLikeCnt(qbno);
+	}
+
+	@Override
+	public int deleteQBoard(int qbno) {
+		return qBoardDao.deleteQBoard(qbno);
+	}
+
+	@Override
+	public int modifyQBoard(QBoardVo vo) {
+		return qBoardDao.modifyQBoard(vo);
+	}
+
+	@Override
+	public int increaseAcnt(int qbno) {
+		return qBoardDao.increaseAcnt(qbno);
+	}
+
+	@Override
+	public int decreaseAcnt(int qbno) {
+		return qBoardDao.decreaseAcnt(qbno);
+	}
 	
 	
 }

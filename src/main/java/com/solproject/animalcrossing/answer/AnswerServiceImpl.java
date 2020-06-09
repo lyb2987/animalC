@@ -1,5 +1,7 @@
 package com.solproject.animalcrossing.answer;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,11 @@ public class AnswerServiceImpl implements AnswerService{
 	public int writeAnswer(AnswerVo vo) {
 		return answerDao.writeAnswer(vo);
 	}
+
+	@Override
+	public List<AnswerVo> getAlist(int qbno) {
+		return answerDao.getAlist(qbno);
+	}
+	
 	
 }

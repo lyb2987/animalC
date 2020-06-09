@@ -1,10 +1,7 @@
 package com.solproject.animalcrossing.qboard;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.solproject.animalcrossing.answer.AnswerServiceImpl;
 import com.solproject.animalcrossing.board.Paging;
 import com.solproject.animalcrossing.member.MemberVo;
 
@@ -24,6 +21,9 @@ public class QBoardController {
 
 	@Autowired
 	QBoardServiceImpl qBoardService;
+	
+	@Autowired
+	AnswerServiceImpl answerService;
 	
 	// 질문 메인으로 이동
 	@RequestMapping("moveQNAMain")
@@ -141,8 +141,73 @@ public class QBoardController {
 		}
 		QBoardVo vo = qBoardService.getQBoard(Integer.parseInt(qbno));
 
+		vo.setAlist(answerService.getAlist(Integer.parseInt(qbno)));
+		
 		mav.addObject("qboard", vo);
-		mav.setViewName("qnaboard/qnaBardView");
+		mav.setViewName("qnaboard/qnaBoardView");
+		
+		return mav;
+	}
+	
+	// 게시글 수정페이지 이동
+	@RequestMapping("moveModifyQBoard")
+	public ModelAndView moveModifyQBoard(String qbno) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		QBoardVo vo = qBoardService.getQBoard(Integer.parseInt(qbno));
+		
+		mav.addObject("qboard", vo);
+		mav.setViewName("qnaboard/qnaBoardModify");
+		
+		return mav;
+	}
+	
+	// 게시글 수정 modifyQBoard 
+	@RequestMapping("modifyQBoard")
+	public ModelAndView modifyQBoard(String qbno, String qbtitle, String qbcontent) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		QBoardVo vo = new QBoardVo(Integer.parseInt(qbno), qbtitle, qbcontent);
+		
+		int result = qBoardService.modifyQBoard(vo);
+		
+		if(result == 1) {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/qnaboard/moveQNAMain");
+			mav.addObject("msg", "게시글이 수정되었습니다.");
+			
+		}
+		else {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/qnaboard/moveQNAMain");
+			mav.addObject("msg", "게시글 수정 실패!");
+		}
+		
+		return mav;
+	}
+	
+	
+	// 질문 게시글 삭제
+	@RequestMapping("deleteQBoard")
+	public ModelAndView deleteQBoard(String qbno) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		int result = qBoardService.deleteQBoard(Integer.parseInt(qbno));
+		
+		if(result == 1) {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/qnaboard/moveQNAMain");
+			mav.addObject("msg", "게시글이 삭제되었습니다.");
+			
+		}
+		else {
+			mav.setViewName("common/msg");
+			mav.addObject("path", "/animalcrossing/qnaboard/moveQNAMain");
+			mav.addObject("msg", "게시글 삭제 실패!");
+		}
 		
 		return mav;
 	}

@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.solproject.animalcrossing.qboard.QBoardServiceImpl;
+
 @Controller
 @RequestMapping("/answer/**")
 public class AnswerController {
 
 	@Autowired
 	AnswerServiceImpl answerService;
+	
+	@Autowired
+	QBoardServiceImpl qBoardService;
 	
 	
 	@PostMapping("answerWrite")
@@ -26,12 +31,16 @@ public class AnswerController {
 		
 		AnswerVo vo = new AnswerVo(Integer.parseInt(qbno), userId, acontent); 
 
-		System.out.println(acontent);
 		
-		int result = answerService.writeAnswer(vo);
+		int writeResult = answerService.writeAnswer(vo);
+		int incAcntResult = 0;
 		
+		if(writeResult == 1) {
+			incAcntResult = qBoardService.increaseAcnt(Integer.parseInt(qbno));
+			System.out.println("incAcntResult : " + incAcntResult);
+		}
 		
-		return result;
+		return writeResult;
 	}
 	
 	@ResponseBody

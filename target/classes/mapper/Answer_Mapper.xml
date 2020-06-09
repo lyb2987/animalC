@@ -9,4 +9,7 @@
 		VALUES(ANSWER_SEQ.NEXTVAL, #{qbno}, #{acontent}, #{awriter}, SYSDATE)
 	</insert>
 	
+	<select id="getAlist" parameterType="int" resultType="answerVo">
+		SELECT * FROM ANSWER WHERE QBNO = #{qbno}
+	</select>
 </mapper>

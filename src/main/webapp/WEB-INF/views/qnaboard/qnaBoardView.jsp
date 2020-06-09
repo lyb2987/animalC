@@ -46,8 +46,21 @@
 					<button class="qblikeBtn" type="button" id="qblikeBtn" onclick="qblikeUp();">추천</button>
 				</div>
 			</div>
-			<div class="answerDiv" style="margin-top: 20px;">
+			<div class="answerWriteDiv" style="margin-top: 20px;">
 				<button class="answerFormBtn" type="button" id="answerFormBtn" onclick="getAnswerForm();">답변 달기</button> 
+			</div>
+			<hr width="100%" color="black">
+			
+			<div class = "answerDiv" style="margin-top: 10px;">
+				<c:forEach var="alist" items="${qboard.alist}">
+					<div class="answerHead" style="margin-top: 10px">
+						<p>${alist.qbno} : ${alist.abno}       작성자 : ${alist.awriter}    추천 : ${alist.likecnt}      ${alist.aregdate}</p>
+					</div>
+					<div class="acontent" style="margin-top: 3px">
+						<p>${alist.acontent}</p>
+					</div>
+					<hr width="100%" color="black"  style="margin-top: 5px">
+				</c:forEach>
 			</div>
 		</div>
 		<div class="sub-col-wrap" style="background: yellow">
@@ -79,7 +92,7 @@
 		pageHTML += "<button class=\"canaleAnswer\" type=\"button\" id=\"canaleAnswer\" value=\"none\" onclick=\"cancleAnswer();\">취소</button>";
 		pageHTML += "</div>";
 
-		$('.answerDiv').append(pageHTML);
+		$('.answerWriteDiv').append(pageHTML);
 		$.callSummernote();
 		
 	}	
@@ -88,7 +101,7 @@
 		$("#answerFormDiv").remove();
 		var pageHTML = "";
 		pageHTML += "<button class=\"answerFormBtn\" type=\"button\" id=\"answerFormBtn\" onclick=\"getAnswerForm();\">답변 달기</button>";
-		$('.answerDiv').append(pageHTML);
+		$('.answerWriteDiv').append(pageHTML);
 	}
 
 	// 답변 쓰기
@@ -106,14 +119,14 @@
 					$("#answerFormDiv").remove();
 					var pageHTML = "";
 					pageHTML += "<button class=\"answerFormBtn\" type=\"button\" id=\"answerFormBtn\" onclick=\"getAnswerForm();\">답변 달기</button>";
-					$('.answerDiv').append(pageHTML);
+					$('.answerWriteDiv').append(pageHTML);
 				}
 				else{
 					alert("답변 작성 실패..");
 					$("#answerFormDiv").remove();
 					var pageHTML = "";
 					pageHTML += "<button class=\"answerFormBtn\" type=\"button\" id=\"answerFormBtn\" onclick=\"getAnswerForm();\">답변 달기</button>";
-					$('.answerDiv').append(pageHTML);
+					$('.answerWriteDiv').append(pageHTML);
 				}
 			}
 		})
@@ -187,7 +200,7 @@
 			dataType : "json",
 			data : {"qbno" : qbno, "userId" : userId},
 			success : function(data){
-				if(data==-1){
+				if(data.likeStatus==-1){
 					var conf = confirm("이미 추천하셨습니다. 추천을 취소하시겠습니까?");
 					if(conf == false)
 						return ;
@@ -195,6 +208,8 @@
 				}
 				else{
 					alert("추천하였습니다.");
+					$("#likeCnt").empty();
+					$("#likeCnt").text(data.likeCnt);
 				}
 			}
 		})
@@ -209,10 +224,10 @@
 			dataType : "json",
 			data : {"qbno" : qbno, "userId" : userId},
 			success : function(data){
-				if(data==1){
+				if(data.likeStatus==1){
 					alert("추천을 취소하였습니다.");
-					//$("#likeCnt").empty();
-					//$("#likeCnt").text();
+					$("#likeCnt").empty();
+					$("#likeCnt").text(data.likeCnt);
 				}
 				else{
 					alert("추천취소에 실패하였습니다.");
@@ -221,25 +236,27 @@
 		})
 	}
 	
-	/*
-	추가해야 할 것 : 질문 수정, 질문 삭제, 추천, 답변 불러오기, 답변추천, 채택, 답변 수정, 답변 삭제
-		
 	function modifyQBoard(){
 		var conf = confirm("게시글을 수정하시겠습니까?")
 		if(conf == false)
 			return ;
 		
-		document.location.href = "./moveModifyQBoard?bno=" + qbno;
+		document.location.href = "./moveModifyQBoard?qbno=" + qbno;
 	}
 
 	function deleteQBoard(){
 		var conf = confirm("게시글을 삭제하시겠습니까?")
 		if(conf == false)
 			return ;
-
-		document.location.href = "./deleteQBoard?bno=" + qbno;
+	
+		document.location.href = "./deleteQBoard?qbno=" + qbno;
 	}
+	
 
+	
+	/*
+	추가해야 할 것 : 답변 불러오기, 답변추천, 채택, 답변 수정, 답변 삭제
+	
 	
 	*/
 	
