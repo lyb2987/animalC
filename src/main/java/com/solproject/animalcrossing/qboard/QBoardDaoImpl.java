@@ -63,5 +63,17 @@ public class QBoardDaoImpl implements QBoardDao{
 	public int decreaseAcnt(int qbno) {
 		return sqlSession.update(namespace + ".decreaseAcnt", qbno);
 	}
+	@Override
+	public int adoptionAnswer(QBoardVo vo) {
+		return sqlSession.update(namespace + ".adoptionAnswer", vo);
+	}
+	@Override
+	public Integer getAdoption(int qbno) {
+		return sqlSession.selectOne(namespace + ".getAdoption", qbno);
+	}
+	@Override
+	public int cancleAnswer(int qbno) {
+		return sqlSession.update(namespace + ".cancleAnswer", qbno);
+	}
 	
 }

@@ -74,6 +74,21 @@ public class QBoardServiceImpl implements QBoardService{
 	public int decreaseAcnt(int qbno) {
 		return qBoardDao.decreaseAcnt(qbno);
 	}
+
+	@Override
+	public int adoptionAnswer(QBoardVo vo) {
+		return qBoardDao.adoptionAnswer(vo);
+	}
+
+	@Override
+	public Integer getAdoption(int qbno) {
+		return qBoardDao.getAdoption(qbno);
+	}
+
+	@Override
+	public int cancleAnswer(int qbno) {
+		return qBoardDao.cancleAnswer(qbno);
+	}
 	
 	
 }

@@ -29,4 +29,10 @@ public interface QBoardDao {
 	public int increaseAcnt(int qbno);
 
 	public int decreaseAcnt(int qbno);
+	
+	public int adoptionAnswer(QBoardVo vo);
+	
+	public Integer getAdoption(int qbno);
+
+	public int cancleAnswer(int qbno);
 }

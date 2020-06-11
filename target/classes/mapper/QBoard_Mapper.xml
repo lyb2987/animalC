@@ -73,4 +73,21 @@
 			QBCONTENT = #{qbcontent}
 		WHERE QBNO = #{qbno}
 	</update>
+	
+	<update id="adoptionAnswer" parameterType="qboardVo">
+		UPDATE QBOARD SET
+			ADOPTION = #{adoption}
+		WHERE QBNO = #{qbno}
+	</update>
+	
+	<select id="getAdoption" parameterType="int" resultType="Integer">
+		SELECT ADOPTION FROM QBOARD WHERE QBNO = #{qbno}
+	</select>
+	
+	<update id="cancleAnswer" parameterType="int">
+		UPDATE QBOARD SET
+			ADOPTION = NULL
+		WHERE QBNO = #{qbno}
+	</update>
+	
 </mapper>

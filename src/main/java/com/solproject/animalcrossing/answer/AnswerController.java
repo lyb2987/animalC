@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.solproject.animalcrossing.qboard.QBoardServiceImpl;
+import com.solproject.animalcrossing.qboard.QBoardVo;
 
 @Controller
 @RequestMapping("/answer/**")
@@ -66,4 +67,44 @@ public class AnswerController {
 		//return saveFileName;
 		return saveFileName;
 	}
+	
+	
+	@PostMapping("adoptionAnswer")
+	@ResponseBody
+	public int adoptionAnswer(String abno, String qbno) throws Exception{
+		
+		int qbnonum = Integer.parseInt(qbno);
+		int abnonum = Integer.parseInt(abno);
+		int result = 0;
+		
+		QBoardVo vo = new QBoardVo(qbnonum, abnonum);
+		Integer adoption = qBoardService.getAdoption(qbnonum);
+		
+		// 1 : 채택완료,  2 : 채택취소 완료,  3 : 이미 채택했기 때문에 취소하고 다시시도하라고 안내
+		if(adoption == null) {
+			result = qBoardService.adoptionAnswer(vo);
+		}
+		else if(adoption == abnonum) {
+			result = qBoardService.cancleAnswer(qbnonum);
+			result = 2;
+		}
+		else if(adoption != abnonum) {
+			result = 3;
+		}
+			
+		
+		return result;
+	}
+	
+	@PostMapping("cancleAnswer")
+	@ResponseBody
+	public int cancleAnswer(String qbno) {
+		int qbnonum = Integer.parseInt(qbno);
+				
+		int result = qBoardService.cancleAnswer(qbnonum);
+		
+		return result;
+	}
+	
+	
 }

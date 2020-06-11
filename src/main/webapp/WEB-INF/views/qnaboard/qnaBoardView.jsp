@@ -21,7 +21,7 @@
 	<div class="main-wrap">
 		<div class="main-col-wrap">
 			<div class="boardView" style="width:100%;">
-				<div class="boardTitle">
+				<div class="qboardTitle">
 					<h3>${qboard.qbno} ${qboard.qbtitle}</h3>
 				</div>
 				<!-- 게시글 작성자와 조회하는 사람이 같을시 수정, 삭제버튼 배치 -->
@@ -54,7 +54,19 @@
 			<div class = "answerDiv" style="margin-top: 10px;">
 				<c:forEach var="alist" items="${qboard.alist}">
 					<div class="answerHead" style="margin-top: 10px">
-						<p>${alist.qbno} : ${alist.abno}       작성자 : ${alist.awriter}    추천 : ${alist.likecnt}      ${alist.aregdate}</p>
+						<p id="answerPHead${alist.qbno}">${alist.qbno} : ${alist.abno}       작성자 : ${alist.awriter}    추천 : ${alist.likecnt}      ${alist.aregdate} <c:if test="${qboard.adoption eq alist.abno}">, 채택됨</c:if></p>
+						<c:choose>
+							<c:when test="${user.id.equals(writer)}">
+								<c:choose>
+									<c:when test="${qboard.adoption eq alist.abno}">
+									  <button class="adoptionBtn${alist.abno}" type="button" id="adoptionBtn${alist.abno}" value="${alist.abno}" style="background-color: #4CAF50;" onclick="adoptionAnswer(this.value);">채택됨</button> 
+									</c:when>
+									<c:otherwise>
+										<button class="adoptionBtn${alist.abno}" type="button" id="adoptionBtn${alist.abno}"  value="${alist.abno}" onclick="adoptionAnswer(this.value);">채택</button> 
+									</c:otherwise>
+								</c:choose>
+								</c:when>
+						</c:choose>
 					</div>
 					<div class="acontent" style="margin-top: 3px">
 						<p>${alist.acontent}</p>
@@ -252,10 +264,56 @@
 		document.location.href = "./deleteQBoard?qbno=" + qbno;
 	}
 	
+	function adoptionAnswer(abno){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/answer/adoptionAnswer",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno, "qbno" : qbno},
+			success : function(data){
+				if(data == 1){
+					alert("답변을 채택하였습니다.");
+					//btnHTML = ", 채택됨";
+					//$("#answerPHead"+abno).append(btnHTML);
+					//var test = document.getElementByClassName("qboardTitle");
+					//test.style.backgroundcolor = "red";
+				}
+				else if(data == 2){
+					var conf = confirm("채택을 취소하시겠습니까?");
+					if(conf == false)
+						return ;
+					$.cancleAnswer(qbno);
+				}
+				else if(data == 3)
+					alert("이미 다른 답변을 채택하였습니다. 채택을 취소하고 다시 시도해주세요!");
+				
+				
+			}
+		})
+	}
 
-	
+	$.cancleAnswer = function(abno){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/answer/cancleAnswer",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno, "qbno" : qbno},
+			success : function(data){
+				if(data == 1){
+					//$("#adoptionBtn"+abno).style.backgroundcolor = red;
+					//$("#adoptionBtn"+abno).text("채택");
+					alert("답변 채택을 취소 하였습니다.");
+				}
+					
+				else
+					alert("답변 취소 실패");
+			}
+		})
+	}
+
+
 	/*
-	추가해야 할 것 : 답변 불러오기, 답변추천, 채택, 답변 수정, 답변 삭제
+	추가해야 할 것 : 답변추천, 채택, 답변 수정, 답변 삭제
 	
 	
 	*/

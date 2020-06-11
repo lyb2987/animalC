@@ -26,6 +26,11 @@ public class QBoardVo {
 		this.qbcontent = qbcontent;
 	}
 	
+	public QBoardVo(int qbno, int adoption){
+		this.qbno = qbno;
+		this.adoption = adoption;
+	}
+	
 	public int getQbno() {
 		return qbno;
 	}
