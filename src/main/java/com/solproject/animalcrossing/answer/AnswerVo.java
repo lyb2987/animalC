@@ -18,6 +18,11 @@ public class AnswerVo {
 		this.acontent = acontent;
 	}
 	
+	AnswerVo(int abno, String acontent){
+		this.abno = abno;
+		this.acontent = acontent;
+	}
+	
 	public int getAbno() {
 		return abno;
 	}

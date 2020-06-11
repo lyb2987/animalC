@@ -12,4 +12,19 @@
 	<select id="getAlist" parameterType="int" resultType="answerVo">
 		SELECT * FROM ANSWER WHERE QBNO = #{qbno}
 	</select>
+	
+	<select id="getAnswerContent" parameterType="int" resultType="String">
+		SELECT ACONTENT FROM ANSWER WHERE ABNO = #{abno}
+	</select>
+	
+	<update id="modifyAnswer" parameterType="answerVo">
+		UPDATE ANSWER SET
+			ACONTENT = #{acontent}
+		WHERE ABNO = #{abno} 
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="int">
+		DELETE FROM ANSWER WHERE ABNO = #{abno}
+	</delete>
+	
 </mapper>

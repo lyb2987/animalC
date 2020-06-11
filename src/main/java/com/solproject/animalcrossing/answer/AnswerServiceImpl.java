@@ -23,6 +23,21 @@ public class AnswerServiceImpl implements AnswerService{
 	public List<AnswerVo> getAlist(int qbno) {
 		return answerDao.getAlist(qbno);
 	}
+
+	@Override
+	public String getAnswerContent(int abno) {
+		return answerDao.getAnswerContent(abno);
+	}
+
+	@Override
+	public int modifyAnswer(AnswerVo vo) {
+		return answerDao.modifyAnswer(vo);
+	}
+
+	@Override
+	public int deleteAnswer(int abno) {
+		return answerDao.deleteAnswer(abno);
+	}
 	
 	
 }

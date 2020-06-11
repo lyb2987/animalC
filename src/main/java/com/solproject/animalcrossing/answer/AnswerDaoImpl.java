@@ -24,4 +24,19 @@ public class AnswerDaoImpl implements AnswerDao{
 	public List<AnswerVo> getAlist(int qbno) {
 		return sqlSession.selectList(namespace + ".getAlist", qbno);
 	}
+
+	@Override
+	public String getAnswerContent(int abno) {
+		return sqlSession.selectOne(namespace + ".getAnswerContent", abno);
+	}
+
+	@Override
+	public int modifyAnswer(AnswerVo vo) {
+		return sqlSession.update(namespace + ".modifyAnswer", vo);
+	}
+	
+	@Override
+	public int deleteAnswer(int abno) {
+		return sqlSession.delete(namespace + ".deleteAnswer", abno);
+	}
 }

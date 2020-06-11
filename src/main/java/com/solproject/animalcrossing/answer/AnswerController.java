@@ -106,5 +106,35 @@ public class AnswerController {
 		return result;
 	}
 	
+	// 답변 수정 취소 +   produces = "application/text; charset=utf8" 를 지정하여 String이 깨지지 않고 가게 됨
+	@PostMapping(value = "getAnswerContent",  produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getAnswerContent(String abno) throws Exception {
+		
+		String acontent = answerService.getAnswerContent(Integer.parseInt(abno));
+
+		return acontent;
+	}
+
+	// 답변수정
+	@PostMapping("modifyAnswer")
+	@ResponseBody
+	public int modifyAnswer(String abno, String acontent){
+		
+		AnswerVo vo = new AnswerVo(Integer.parseInt(abno), acontent);
+		
+		int result = answerService.modifyAnswer(vo);
+		
+		return result;
+	}
 	
+	// 답변 삭제 deleteAnswer
+		@PostMapping("deleteAnswer")
+		@ResponseBody
+		public int deleteAnswer(String abno){
+		
+			int result = answerService.deleteAnswer(Integer.parseInt(abno));
+			
+			return result;
+		}
 }

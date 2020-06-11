@@ -53,13 +53,14 @@
 			
 			<div class = "answerDiv" style="margin-top: 10px;">
 				<c:forEach var="alist" items="${qboard.alist}">
-					<div class="answerHead" style="margin-top: 10px">
-						<p id="answerPHead${alist.qbno}">${alist.qbno} : ${alist.abno}       작성자 : ${alist.awriter}    추천 : ${alist.likecnt}      ${alist.aregdate} <c:if test="${qboard.adoption eq alist.abno}">, 채택됨</c:if></p>
+					<div class="answerHead${alist.abno}" style="margin-top: 10px">
+						<p id="answerPHead${alist.abno}">${alist.qbno} : ${alist.abno}       작성자 : ${alist.awriter}    추천 : ${alist.likecnt}      ${alist.aregdate} 
+						<c:if test="${qboard.adoption eq alist.abno}"> <img id="adoptionImage" alt="adoption" src="${pageContext.request.contextPath}/resources/images/qboard/check_Icon.png" width="20px" height="20px"></c:if></p>
 						<c:choose>
 							<c:when test="${user.id.equals(writer)}">
 								<c:choose>
 									<c:when test="${qboard.adoption eq alist.abno}">
-									  <button class="adoptionBtn${alist.abno}" type="button" id="adoptionBtn${alist.abno}" value="${alist.abno}" style="background-color: #4CAF50;" onclick="adoptionAnswer(this.value);">채택됨</button> 
+									  <button class="adoptionBtn${alist.abno}" type="button" id="adoptionBtn${alist.abno}" value="${alist.abno}" onclick="adoptionAnswer(this.value);">채택 됨</button> 
 									</c:when>
 									<c:otherwise>
 										<button class="adoptionBtn${alist.abno}" type="button" id="adoptionBtn${alist.abno}"  value="${alist.abno}" onclick="adoptionAnswer(this.value);">채택</button> 
@@ -68,9 +69,19 @@
 								</c:when>
 						</c:choose>
 					</div>
-					<div class="acontent" style="margin-top: 3px">
+					<div class="acontent${alist.abno}" style="margin-top: 3px">
 						<p>${alist.acontent}</p>
+					
+						<c:choose>
+							<c:when test="${user.id.equals(alist.awriter)}">
+								<div class="modifyAndDeleteForm">
+									<button class="modifyAnswerBtn" type="button" value="${alist.abno}" id="modifyAnswerBtn" onclick="modifyAnswerForm(this.value);">답변 수정</button> 
+									<button class="deleteAnswerBtn" type="button" value="${alist.abno}" id="deleteAnswerBtn" onclick="deleteAnswer(this.value);">답변 삭제</button> 
+								</div>
+							</c:when>
+						</c:choose>
 					</div>
+						
 					<hr width="100%" color="black"  style="margin-top: 5px">
 				</c:forEach>
 			</div>
@@ -85,6 +96,7 @@
 
 <script type="text/javascript">
 	var qbno = ${qboard.qbno};
+	var aModifyStatus = 0;
 	
 	$(document).ready(function(){
 	});
@@ -247,7 +259,8 @@
 			}
 		})
 	}
-	
+
+	// 질문 수정
 	function modifyQBoard(){
 		var conf = confirm("게시글을 수정하시겠습니까?")
 		if(conf == false)
@@ -255,7 +268,8 @@
 		
 		document.location.href = "./moveModifyQBoard?qbno=" + qbno;
 	}
-
+	
+	// 질문 삭제
 	function deleteQBoard(){
 		var conf = confirm("게시글을 삭제하시겠습니까?")
 		if(conf == false)
@@ -263,7 +277,8 @@
 	
 		document.location.href = "./deleteQBoard?qbno=" + qbno;
 	}
-	
+
+	// 질문 채택
 	function adoptionAnswer(abno){
 		$.ajax({
 			url : "${pageContext.request.contextPath}/answer/adoptionAnswer",
@@ -273,10 +288,7 @@
 			success : function(data){
 				if(data == 1){
 					alert("답변을 채택하였습니다.");
-					//btnHTML = ", 채택됨";
-					//$("#answerPHead"+abno).append(btnHTML);
-					//var test = document.getElementByClassName("qboardTitle");
-					//test.style.backgroundcolor = "red";
+					location.reload();
 				}
 				else if(data == 2){
 					var conf = confirm("채택을 취소하시겠습니까?");
@@ -292,6 +304,7 @@
 		})
 	}
 
+	// 채택 취소
 	$.cancleAnswer = function(abno){
 		$.ajax({
 			url : "${pageContext.request.contextPath}/answer/cancleAnswer",
@@ -300,22 +313,115 @@
 			data : {"abno" : abno, "qbno" : qbno},
 			success : function(data){
 				if(data == 1){
-					//$("#adoptionBtn"+abno).style.backgroundcolor = red;
-					//$("#adoptionBtn"+abno).text("채택");
 					alert("답변 채택을 취소 하였습니다.");
+					location.reload();
 				}
 					
 				else
-					alert("답변 취소 실패");
+					alert("답변 채택 취소 실패");
 			}
 		})
 	}
 
+	// 답변 수정 폼 가져오기
+	function modifyAnswerForm(abno){
+		var conf = confirm("답변을 수정하시겠습니까?")
+		if(conf == false)
+			return ;
+		if(aModifyStatus == 0 ){
+			aModifyStatus =1;
+		}
+		else{
+			alert("이미 다른 답변을 수정중입니다. 취소 후 다시 시도해주세요.")
+			return 0;
+		}
+		
+		$('.acontent'+abno).empty();
+		var pageHTML = "";
+		pageHTML += "<div id=\"answerFormDiv\">";
+		pageHTML += "<textarea name=\"answerContent\" id=\"answerContent\"></textarea>";
+		pageHTML += "<button class=\"answerModify\" type=\"button\" id=\"answerModify\" onclick=\"modifyAnswer(" + abno + ");\">수정</button>";
+		pageHTML += "<button class=\"canaleModifyAnswer\" type=\"button\" id=\"canaleModifyAnswer\" value=\"none\" onclick=\"cancleModifyAnswer("+ abno +");\">취소</button>";
+		pageHTML += "</div>";
+
+		$('.acontent'+abno).append(pageHTML);
+		$.callSummernote();
+	}
+
+	// 답변 수정
+	function modifyAnswer(abno){
+		var mAContent = $("#answerContent").val();
+		$.ajax({
+			url : "${pageContext.request.contextPath}/answer/modifyAnswer",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno, "acontent" : mAContent},
+			success : function(data){
+				aModifyStatus = 0;
+				if(data == 1){
+					alert("답변을 수정하였습니다.");
+					location.reload();
+				}
+					
+				else
+					alert("답변 수정 실패");
+			}
+		})
+	}
+
+	// 답변 수정 취소
+	function cancleModifyAnswer(abno){
+		aModifyStatus = 0;
+
+		$.ajax({
+			url : "${pageContext.request.contextPath}/answer/getAnswerContent",
+			type : "post",
+			dataType : "text",
+			data : {"abno" : abno},
+			success : function(data){
+				$("#answerFormDiv").remove();
+				console.log(data);
+				var rollBackHTML = "";
+				rollBackHTML += "<div class=\"acontent" + abno + "\" style=\"margin-top: 3px\">";
+				rollBackHTML += data;
+				rollBackHTML += "<div class=\"modifyAndDeleteForm\">"
+				rollBackHTML += "<button class=\"modifyAnswerBtn\" type=\"button\" value=\"" + abno + "\" id=\"modifyAnswerBtn\" onclick=\"modifyAnswerForm(this.value);\">답변 수정</button>"
+				rollBackHTML += "<button class=\"deleteAnswerBtn\" type=\"button\" value=\"" + abno + "\" id=\"deleteAnswerBtn\" onclick=\"deleteAnswer(this.value);\">답변 삭제</button>"
+				rollBackHTML += "</div>";
+				rollBackHTML += "</div>";
+				console.log(rollBackHTML);
+				$('.answerHead'+abno).after(rollBackHTML);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		})
+	}
+
+	
+	
+	function deleteAnswer(abno){
+		var conf = confirm("답변을 삭제하시겠습니까?");
+		if(conf == false)
+			return ;
+		$.ajax({
+			url : "${pageContext.request.contextPath}/answer/deleteAnswer",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno},
+			success : function(data){
+				if(data == 1){
+					alert("답변을 삭제하였습니다.");
+					location.reload();
+				}
+				else
+					alert("답변 삭제 실패");
+			}
+		})
+	}
 
 	/*
-	추가해야 할 것 : 답변추천, 채택, 답변 수정, 답변 삭제
-	
-	
+	추가해야 할 것 : 답변추천
 	*/
 	
 </script>
