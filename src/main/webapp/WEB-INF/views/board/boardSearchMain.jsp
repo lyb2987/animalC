@@ -9,7 +9,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/board/boardMain.css">
-	<title>게시판 메인</title>
+	<title>게시판 검색 메인</title>
 	<%@ include file="../tamplate/header.jsp"%>
 </head>
 <body>
@@ -91,38 +91,45 @@
 
 	// 게시글 뿌려주는 ajax
 	$.getList = function(pageNum){
-			$.ajax({
-				url : "${pageContext.request.contextPath}/board/getBoardPageList",
-				type : "post",
-				dataType : "json",
-				data : {"currentP" : pageNum},
-				success : function(data){
-					var pageHTML2 = "";
-					var bnoString = "";
-					$("tr").remove(".boardList");
-					for(var i=0; i<=data.length; i++){
-						// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
-						if(data[i]){
-							pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
-							pageHTML2 += "<td>" + data[i].bno + "</td>\n";
-							pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
-							// 테스트를 위해 viewBoard -> viewBoardTest로 변경
-							pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" id=\"btitle" + data[i].bno +"\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
-							pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
-							pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
-							pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
-							pageHTML2 += "<td id=\"likeCnt" + data[i].bno + "\"> </td>\n"
-							pageHTML2 += "</tr>"
-							bnoString += data[i].bno + " ";
-						}
+		var searchB = "${paging.sb}";
+		var bKind =  "${paging.kind}";
+		var searchT = "${paging.st}"; 
+		var searchBcount = ${paging.boardCnt};
+		var searchCP = ${paging.currentPage};
+		console.log("searchB : " + searchB + ", bKind : " + bKind + ", searchT : " + searchT + ", searchBcount : " + searchBcount + ", searchCP : " + searchCP);
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/getSearchBoardPageList",
+			type : "post",
+			dataType : "json",
+			//searchBoundary, bkind, searchTerm, count, searchCurrentP
+			data : {"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP},
+			success : function(data){
+				var pageHTML2 = "";
+				var bnoString = "";
+				$("tr").remove(".boardList");
+				for(var i=0; i<=data.length; i++){
+					// 리스트로 되있을때 if문으로 검사한해주면 요효하지 않은 애들이라고 에러 개나옴 ㅅㅂ
+					if(data[i]){
+						pageHTML2 += "<tr id=\"boardTable\" class=\"boardList\" style=\"border-bottom: 1px solid #aaa;\">\n"
+						pageHTML2 += "<td>" + data[i].bno + "</td>\n";
+						pageHTML2 += "<td>" + data[i].bkind + "</td>\n";
+						// 테스트를 위해 viewBoard -> viewBoardTest로 변경
+						pageHTML2 += "<td> <a href=\"./viewBoard?bno=" + data[i].bno + "\" id=\"btitle" + data[i].bno +"\" style=\"color : black; font-weight : bold;\">" + data[i].btitle + "</a> </td>\n";						
+						pageHTML2 += "<td>" + data[i].bwriter + "</td>\n";
+						pageHTML2 += "<td>" + data[i].regdate + "</td>\n";
+						pageHTML2 += "<td>" + data[i].viewCnt + "</td>\n";
+						pageHTML2 += "<td id=\"likeCnt" + data[i].bno + "\"> </td>\n"
+						pageHTML2 += "</tr>"
+						bnoString += data[i].bno + " ";
 					}
-					//console.log(pageHTML2);
-					$("#boardhead").after(pageHTML2);
-					$.getLikeAndCommentCnt(bnoString);
-					console.log("현재 페이지 : " + currentP);	
 				}
-			})
-		}
+				//console.log(pageHTML2);
+				$("#boardhead").after(pageHTML2);
+				$.getLikeAndCommentCnt(bnoString);
+				console.log("현재 페이지 : " + currentP);	
+			}
+		})
+	}
 		
 
 

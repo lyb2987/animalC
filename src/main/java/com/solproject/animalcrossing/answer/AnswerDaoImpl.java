@@ -39,4 +39,19 @@ public class AnswerDaoImpl implements AnswerDao{
 	public int deleteAnswer(int abno) {
 		return sqlSession.delete(namespace + ".deleteAnswer", abno);
 	}
+
+	@Override
+	public int likeUp(int abno) {
+		return sqlSession.update(namespace + ".likeUp", abno);
+	}
+
+	@Override
+	public int likeDown(int abno) {
+		return sqlSession.update(namespace + ".likeDown", abno);
+	}
+
+	@Override
+	public int getLikeCnt(int abno) {
+		return sqlSession.selectOne(namespace + ".getLikeCnt", abno);
+	}
 }

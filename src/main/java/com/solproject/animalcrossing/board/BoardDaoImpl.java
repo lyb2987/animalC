@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
-import com.solproject.animalcrossing.board.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Repository
 public class BoardDaoImpl implements BoardDao{
@@ -73,6 +74,15 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.delete(namespace + ".deleteBoard", bno);
 	}
 
+	@Override
+	public int getSearchBoardCount(SearchHelper sh) {
+		return sqlSession.selectOne(namespace + ".getSearchBoardCount", sh);
+	}
+
+	@Override
+	public List<BoardVo> getSearchBoardPageList(SearchPaging sp) {
+		return sqlSession.selectList(namespace + ".getSearchBoardPageList", sp);
+	}
 	
 
 }

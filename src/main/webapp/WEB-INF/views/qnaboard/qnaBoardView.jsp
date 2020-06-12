@@ -70,7 +70,7 @@
 						</c:choose>
 					</div>
 					<div class="acontent${alist.abno}" style="margin-top: 3px">
-						<p>${alist.acontent}</p>
+						<p>${alist.acontent}	<button class="alikteBtn${alist.abno}" type="button" id="alikteBtn${alist.abno}" style="float : right;"  value="${alist.abno}" onclick="alikeUp(this.value);">추천</button> </p>
 					
 						<c:choose>
 							<c:when test="${user.id.equals(alist.awriter)}">
@@ -144,6 +144,7 @@
 					var pageHTML = "";
 					pageHTML += "<button class=\"answerFormBtn\" type=\"button\" id=\"answerFormBtn\" onclick=\"getAnswerForm();\">답변 달기</button>";
 					$('.answerWriteDiv').append(pageHTML);
+					location.reload();
 				}
 				else{
 					alert("답변 작성 실패..");
@@ -420,6 +421,49 @@
 		})
 	}
 
+	function alikeUp(abno){
+	var userId = "${user.id}";
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/alike/alikeUp",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno, "userId" : userId},
+			success : function(data){
+				if(data.likeStatus==-1){
+					var conf = confirm("이미 추천하셨습니다. 추천을 취소하시겠습니까?");
+					if(conf == false)
+						return ;
+					$.alikeDown(abno);
+				}
+				else{
+					alert("추천하였습니다.");
+					location.reload();
+				}
+			}
+		})
+	}
+
+	$.alikeDown = function(abno){
+	var userId = "${user.id}";
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/alike/alikeDown",
+			type : "post",
+			dataType : "json",
+			data : {"abno" : abno, "userId" : userId},
+			success : function(data){
+				if(data.likeStatus==1){
+					alert("추천을 취소하였습니다.");
+					location.reload();
+				}
+				else{
+					alert("추천 취소에 실패했습니다!");
+				}
+			}
+		})
+	}
+	
 	/*
 	추가해야 할 것 : 답변추천
 	*/

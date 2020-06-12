@@ -134,6 +134,9 @@ public class AnswerController {
 		public int deleteAnswer(String abno){
 		
 			int result = answerService.deleteAnswer(Integer.parseInt(abno));
+			if(result == 1) {
+				result = answerService.deleteAnswer(Integer.parseInt(abno));
+			}
 			
 			return result;
 		}

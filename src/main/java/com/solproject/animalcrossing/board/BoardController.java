@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.solproject.animalcrossing.member.MemberVo;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Controller
 @RequestMapping("/board/**")
@@ -519,6 +522,48 @@ public class BoardController {
 		
 		return result;
 	}
+	
+	// 검색
+	@RequestMapping("searchBoard")
+	public ModelAndView searchBoard(String searchBoundary, String bkind, String searchTerm) {
+		ModelAndView mav = new ModelAndView();
+		SearchHelper sh = new SearchHelper(searchBoundary, bkind, searchTerm);
+		
+		//System.out.println(sh.toString());
+		
+		int count = boardService.getSearchBoardCount(sh);
+		
+		//String sb, String st, int boardCnt
+		SearchPaging sp = new SearchPaging(searchBoundary, bkind, searchTerm, count);
+		
+		
+		
+		mav.addObject("paging", sp);
+		mav.setViewName("board/boardSearchMain");
+		
+		return mav;
+	}
+	
+	// 페이지에 맞는 게시글 목록 가져오기
+	@ResponseBody
+	@PostMapping("getSearchBoardPageList")
+	public List<BoardVo> getSearchBoardPageList(String searchB, String bKind, String searchT, String searchBcount, String searchCP){
+		//"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP
+
+		System.out.println("들어옴 ");
+		
+		SearchPaging sp = new SearchPaging(searchB, bKind, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+
+		System.out.println("sb : " + sp.getSb() + ", kind : " + sp.getKind());
+		
+		List<BoardVo> list = boardService.getSearchBoardPageList(sp);
+		System.out.println(" listSize : " + list.size());
+		
+		return list;
+	}
+		
+	
+	
 	/*
 	// db 인서트 필요할때 말고는 헤더에 봉인해둠 + 로그인하고 사용할 것
 	@RequestMapping("writeboardloop")

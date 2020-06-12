@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solproject.animalcrossing.mapper.Alike_Mapper">
+
+	<select id="checkAllike" parameterType="alikeVo" resultType="int">
+		SELECT COUNT(*) FROM ALIKE WHERE ABLIKER = #{abliker} AND ABNO = #{abno}
+	</select>
+
+	<insert id="createLike" parameterType="alikeVo">
+		INSERT INTO ALIKE(ABNO, ABLIKER)
+		VALUES(#{abno}, #{abliker})
+	</insert>
+
+	<delete id="deleteLike" parameterType="alikeVo">
+		DELETE FROM ALIKE WHERE ABNO = #{abno} AND ABLIKER = #{abliker}
+	</delete>
+	
+</mapper>

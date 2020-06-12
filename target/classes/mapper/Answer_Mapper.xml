@@ -10,7 +10,7 @@
 	</insert>
 	
 	<select id="getAlist" parameterType="int" resultType="answerVo">
-		SELECT * FROM ANSWER WHERE QBNO = #{qbno}
+		SELECT * FROM ANSWER WHERE QBNO = #{qbno} ORDER BY AREGDATE DESC
 	</select>
 	
 	<select id="getAnswerContent" parameterType="int" resultType="String">
@@ -26,5 +26,21 @@
 	<delete id="deleteAnswer" parameterType="int">
 		DELETE FROM ANSWER WHERE ABNO = #{abno}
 	</delete>
+	
+	<update id="likeUp" parameterType="int">
+		UPDATE ANSWER SET
+			LIKECNT = LIKECNT+1
+		WHERE ABNO = #{abno} 
+	</update>
+	
+	<update id="likeDown"  parameterType="int">
+		UPDATE ANSWER SET
+			LIKECNT = LIKECNT-1
+		WHERE ABNO = #{abno} 
+	</update>
+	
+	<select id="getLikeCnt" parameterType="int" resultType="int">
+		SELECT LIKECNT FROM ANSWER WHERE ABNO = #{abno}
+	</select>
 	
 </mapper>

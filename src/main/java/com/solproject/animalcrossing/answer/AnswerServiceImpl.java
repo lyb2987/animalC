@@ -38,6 +38,21 @@ public class AnswerServiceImpl implements AnswerService{
 	public int deleteAnswer(int abno) {
 		return answerDao.deleteAnswer(abno);
 	}
+
+	@Override
+	public int likeUp(int abno) {
+		return answerDao.likeUp(abno);
+	}
+
+	@Override
+	public int likeDown(int abno) {
+		return answerDao.likeDown(abno);
+	}
+
+	@Override
+	public int getLikeCnt(int abno) {
+		return answerDao.getLikeCnt(abno);
+	}
 	
 	
 }

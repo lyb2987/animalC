@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
 import com.solproject.animalcrossing.boardInter.BoardService;
-import com.solproject.animalcrossing.board.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -63,6 +64,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int deleteBoard(int bno) {
 		return boardDao.deleteBoard(bno);
+	}
+
+	@Override
+	public int getSearchBoardCount(SearchHelper sh) {
+		return boardDao.getSearchBoardCount(sh);
+	}
+
+	@Override
+	public List<BoardVo> getSearchBoardPageList(SearchPaging sp) {
+		return boardDao.getSearchBoardPageList(sp);
 	}
 
 

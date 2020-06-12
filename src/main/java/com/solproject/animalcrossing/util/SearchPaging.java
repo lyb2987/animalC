@@ -1,6 +1,9 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.util;
 
-public class Paging {
+public class SearchPaging {
+	private String sb;		//Search Boundary	검색 범위 (제목, 내용, 제목+내용)
+	private String kind;	//Search Kind 	 	검색 종류(게시글 종류에따라다름) 사실상 sb2
+	private String st;		//Search Term	 	검색어
 	private int boardCnt; 		// 게시글 갯수
 	private int perPageBoardCnt;// 한 페이지 당 글 갯수
 	private int pageCnt;		// 페이지 길이
@@ -10,16 +13,19 @@ public class Paging {
 	private int startRnum;		// rnum(데이터베이스 페이징 번호) 시작값 
 	private int endRnum;		// rnum 끝값
 	
-	/* 
-	   
-	   
-	 */
-	// 기본 생성자가 없으면 ajax로 데이터를 넘겨줄때 에러가남 생성해주면 잘 됨
-	public Paging(){
+	public SearchPaging() {
 		
 	}
 	
-	public Paging(int boardCnt){
+	public SearchPaging(String sb, String st, int boardCnt) {
+		if(sb.equals("제목"))
+			this.sb = "Title";
+		else if(sb.equals("내용"))
+			this.sb = "Content";
+		else 
+			this.sb = "TitleAndContent";
+		
+		this.st = st;
 		this.perPageBoardCnt = 10;
 		this.boardCnt = boardCnt;
 		if(boardCnt % perPageBoardCnt == 0)
@@ -32,7 +38,15 @@ public class Paging {
 		this.setSpageEpage();
 	}
 	
-	public Paging(int boardCnt, int currentPage){
+	public SearchPaging(String sb, String st, int boardCnt, int currentPage) {
+		if(sb.equals("제목"))
+			this.sb = "Title";
+		else if(sb.equals("내용"))
+			this.sb = "Content";
+		else 
+			this.sb = "TitleAndContent";
+		
+		this.st = st;
 		this.perPageBoardCnt = 10;
 		this.boardCnt = boardCnt;
 		if(boardCnt % perPageBoardCnt == 0)
@@ -43,8 +57,63 @@ public class Paging {
 		this.currentPage = currentPage;
 		this.setSrnumErnum();
 		this.setSpageEpage();
-		
 	}
+	//"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP
+	public SearchPaging(String sb, String kind, String st, int boardCnt, int currentPage) {
+		if(sb.equals("제목"))
+			this.sb = "Title";
+		else if(sb.equals("내용"))
+			this.sb = "Content";
+		else if(sb.equals("제목 + 내용"))
+			this.sb = "TitleAndContent";
+		else 
+			this.sb = sb;
+		
+		if(kind.equals("전체"))
+			this.kind = "All";
+		else
+			this.kind = kind;
+		
+		this.st = st;
+		this.perPageBoardCnt = 10;
+		this.boardCnt = boardCnt;
+		if(boardCnt % perPageBoardCnt == 0)
+			this.pageCnt = boardCnt / perPageBoardCnt;
+		else
+			this.pageCnt = (boardCnt / perPageBoardCnt);
+		
+		this.currentPage = currentPage;
+		this.setSrnumErnum();
+		this.setSpageEpage();
+	}
+
+	public SearchPaging(String sb, String kind, String st, int boardCnt) {
+		if(sb.equals("제목"))
+			this.sb = "Title";
+		else if(sb.equals("내용"))
+			this.sb = "Content";
+		else 
+			this.sb = "TitleAndContent";
+		
+		if(kind.equals("전체"))
+			this.kind = "All";
+		else
+			this.kind = kind;
+		
+		this.kind = kind;
+		this.st = st;
+		this.perPageBoardCnt = 10;
+		this.boardCnt = boardCnt;
+		if(boardCnt % perPageBoardCnt == 0)
+			this.pageCnt = boardCnt / perPageBoardCnt;
+		else
+			this.pageCnt = (boardCnt / perPageBoardCnt);
+		
+		this.currentPage = 1;
+		this.setSrnumErnum();
+		this.setSpageEpage();
+	}
+	
 	
 	public void movePage(int currentPage){
 		this.currentPage = currentPage;
@@ -190,6 +259,22 @@ public class Paging {
 	public void setBoardCnt(int boardCnt) {
 		this.boardCnt = boardCnt;
 	}
-
-	
+	public String getSb() {
+		return sb;
+	}
+	public void setSb(String sb) {
+		this.sb = sb;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	public String getSt() {
+		return st;
+	}
+	public void setSt(String st) {
+		this.st = st;
+	}
 }

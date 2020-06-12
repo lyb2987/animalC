@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.solproject.animalcrossing.board.BoardVo;
 import com.solproject.animalcrossing.board.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 public interface BoardService {
 	public int writeboard(BoardVo vo);
@@ -26,4 +28,8 @@ public interface BoardService {
 	public int modifyBoard(BoardVo vo);
 
 	public int deleteBoard(int bno);
+
+	public int getSearchBoardCount(SearchHelper sh);
+	
+	public List<BoardVo> getSearchBoardPageList(SearchPaging sp);
 }

@@ -14,4 +14,10 @@ public interface AnswerService {
 	public int modifyAnswer(AnswerVo vo);
 
 	public int deleteAnswer(int abno);
+
+	public int likeUp(int abno);
+	
+	public int likeDown(int abno);
+
+	public int getLikeCnt(int abno);
 }
