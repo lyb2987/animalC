@@ -11,14 +11,22 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.solproject.animalcrossing.blike.BlikeServiceImpl;
+import com.solproject.animalcrossing.blike.BlikeVo;
+import com.solproject.animalcrossing.clike.ClikeServiceImpl;
+import com.solproject.animalcrossing.clike.ClikeVo;
+import com.solproject.animalcrossing.comment.CommentServiceImpl;
+import com.solproject.animalcrossing.comment.CommentVo;
 import com.solproject.animalcrossing.member.MemberVo;
+import com.solproject.animalcrossing.util.BoardLAndCcnt;
+import com.solproject.animalcrossing.util.CommentCnoALCnt;
+import com.solproject.animalcrossing.util.Paging;
 import com.solproject.animalcrossing.util.SearchHelper;
 import com.solproject.animalcrossing.util.SearchPaging;
 

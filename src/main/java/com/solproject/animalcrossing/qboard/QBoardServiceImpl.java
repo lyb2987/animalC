@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.solproject.animalcrossing.board.Paging;
 import com.solproject.animalcrossing.qboardInter.QBoardDao;
 import com.solproject.animalcrossing.qboardInter.QBoardService;
+import com.solproject.animalcrossing.util.Paging;
 
 @Service
 public class QBoardServiceImpl implements QBoardService{

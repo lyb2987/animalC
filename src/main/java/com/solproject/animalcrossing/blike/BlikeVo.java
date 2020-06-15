@@ -1,14 +1,14 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.blike;
 
 public class BlikeVo {
 	private int bno;
 	private String bliker;
 	
-	BlikeVo(){
+	public BlikeVo(){
 		
 	}
 	
-	BlikeVo(int bno, String bliker){
+	public BlikeVo(int bno, String bliker){
 		this.bno = bno;
 		this.bliker = bliker;
 	}

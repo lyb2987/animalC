@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.solproject.animalcrossing.answer.AnswerServiceImpl;
-import com.solproject.animalcrossing.board.Paging;
 import com.solproject.animalcrossing.member.MemberVo;
+import com.solproject.animalcrossing.util.Paging;
 
 @Controller
 @RequestMapping("/qnaboard/**")

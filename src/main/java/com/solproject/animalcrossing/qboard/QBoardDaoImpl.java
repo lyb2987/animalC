@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.solproject.animalcrossing.board.Paging;
 import com.solproject.animalcrossing.qboardInter.QBoardDao;
+import com.solproject.animalcrossing.util.Paging;
 
 @Repository
 public class QBoardDaoImpl implements QBoardDao{

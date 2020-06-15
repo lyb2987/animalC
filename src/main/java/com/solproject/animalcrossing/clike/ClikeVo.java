@@ -1,14 +1,14 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.clike;
 
 public class ClikeVo {
 	private int cno;
 	private String cliker;
 	
-	ClikeVo(){
+	public ClikeVo(){
 		
 	}
 	
-	ClikeVo(int cno, String cliker){
+	public ClikeVo(int cno, String cliker){
 		this.cno = cno;
 		this.cliker = cliker;
 	}

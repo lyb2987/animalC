@@ -1,4 +1,4 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.comment;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.solproject.animalcrossing.boardInter.CommentDao;
+import com.solproject.animalcrossing.commentInter.CommentDao;
 
 @Repository
 public class CommentDaoImpl implements CommentDao {

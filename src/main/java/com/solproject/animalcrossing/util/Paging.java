@@ -1,4 +1,4 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.util;
 
 public class Paging {
 	private int boardCnt; 		// 게시글 갯수

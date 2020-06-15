@@ -1,8 +1,8 @@
-package com.solproject.animalcrossing.boardInter;
+package com.solproject.animalcrossing.clikeInter;
 
-import com.solproject.animalcrossing.board.ClikeVo;
+import com.solproject.animalcrossing.clike.ClikeVo;
 
-public interface ClikeService {
+public interface ClikeDao {
 	public int likeUp(ClikeVo vo);
 
 	public int getLike(int cno);

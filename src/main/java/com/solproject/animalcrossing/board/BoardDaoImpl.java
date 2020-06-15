@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
+import com.solproject.animalcrossing.util.Paging;
 import com.solproject.animalcrossing.util.SearchHelper;
 import com.solproject.animalcrossing.util.SearchPaging;
 

@@ -1,12 +1,12 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.comment;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.solproject.animalcrossing.boardInter.CommentDao;
-import com.solproject.animalcrossing.boardInter.CommentService;
+import com.solproject.animalcrossing.commentInter.CommentDao;
+import com.solproject.animalcrossing.commentInter.CommentService;
 
 @Service
 public class CommentServiceImpl implements CommentService{

@@ -4,7 +4,7 @@ package com.solproject.animalcrossing.boardInter;
 import java.util.List;
 
 import com.solproject.animalcrossing.board.BoardVo;
-import com.solproject.animalcrossing.board.Paging;
+import com.solproject.animalcrossing.util.Paging;
 import com.solproject.animalcrossing.util.SearchHelper;
 import com.solproject.animalcrossing.util.SearchPaging;
 

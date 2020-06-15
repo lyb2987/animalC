@@ -1,4 +1,4 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.comment;
 
 public class CommentVo {
 	private int bno;

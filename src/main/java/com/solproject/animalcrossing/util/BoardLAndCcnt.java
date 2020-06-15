@@ -1,4 +1,4 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.util;
 
 public class BoardLAndCcnt {
 	private int bno;

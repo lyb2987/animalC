@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.solproject.animalcrossing.boardInter.BoardDao;
 import com.solproject.animalcrossing.boardInter.BoardService;
+import com.solproject.animalcrossing.util.Paging;
 import com.solproject.animalcrossing.util.SearchHelper;
 import com.solproject.animalcrossing.util.SearchPaging;
 

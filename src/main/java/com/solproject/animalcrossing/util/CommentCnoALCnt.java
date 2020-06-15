@@ -1,13 +1,13 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.util;
 
 public class CommentCnoALCnt {
 	private int cno;
 	private int clikeCnt;
 	
-	CommentCnoALCnt(){
+	public CommentCnoALCnt(){
 		
 	}
-	CommentCnoALCnt(int cno, int clikeCnt){
+	public CommentCnoALCnt(int cno, int clikeCnt){
 		this.cno = cno;
 		this.clikeCnt = clikeCnt;
 	}

@@ -1,6 +1,6 @@
-package com.solproject.animalcrossing.boardInter;
+package com.solproject.animalcrossing.blikeInter;
 
-import com.solproject.animalcrossing.board.BlikeVo;
+import com.solproject.animalcrossing.blike.BlikeVo;
 
 public interface BlikeService {
 	public int likeUp(BlikeVo vo);

@@ -2,8 +2,8 @@ package com.solproject.animalcrossing.qboardInter;
 
 import java.util.List;
 
-import com.solproject.animalcrossing.board.Paging;
 import com.solproject.animalcrossing.qboard.QBoardVo;
+import com.solproject.animalcrossing.util.Paging;
 
 public interface QBoardService {
 	public int writeQBoard(QBoardVo vo);

@@ -1,10 +1,10 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.clike;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.solproject.animalcrossing.boardInter.ClikeDao;
+import com.solproject.animalcrossing.clikeInter.ClikeDao;
 
 @Repository
 public class ClikeDaoImpl implements ClikeDao{

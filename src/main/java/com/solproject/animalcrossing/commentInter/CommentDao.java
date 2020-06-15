@@ -1,8 +1,8 @@
-package com.solproject.animalcrossing.boardInter;
+package com.solproject.animalcrossing.commentInter;
 
 import java.util.List;
 
-import com.solproject.animalcrossing.board.CommentVo;
+import com.solproject.animalcrossing.comment.CommentVo;
 
 public interface CommentDao {
 	

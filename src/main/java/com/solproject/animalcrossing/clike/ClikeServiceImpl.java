@@ -1,10 +1,10 @@
-package com.solproject.animalcrossing.board;
+package com.solproject.animalcrossing.clike;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.solproject.animalcrossing.boardInter.ClikeDao;
-import com.solproject.animalcrossing.boardInter.ClikeService;
+import com.solproject.animalcrossing.clikeInter.ClikeDao;
+import com.solproject.animalcrossing.clikeInter.ClikeService;
 
 @Service
 public class ClikeServiceImpl implements ClikeService{
