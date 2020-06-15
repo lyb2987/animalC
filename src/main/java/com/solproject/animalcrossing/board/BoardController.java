@@ -78,8 +78,8 @@ public class BoardController {
 	@PostMapping("getBoardPageList")
 	public List<BoardVo> getBoardPageList(int currentP){
 		
-		System.out.println("현재 페이지 : " + currentP);
-		System.out.println("");
+		//System.out.println("현재 페이지 : " + currentP);
+		//System.out.println("");
 		
 		int boardCtn = boardService.getBoardCount();
 		Paging p = new Paging(boardCtn, currentP);
@@ -552,25 +552,52 @@ public class BoardController {
 		return mav;
 	}
 	
-	// 페이지에 맞는 게시글 목록 가져오기
+	// 검색 페이지에 맞는 게시글 목록 가져오기
 	@ResponseBody
 	@PostMapping("getSearchBoardPageList")
 	public List<BoardVo> getSearchBoardPageList(String searchB, String bKind, String searchT, String searchBcount, String searchCP){
 		//"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP
 
-		System.out.println("들어옴 ");
+		//System.out.println("들어옴 ");
 		
 		SearchPaging sp = new SearchPaging(searchB, bKind, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
 
-		System.out.println("sb : " + sp.getSb() + ", kind : " + sp.getKind());
+		//System.out.println("sb : " + sp.getSb() + ", kind : " + sp.getKind());
 		
 		List<BoardVo> list = boardService.getSearchBoardPageList(sp);
-		System.out.println(" listSize : " + list.size());
+		//System.out.println(" listSize : " + list.size());
 		
 		return list;
 	}
 		
 	
+	// 검색시 페이지 버튼 부려주기
+	@ResponseBody
+	@PostMapping("getSearchPageBtn")
+	public SearchPaging getSearchPageBtn(String searchB, String bKind, String searchT, String searchBcount, String searchCP) {
+		
+		SearchPaging sp = new SearchPaging(searchB, bKind, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		
+		return sp;
+	}
+	
+	// 다음 버튼 클릭시 페이지 이동 (검색)
+	@ResponseBody
+	@PostMapping("moveSearchNextPage")
+	public SearchPaging moveSearchNextPage(String searchB, String bKind, String searchT, String searchBcount, String searchCP){
+		SearchPaging sp = new SearchPaging(searchB, bKind, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		sp.nextPage();
+		return sp;
+	}
+	
+	// 이전 버튼 클릭시 페이지 이동 (검색)
+	@ResponseBody
+	@PostMapping("moveSearchPreviousPage")
+	public SearchPaging moveSearchPreviousPage(String searchB, String bKind, String searchT, String searchBcount, String searchCP){
+		SearchPaging sp = new SearchPaging(searchB, bKind, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		sp.previousPage();
+		return sp;
+	}
 	
 	/*
 	// db 인서트 필요할때 말고는 헤더에 봉인해둠 + 로그인하고 사용할 것

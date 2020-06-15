@@ -80,7 +80,11 @@
 </div>
 
 <script type="text/javascript">
-	var currentP = ${paging.currentPage};
+	var searchB = "${paging.sb}";
+	var bKind =  "${paging.kind}";
+	var searchT = "${paging.st}"; 
+	var searchBcount = ${paging.boardCnt};
+	var searchCP = ${paging.currentPage};
 	var pageSize = ${paging.pageCnt};
 	
 	$(document).ready(function(){
@@ -91,11 +95,6 @@
 
 	// 게시글 뿌려주는 ajax
 	$.getList = function(pageNum){
-		var searchB = "${paging.sb}";
-		var bKind =  "${paging.kind}";
-		var searchT = "${paging.st}"; 
-		var searchBcount = ${paging.boardCnt};
-		var searchCP = ${paging.currentPage};
 		console.log("searchB : " + searchB + ", bKind : " + bKind + ", searchT : " + searchT + ", searchBcount : " + searchBcount + ", searchCP : " + searchCP);
 		$.ajax({
 			url : "${pageContext.request.contextPath}/board/getSearchBoardPageList",
@@ -126,7 +125,7 @@
 				//console.log(pageHTML2);
 				$("#boardhead").after(pageHTML2);
 				$.getLikeAndCommentCnt(bnoString);
-				console.log("현재 페이지 : " + currentP);	
+				console.log("현재 페이지 : " + searchCP);	
 			}
 		})
 	}
@@ -155,14 +154,14 @@
 	}
 	
 	// 버튼 뿌려주는 ajax
-	$.getPageButton = function(currentP){
+	$.getPageButton = function(searchCP){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/board/getPageBtn",
+			url : "${pageContext.request.contextPath}/board/getSearchPageBtn",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : currentP},
+			data : {"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP},
 			success : function(data){
-				var currentP = data.currentPage;
+				var searchCP = data.currentPage;
 				var pageHTML ="";
 				$("#pageUl").empty();
 				for(var i=data.startPage; i<=data.endPage; i++){
@@ -171,45 +170,45 @@
 					pageHTML += "</li>\n"
 				}
 				$("#pageUl").append(pageHTML);
-				$("#pagebtn"+currentP).css("font-weight", "bold");
+				$("#pagebtn"+searchCP).css("font-weight", "bold");
 			}
 		})
 	}
 	
 	function goFront(){
-		currentP=1;
+		searchCP=1;
 		$.getList(1);
 		$.getPageButton(1);
 	}
 	
 	function goEnd(){
-		currentP=pageSize;
-		$.getList(currentP);
-		$.getPageButton(currentP);
+		searchCP=pageSize;
+		$.getList(searchCP);
+		$.getPageButton(searchCP);
 	}
 
 	function goPageBtn(i){
-		$("#pagebtn"+currentP).css("font-weight", "normal");
+		$("#pagebtn"+searchCP).css("font-weight", "normal");
 		currentP = i;
-		$("#pagebtn"+currentP).css("font-weight", "bold");
-		console.log("현재 페이지 : " + currentP);
+		$("#pagebtn"+searchCP).css("font-weight", "bold");
+		console.log("현재 페이지 : " + searchCP);
 		$.getList(i);
 	}
 
 	// 이전버튼 기능
 	function goPrevious(){
-		if(currentP <= 10){
+		if(searchCP <= 10){
 			alert("이미 첫 페이지 입니다.");
 			return ;
 		}
 
-		console.log("다음 버튼 시작 전 현재 페이지 : " + currentP);
+		console.log("다음 버튼 시작 전 현재 페이지 : " + searchCP);
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/board/movePreviousPage",
+			url : "${pageContext.request.contextPath}/board/moveSearchPreviousPage",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : currentP},
+			data : {"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP},
 			success : function(data){
 				var pageHTML ="";
 				$("#pageUl").empty();
@@ -219,9 +218,9 @@
 					pageHTML += "</li>\n"
 				}
 				$("#pageUl").append(pageHTML);
-				currentP = data.currentPage;
-				$("#pagebtn"+currentP).css("font-weight", "bold");
-				console.log("다음 클릭 후 현재 페이지 : " + currentP);
+				searchCP = data.currentPage;
+				$("#pagebtn"+searchCP).css("font-weight", "bold");
+				console.log("다음 클릭 후 현재 페이지 : " + searchCP);
 				$.getList(data.currentPage);
 			}
 		})
@@ -235,27 +234,27 @@
 			return ;
 		}
 		else{
-			if(currentP%10==0){
-				if((currentP/10)*10+1 > pageSize){
+			if(searchCP%10==0){
+				if((searchCP/10)*10+1 > pageSize){
 					alert("이미 마지막 페이지 입니다.");
 					return ;
 				}
 			}
 			else{
-				if((currentP/10)*10+11 > pageSize){
+				if((searchCP/10)*10+11 > pageSize){
 					alert("이미 마지막 페이지 입니다.");
 					return ;
 				}
 			}
 		}
 	
-		console.log("다음 버튼 시작 전 현재 페이지 : " + currentP);
+		console.log("다음 버튼 시작 전 현재 페이지 : " + searchCP);
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/board/moveNextPage",
+			url : "${pageContext.request.contextPath}/board/moveSearchNextPage",
 			type : "post",
 			dataType : "json",
-			data : {"currentP" : currentP},
+			data : {"searchB" : searchB, "bKind" : bKind, "searchT" : searchT, "searchBcount" : searchBcount, "searchCP" : searchCP},
 			success : function(data){
 				var pageHTML ="";
 				$("#pageUl").empty();
@@ -265,9 +264,9 @@
 					pageHTML += "</li>\n"
 				}
 				$("#pageUl").append(pageHTML);
-				currentP = data.currentPage;
-				$("#pagebtn"+currentP).css("font-weight", "bold");
-				console.log("다음 클릭 후 현재 페이지 : " + currentP);
+				searchCP = data.currentPage;
+				$("#pagebtn"+searchCP).css("font-weight", "bold");
+				console.log("다음 클릭 후 현재 페이지 : " + searchCP);
 				$.getList(data.currentPage);
 			}
 		})

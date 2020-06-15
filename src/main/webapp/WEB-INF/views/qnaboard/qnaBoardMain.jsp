@@ -19,6 +19,17 @@
 		<div class="main-col-wrap">
 			<div class="qboard" style="width:100%;">
 				<h2 style="margin-left: 400px; margin-top:15px; font-size: 25px; color: rgb(0,0,0);">질문게시판</h2>
+				<form action="./searchQBoard" method=post id="writeForm">
+					<div class="searchDiv" style="margin-top: 10px; float: right;">
+					 	<select id="searchBoundary" name="searchBoundary">
+						 	<option id="Title">제목</option>
+						 	<option id="Content">내용</option>
+						 	<option id="TitleAndContent">제목 + 내용</option>
+					 	</select>
+					 	<input type="text" name="searchTerm" id="searchTerm" placeholder="검색어를 입력해주세요.">
+						<input class="writebtn" id="writebtn" type="submit" value="확인">
+					</div>
+				</form>
 				<table style="width:100%; text-align: center; border-bottom: 1px solid #aaa;">
 					<tr id="qboardhead" style="border-bottom: 1px solid #aaa;">
 						<td>글 번호</td>
