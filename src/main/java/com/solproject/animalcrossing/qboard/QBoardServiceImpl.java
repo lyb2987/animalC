@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.solproject.animalcrossing.qboardInter.QBoardDao;
 import com.solproject.animalcrossing.qboardInter.QBoardService;
 import com.solproject.animalcrossing.util.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Service
 public class QBoardServiceImpl implements QBoardService{
@@ -88,6 +90,16 @@ public class QBoardServiceImpl implements QBoardService{
 	@Override
 	public int cancleAnswer(int qbno) {
 		return qBoardDao.cancleAnswer(qbno);
+	}
+
+	@Override
+	public int getSearchQBoardCount(SearchHelper sh) {
+		return qBoardDao.getSearchQBoardCount(sh);
+	}
+
+	@Override
+	public List<QBoardVo> getSearchQBoardPageList(SearchPaging p) {
+		return qBoardDao.getSearchQBoardPageList(p);
 	}
 	
 	

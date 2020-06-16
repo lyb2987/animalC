@@ -92,4 +92,9 @@ public class QBoardVo {
 		this.alist = alist;
 	}
 	
+	public String toString() {
+		String returns = "qbno : " + this.qbno;
+		return returns;
+	}
+	
 }

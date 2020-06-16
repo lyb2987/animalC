@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.solproject.animalcrossing.answer.AnswerServiceImpl;
 import com.solproject.animalcrossing.member.MemberVo;
 import com.solproject.animalcrossing.util.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Controller
 @RequestMapping("/qnaboard/**")
@@ -212,6 +214,98 @@ public class QBoardController {
 		return mav;
 	}
 	
+	
+	// 질문게시판 검색기능
+	@RequestMapping("searchQBoard")
+	public  ModelAndView searchQBoard(String searchBoundary, String searchTerm) {
+		ModelAndView mav = new ModelAndView();
+		SearchHelper sh = new SearchHelper(searchBoundary, searchTerm);
+		
+		int count = qBoardService.getSearchQBoardCount(sh);
+		
+		SearchPaging sp = new SearchPaging(searchBoundary, searchTerm, count);
+		
+		System.out.println("count : " + count);
+		
+		mav.addObject("paging", sp);
+		mav.setViewName("qnaboard/qnaboardSearchMain");
+		
+		return mav;
+	}
+	 
+	
+	//getSearchQnABoardPageList
+	@PostMapping("getSearchQnABoardPageList")
+	@ResponseBody
+	public List<QBoardVo> getSearchQnABoardPageList(String searchB, String searchT, String searchBcount, String searchCP){
+		
+		SearchPaging sp = new SearchPaging(searchB, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+
+		List<QBoardVo> list = qBoardService.getSearchQBoardPageList(sp);
+	
+		System.out.println(list.size());
+		
+		QBoardVo vo = list.get(0);
+		
+		
+		return list;
+		
+	}
+	
+	 // 검색시 페이지 버튼 부려주기
+	@ResponseBody
+	@PostMapping("getSearchPageBtn")
+	public SearchPaging getSearchPageBtn(String searchB,  String searchT, String searchBcount, String searchCP) {
+		
+		SearchPaging sp = new SearchPaging(searchB, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		
+		return sp;
+	}
+
+	
+	// 다음 버튼 클릭시 페이지 이동 (검색)
+	@ResponseBody
+	@PostMapping("moveSearchNextPage")
+	public SearchPaging moveSearchNextPage(String searchB, String searchT, String searchBcount, String searchCP){
+		SearchPaging sp = new SearchPaging(searchB, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		sp.nextPage();
+		return sp;
+	}
+	
+	// 이전 버튼 클릭시 페이지 이동 (검색)
+	@ResponseBody
+	@PostMapping("moveSearchPreviousPage")
+	public SearchPaging moveSearchPreviousPage(String searchB, String searchT, String searchBcount, String searchCP){
+		SearchPaging sp = new SearchPaging(searchB, searchT,  Integer.parseInt(searchBcount),  Integer.parseInt(searchCP));
+		sp.previousPage();
+		return sp;
+	}
+	
+	
+	
+	/*
+	 @RequestMapping("searchBoard")
+	public ModelAndView searchBoard(String searchBoundary, String bkind, String searchTerm) {
+		ModelAndView mav = new ModelAndView();
+		SearchHelper sh = new SearchHelper(searchBoundary, bkind, searchTerm);
+		
+		//System.out.println(sh.toString());
+		
+		int count = boardService.getSearchBoardCount(sh);
+		
+		//String sb, String st, int boardCnt
+		SearchPaging sp = new SearchPaging(searchBoundary, bkind, searchTerm, count);
+		
+		
+		
+		mav.addObject("paging", sp);
+		mav.setViewName("board/boardSearchMain");
+		
+		return mav;
+	}
+	 
+	 
+	 */
 	
 	
 		 /*

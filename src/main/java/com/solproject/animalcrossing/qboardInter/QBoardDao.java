@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.solproject.animalcrossing.qboard.QBoardVo;
 import com.solproject.animalcrossing.util.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 public interface QBoardDao {
 	public int writeQBoard(QBoardVo vo);
@@ -35,4 +37,8 @@ public interface QBoardDao {
 	public Integer getAdoption(int qbno);
 
 	public int cancleAnswer(int qbno);
+	
+	public int getSearchQBoardCount(SearchHelper sh);
+
+	public List<QBoardVo> getSearchQBoardPageList(SearchPaging p);
 }

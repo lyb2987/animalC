@@ -565,6 +565,10 @@ public class BoardController {
 		//System.out.println("sb : " + sp.getSb() + ", kind : " + sp.getKind());
 		
 		List<BoardVo> list = boardService.getSearchBoardPageList(sp);
+		
+		
+		
+
 		//System.out.println(" listSize : " + list.size());
 		
 		return list;

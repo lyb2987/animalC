@@ -90,4 +90,53 @@
 		WHERE QBNO = #{qbno}
 	</update>
 	
+	<select id="getSearchQBoardCount" parameterType="searchHelper" resultType="int">
+		SELECT COUNT(*) FROM QBOARD WHERE
+	    	<choose>
+	        	<when test="sb == 'Title'">
+	            	QBTITLE
+	         	</when>
+	         	<when test="sb == 'Content'">
+	            	QBCONTENT
+	         	</when>
+	         	<otherwise>
+	            	QBTITLE LIKE CONCAT('%' || #{st} , '%') OR QBCONTENT
+	         	</otherwise>
+	      </choose>
+	  LIKE CONCAT('%' || #{st}, '%')
+	</select>
+	
+
+	 
+	 
+	<select id="getSearchQBoardPageList" parameterType="searchPaging" resultType="qboardVo">
+		SELECT B.QBNO, B.QBTITLE, B.QBCONTENT, B.QBWRITER, B.QREGDATE, B.VIEWCNT, B.ACOUNT, B.ADOPTION, B.LIKECNT
+		FROM(
+		    SELECT ROWNUM AS RNUM, A.QBNO, A.QBTITLE, A.QBCONTENT, A.QBWRITER, A.QREGDATE, A.VIEWCNT, A.ACOUNT, A.ADOPTION, A.LIKECNT
+		    FROM(
+		            SELECT QBNO, QBTITLE, QBCONTENT, QBWRITER, TO_CHAR(QREGDATE, 'YYYY-MM-DD HH:MI:SS') QREGDATE, VIEWCNT, ACOUNT, ADOPTION, LIKECNT
+		            FROM QBOARD WHERE
+		            	<choose>
+				        	<when test="sb == 'Title'">
+				            	QBTITLE
+				         	</when>
+				         	<when test="sb == 'Content'">
+				            	QBCONTENT
+				         	</when>
+				         	<otherwise>
+				            	QBTITLE LIKE CONCAT('%' || #{st} , '%') OR QBCONTENT
+				         	</otherwise>
+				      </choose>
+				  LIKE CONCAT('%' || #{st}, '%')  ORDER BY QREGDATE DESC
+		    ) A <![CDATA[WHERE ROWNUM <= #{endRnum}]]>
+		)B <![CDATA[WHERE B.RNUM >= #{startRnum}]]>
+	</select>
+	
+	
+	 
+	
+	
+	
+	
+	
 </mapper>

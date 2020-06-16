@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.solproject.animalcrossing.qboardInter.QBoardDao;
 import com.solproject.animalcrossing.util.Paging;
+import com.solproject.animalcrossing.util.SearchHelper;
+import com.solproject.animalcrossing.util.SearchPaging;
 
 @Repository
 public class QBoardDaoImpl implements QBoardDao{
@@ -75,5 +77,14 @@ public class QBoardDaoImpl implements QBoardDao{
 	public int cancleAnswer(int qbno) {
 		return sqlSession.update(namespace + ".cancleAnswer", qbno);
 	}
+	@Override
+	public int getSearchQBoardCount(SearchHelper sh) {
+		return sqlSession.selectOne(namespace + ".getSearchQBoardCount", sh);
+	}
+	@Override
+	public List<QBoardVo> getSearchQBoardPageList(SearchPaging p) {
+		return sqlSession.selectList(namespace + ".getSearchQBoardPageList", p);
+	}
+	
 	
 }
