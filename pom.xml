@@ -10,7 +10,7 @@
 	<properties>
 		<java-version>1.8</java-version>
 		<!-- 4.3.2에서 메일테스트를 위해 4.3.9로 upgrade -->
-		<org.springframework-version>4.3.9.RELEASE</org.springframework-version>
+		<org.springframework-version>5.3.18</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
